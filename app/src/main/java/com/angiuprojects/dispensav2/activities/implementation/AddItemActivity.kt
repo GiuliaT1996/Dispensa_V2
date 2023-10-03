@@ -14,6 +14,7 @@ import java.util.*
 
 class AddItemActivity : BaseActivity<ActivityAddItemBinding>(ActivityAddItemBinding::inflate) {
 
+    // wasEmpty is used to handle the case we don't want to add an exp date
     private var wasEmpty: Boolean? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
