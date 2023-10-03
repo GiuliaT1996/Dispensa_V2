@@ -1,6 +1,8 @@
 package com.angiuprojects.dispensav2.utilities
 
-import android.widget.ImageButton
+import android.annotation.SuppressLint
+import java.text.DateFormat
+import java.text.SimpleDateFormat
 
 class Constants {
 
@@ -8,6 +10,12 @@ class Constants {
 
         private lateinit var singleton: Constants
         private lateinit var profileMap: MutableMap<ProfileEnum, ProfileButtonStateEnum>
+
+        const val DATE_FORMAT = "dd/MM/yyyy"
+        @SuppressLint("SimpleDateFormat")
+        val DATE_TIME_FORMATTER: DateFormat = SimpleDateFormat(DATE_FORMAT)
+        const val STORAGE_LOGGER = "Storage Logger"
+
         var maxTicketInOneTransaction = 8
 
         fun initializeConstantsSingleton(): Constants {

@@ -1,6 +1,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Theme.DispensaV2" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:windowDisablePreview">true</item>
+        <item name="android:windowBackground">@null</item>
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/light_blue</item>
         <item name="colorPrimaryVariant">@color/light_blue</item>
@@ -12,6 +14,10 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+    </style>
+
+    <style name="Theme.DispensaV2.CenterAnimation">
+        <item name="android:windowBackground">@drawable/fruit_icon_background</item>
     </style>
 
     <style name="Theme.DispensaV2.NoActionBar">

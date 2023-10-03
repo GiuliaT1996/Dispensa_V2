@@ -1,11 +1,154 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".activities.implementation.AddItemActivity">
 
     <include android:id="@+id/header" layout="@layout/header_layout" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/body"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="40dp"
+        android:layout_below="@+id/header">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/section"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
+            android:layout_width="330dp"
+            android:layout_height="60dp"
+            app:layout_constraintBottom_toTopOf="@+id/name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <AutoCompleteTextView
+                android:id="@+id/sezione_auto_complete"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/transparent"
+                android:hint="@string/sezione"
+                android:inputType="text"
+                android:textColor="@color/white"
+                android:textColorHint="@color/main_blue" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/name"
+            android:layout_width="330dp"
+            android:layout_height="60dp"
+            app:helperTextTextColor="@color/purple"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toTopOf="@+id/quantity"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/section">
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/transparent"
+                android:hint="@string/nome_obbl"
+                android:textColor="@color/white"
+                android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/quantity"
+            android:layout_width="330dp"
+            android:layout_height="60dp"
+            android:textColor="@color/white"
+            app:helperTextTextColor="@color/purple"
+            app:layout_constraintBottom_toTopOf="@+id/trigger"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/name">
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/transparent"
+                android:hint="@string/quantità_obbl"
+                android:textColor="@color/white"
+                android:inputType="number" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/trigger"
+            android:layout_width="330dp"
+            android:layout_height="60dp"
+            app:helperTextTextColor="@color/purple"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toTopOf="@+id/exp_date"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/quantity">
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/trigger"
+                android:background="@color/transparent"
+                android:textColor="@color/white"
+                android:inputType="numberSigned" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/exp_date"
+            android:layout_width="330dp"
+            android:layout_height="60dp"
+            app:helperTextTextColor="@color/purple"
+            app:layout_constraintBottom_toTopOf="@+id/profile"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/trigger"
+            android:textColor="@color/white">
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColor="@color/white"
+                android:background="@color/transparent"
+                android:hint="@string/date_format"
+                android:inputType="date" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/profile"
+            android:layout_width="330dp"
+            android:layout_height="60dp"
+            app:layout_constraintBottom_toTopOf="@+id/create_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/exp_date"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu">
+            <AutoCompleteTextView
+                android:id="@+id/profile_auto_complete"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColor="@color/white"
+                android:textColorHint="@color/main_blue"
+                android:background="@color/transparent"
+                android:hint="@string/profile"
+                android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/create_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/round_button"
+            android:text="@string/crea_button"
+            android:textColor="@color/white"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/profile"
+            app:layout_constraintVertical_bias="1"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </RelativeLayout>

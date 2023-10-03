@@ -12,6 +12,15 @@
     <string name="house_of_disage">La Casa del\nDisagio</string>
     <string name="presents">Presents</string>
 
+    <!-- Add Item Activity -->
+    <string name="sezione">Sezione</string>
+    <string name="trigger">Trigger *</string>
+    <string name="date_format">DD/MM/YYYY</string>
+    <string name="quantità_obbl">Quantità *</string>
+    <string name="nome_obbl">Nome *</string>
+    <string name="profile">Profilo</string>
+    <string name="crea_button">Crea</string>
+
     <!-- Calculator Activity -->
     <string name="importo">Importo Buoni Pasto:</string>
     <string name="importo_spesa">Importo Spesa:</string>
@@ -20,14 +29,30 @@
     <string name="message">*Il conteggio viene effettuato su un massimo di 8 buoni pasto.</string>
     <string name="calculate_button">Calcola</string>
 
-
-
     <!-- Arrays -->
     <string-array name="importiBP">
         <item>5,20 €</item>
         <item>6,00 €</item>
         <item>7,00 €</item>
         <item>8,00 €</item>
+    </string-array>
+
+    <string-array name="sezioni">
+        <item>Frutta</item>
+        <item>Verdura</item>
+        <item>Carne</item>
+        <item>Pesce</item>
+        <item>Merendine</item>
+        <item>Pulizie</item>
+        <item>Igiene Personale</item>
+        <item>Pasta, Riso, Pane</item>
+        <item>Legumi</item>
+        <item>Biscotti</item>
+        <item>Gatti</item>
+        <item>Snack</item>
+        <item>Bevande</item>
+        <item>Condimenti</item>
+        <item>Altro</item>
     </string-array>
 
     <!-- Descriptions -->

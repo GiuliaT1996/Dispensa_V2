@@ -3,6 +3,7 @@ package com.angiuprojects.dispensav2.activities
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -15,12 +16,14 @@ import com.angiuprojects.dispensav2.utilities.Utils
 abstract class BaseActivity<B : ViewBinding> (val bindingFactory: (LayoutInflater) -> B) : AppCompatActivity() {
 
     lateinit var binding: B
+    lateinit var snackBarView: View
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = bindingFactory(layoutInflater)
         setContentView(binding.root)
-        window.decorView.setBackgroundColor(resources.getColor(R.color.light_blue, baseContext.theme));
+        window.decorView.setBackgroundColor(resources.getColor(R.color.light_blue, baseContext.theme))
+        snackBarView = findViewById(android.R.id.content)
     }
 
     open fun setBackButtonListener(header: HeaderLayoutBinding, textId: Int?, context: Context) {

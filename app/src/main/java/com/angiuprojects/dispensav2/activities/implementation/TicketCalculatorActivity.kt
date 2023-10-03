@@ -23,12 +23,11 @@ class TicketCalculatorActivity : BaseActivity<ActivityCalculatorBinding>(Activit
 
     private fun onClickCalculate() {
 
-        val snackBarView = findViewById<View>(android.R.id.content)
-
         // If Amount is Empty it Can't be Calculated
-        if(binding.amountExpVal.editText == null && binding.amountExpVal.editText!!.text == null
+        if(binding.amountExpVal.editText == null || binding.amountExpVal.editText!!.text == null
             || binding.amountExpVal.editText!!.text.toString().isEmpty()) {
            Utils.getInstance().openSnackBar(snackBarView, "Inserire Importo!")
+            return
         }
 
         // Conversion Ticket and Expenses from String to Double
