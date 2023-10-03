@@ -5,4 +5,5 @@
     <color name="light_blue">#73B1B0</color>
     <color name="yellow">#FFC107</color>
     <color name="gray">#808080</color>
+    <color name="white">#FFFFFFFF</color>
 </resources>

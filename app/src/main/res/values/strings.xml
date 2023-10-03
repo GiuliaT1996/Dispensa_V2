@@ -12,4 +12,8 @@
     <string name="button_giulia_desc">button giulia</string>
     <string name="button_both_desc">button both</string>
     <string name="back_button_desc">back button</string>
+    <string name="logo_desc">logo</string>
+    <string name="house_of_disage">La Casa del\nDisagio</string>
+    <string name="presents">Presents</string>
+
 </resources>
