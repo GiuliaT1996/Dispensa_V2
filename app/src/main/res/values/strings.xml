@@ -3,10 +3,13 @@
     <string name="storage_txt">Dispensa</string>
     <string name="shopping_list_txt">Lista della Spesa</string>
     <string name="expiring_txt">In Scadenza</string>
+    <string name="history_txt">Storico</string>
+    <string name="ticket_calculator_txt">Calcolatore Buoni Pasto</string>
     <string name="add_item_button_desc">add item button</string>
     <string name="calculator_button_desc">calculator button</string>
     <string name="history_button_desc">history button</string>
     <string name="button_antonio_desc">button antonio</string>
     <string name="button_giulia_desc">button giulia</string>
     <string name="button_both_desc">button both</string>
+    <string name="back_button_desc">back button</string>
 </resources>
