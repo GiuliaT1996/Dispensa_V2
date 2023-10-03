@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,4 +8,140 @@
 
     <include android:id="@+id/header" layout="@layout/header_layout" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/amount_tickets_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/header"
+        android:layout_alignTop="@+id/amount_tickets_val"
+        android:layout_alignBottom="@+id/amount_tickets_val"
+        android:gravity="center"
+        android:layout_marginStart="20dp"
+        android:text="@string/importo"
+        android:textColor="@color/main_blue" />
+
+    <Spinner
+        android:id="@+id/amount_tickets_val"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:entries="@array/importiBP"
+        android:layout_below="@+id/header"
+        android:layout_marginTop="70dp"
+        android:layout_centerHorizontal="true"
+        android:spinnerMode="dropdown"
+        android:backgroundTint="@color/main_blue"
+        android:foregroundTint="@color/main_blue"
+        android:layout_toEndOf="@+id/amount_tickets_txt"
+        android:textColor="@color/main_blue"
+        android:layout_marginStart="30dp"
+        />
+
+    <TextView
+        android:id="@+id/amount_exp_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/amount_exp_val"
+        android:layout_alignBottom="@+id/amount_exp_val"
+        android:gravity="center"
+        android:layout_marginStart="20dp"
+        android:text="@string/importo_spesa"
+        android:textColor="@color/main_blue" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/amount_exp_val"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        app:helperTextTextColor="#6200EE"
+        android:background="@color/transparent"
+        android:backgroundTint="@color/transparent"
+        android:textColor="@color/white"
+        android:layout_alignStart="@+id/amount_tickets_val"
+        android:layout_below="@+id/amount_tickets_val"
+        android:layout_marginTop="60dp">
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
+            android:textColor="@color/white"
+            android:inputType="numberDecimal" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/calculate_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/amount_exp_val"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/round_button"
+        android:text="@string/calculate_button"
+        android:textColor="#FFFFFF" />
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/calculate_button"
+        android:layout_marginTop="10dp"
+        android:visibility="visible">
+
+        <TextView
+            android:id="@+id/amount_exceding_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="45dp"
+            android:text="@string/importo_eccedenza"
+            android:textColor="@color/main_blue"
+            android:textSize="20sp"
+            android:layout_marginEnd="10dp"/>
+
+        <TextView
+            android:id="@+id/amount_exceding_val"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="45dp"
+            android:textColor="@color/main_blue"
+            android:layout_toEndOf="@+id/amount_exceding_txt"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/missing_amount_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/amount_exceding_txt"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="35dp"
+            android:text="@string/importo_mancante"
+            android:textColor="@color/main_blue"
+            android:layout_marginEnd="10dp"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/missing_amount_val"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/amount_exceding_txt"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="35dp"
+            android:textColor="@color/main_blue"
+            android:textSize="20sp"
+            android:layout_toEndOf="@+id/missing_amount_txt"/>
+
+        <TextView
+            android:id="@+id/message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/missing_amount_val"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="35dp"
+            android:text="@string/message"
+            android:textColor="@color/main_blue"
+            android:layout_marginEnd="10dp"
+            android:textSize="10sp" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

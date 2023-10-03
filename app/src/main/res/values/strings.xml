@@ -1,10 +1,36 @@
 <resources>
+
+    <!--App & Activity Names -->
     <string name="app_name">Dispensa V2</string>
     <string name="storage_txt">Dispensa</string>
     <string name="shopping_list_txt">Lista della Spesa</string>
     <string name="expiring_txt">In Scadenza</string>
     <string name="history_txt">Storico</string>
     <string name="ticket_calculator_txt">Calcolatore Buoni Pasto</string>
+
+    <!-- Logo Activity -->
+    <string name="house_of_disage">La Casa del\nDisagio</string>
+    <string name="presents">Presents</string>
+
+    <!-- Calculator Activity -->
+    <string name="importo">Importo Buoni Pasto:</string>
+    <string name="importo_spesa">Importo Spesa:</string>
+    <string name="importo_eccedenza">Resto:</string>
+    <string name="importo_mancante">Importo per prossimo buono:</string>
+    <string name="message">*Il conteggio viene effettuato su un massimo di 8 buoni pasto.</string>
+    <string name="calculate_button">Calcola</string>
+
+
+
+    <!-- Arrays -->
+    <string-array name="importiBP">
+        <item>5,20 €</item>
+        <item>6,00 €</item>
+        <item>7,00 €</item>
+        <item>8,00 €</item>
+    </string-array>
+
+    <!-- Descriptions -->
     <string name="add_item_button_desc">add item button</string>
     <string name="calculator_button_desc">calculator button</string>
     <string name="history_button_desc">history button</string>
@@ -13,7 +39,5 @@
     <string name="button_both_desc">button both</string>
     <string name="back_button_desc">back button</string>
     <string name="logo_desc">logo</string>
-    <string name="house_of_disage">La Casa del\nDisagio</string>
-    <string name="presents">Presents</string>
 
 </resources>

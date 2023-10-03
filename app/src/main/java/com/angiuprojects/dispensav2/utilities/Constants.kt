@@ -8,6 +8,7 @@ class Constants {
 
         private lateinit var singleton: Constants
         private lateinit var profileMap: MutableMap<ProfileEnum, ProfileButtonStateEnum>
+        var maxTicketInOneTransaction = 8
 
         fun initializeConstantsSingleton(): Constants {
             singleton = Constants()
