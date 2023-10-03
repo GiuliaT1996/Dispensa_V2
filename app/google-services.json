@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "645286153728",
+    "project_id": "dispensa-v2",
+    "storage_bucket": "dispensa-v2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:645286153728:android:f0ed68cfef249388ec92e5",
+        "android_client_info": {
+          "package_name": "com.angiuprojects.dispensav2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCejWCL4S7NT26awTrkdRQDjY7kI6NvBDI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
