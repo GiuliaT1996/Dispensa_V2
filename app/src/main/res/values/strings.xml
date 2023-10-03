@@ -1,13 +1,12 @@
 <resources>
     <string name="app_name">Dispensa V2</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
-    <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
-
-    <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
+    <string name="storage_txt">Dispensa</string>
+    <string name="shopping_list_txt">Lista della Spesa</string>
+    <string name="expiring_txt">In Scadenza</string>
+    <string name="add_item_button_desc">add item button</string>
+    <string name="calculator_button_desc">calculator button</string>
+    <string name="history_button_desc">history button</string>
+    <string name="button_antonio_desc">button antonio</string>
+    <string name="button_giulia_desc">button giulia</string>
+    <string name="button_both_desc">button both</string>
 </resources>
