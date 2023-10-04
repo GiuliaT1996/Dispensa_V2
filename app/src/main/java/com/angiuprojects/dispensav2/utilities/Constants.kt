@@ -1,6 +1,8 @@
 package com.angiuprojects.dispensav2.utilities
 
 import android.annotation.SuppressLint
+import com.angiuprojects.dispensav2.entities.ProfileSettings
+import com.angiuprojects.dispensav2.entities.StorageItem
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 
@@ -8,8 +10,10 @@ class Constants {
 
     companion object {
 
-        private lateinit var singleton: Constants
-        private lateinit var profileMap: MutableMap<ProfileEnum, ProfileButtonStateEnum>
+        lateinit var singleton: Constants
+        lateinit var itemList: MutableList<StorageItem>
+
+        lateinit var profileSettings: ProfileSettings
 
         const val DATE_FORMAT = "dd/MM/yyyy"
         @SuppressLint("SimpleDateFormat")
@@ -18,21 +22,10 @@ class Constants {
 
         var maxTicketInOneTransaction = 8
 
-        fun initializeConstantsSingleton(): Constants {
+        fun initializeConstants() {
             singleton = Constants()
-            profileMap = mutableMapOf()
-            return singleton
-        }
-
-        fun getInstance(): Constants {
-            return singleton
+            itemList = mutableListOf()
+            profileSettings = ProfileSettings()
         }
     }
-
-    fun getProfileMap(): MutableMap<ProfileEnum, ProfileButtonStateEnum> {
-        return profileMap
-    }
-
-
-
 }

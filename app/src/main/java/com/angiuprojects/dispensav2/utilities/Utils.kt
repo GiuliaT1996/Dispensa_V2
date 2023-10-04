@@ -1,6 +1,5 @@
 package com.angiuprojects.dispensav2.utilities
 
-import android.R
 import android.content.Context
 import android.content.Intent
 import android.util.Log
@@ -8,22 +7,17 @@ import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import androidx.core.content.res.ResourcesCompat
+import android.R
 import com.google.android.material.snackbar.Snackbar
 import java.util.*
 
 class Utils {
 
     companion object {
+        lateinit var singleton : Utils
 
-        private lateinit var singleton: Utils
-
-        fun initializeUtilsSingleton(): Utils {
+        fun initializeUtils() {
             singleton = Utils()
-            return singleton
-        }
-
-        fun getInstance(): Utils {
-            return singleton
         }
     }
 

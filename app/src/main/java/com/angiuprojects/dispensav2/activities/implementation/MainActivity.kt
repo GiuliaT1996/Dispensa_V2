@@ -2,13 +2,15 @@ package com.angiuprojects.dispensav2.activities.implementation
 
 import android.content.res.ColorStateList
 import android.os.Bundle
+import android.util.Log
 import android.widget.ImageButton
 import com.angiuprojects.dispensav2.R
 import com.angiuprojects.dispensav2.activities.BaseActivity
 import com.angiuprojects.dispensav2.databinding.ActivityMainBinding
 import com.angiuprojects.dispensav2.utilities.Constants
-import com.angiuprojects.dispensav2.utilities.ProfileButtonStateEnum
-import com.angiuprojects.dispensav2.utilities.ProfileEnum
+import com.angiuprojects.dispensav2.enums.ProfileButtonStateEnum
+import com.angiuprojects.dispensav2.enums.ProfileEnum
+import com.angiuprojects.dispensav2.utilities.ReadWriteJsonUtils
 import com.angiuprojects.dispensav2.utilities.Utils
 
 class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
@@ -48,9 +50,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
 
     private fun setColorProfileButton(imageButton: ImageButton, profile: ProfileEnum, isClicked: Boolean) {
 
-        if(Constants.getInstance().getProfileMap()[profile]?.equals(ProfileButtonStateEnum.OFF) == true) {
+        if(Constants.profileSettings.profileMap[profile]?.equals(ProfileButtonStateEnum.OFF) == true) {
             if(isClicked) {
-                Constants.getInstance().getProfileMap()[profile] = ProfileButtonStateEnum.ON
+                Constants.profileSettings.profileMap[profile] = ProfileButtonStateEnum.ON
+                ReadWriteJsonUtils.singleton.write(this)
                 imageButton.backgroundTintList =
                     ColorStateList.valueOf(resources.getColor(R.color.yellow, baseContext.theme))
             } else {
@@ -59,7 +62,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
             }
         } else{
             if(isClicked) {
-                Constants.getInstance().getProfileMap()[profile] = ProfileButtonStateEnum.OFF
+                Constants.profileSettings.profileMap[profile] = ProfileButtonStateEnum.OFF
+                ReadWriteJsonUtils.singleton.write(this)
                 imageButton.backgroundTintList =
                     ColorStateList.valueOf(resources.getColor(R.color.gray, baseContext.theme))
             } else {
@@ -70,6 +74,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
     }
 
     private fun <T> onClickOpenSelectedActivity(clazz: Class<T>) {
-        Utils.getInstance().changeActivity(this, clazz)
+        Utils.singleton.changeActivity(this, clazz)
     }
 }

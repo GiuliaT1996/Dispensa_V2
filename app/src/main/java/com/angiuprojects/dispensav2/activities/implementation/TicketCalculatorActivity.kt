@@ -2,13 +2,11 @@ package com.angiuprojects.dispensav2.activities.implementation
 
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import com.angiuprojects.dispensav2.R
 import com.angiuprojects.dispensav2.activities.BaseActivity
 import com.angiuprojects.dispensav2.databinding.ActivityCalculatorBinding
 import com.angiuprojects.dispensav2.utilities.Constants
 import com.angiuprojects.dispensav2.utilities.Utils
-import com.google.android.material.snackbar.Snackbar
 import java.math.RoundingMode
 import java.text.DecimalFormat
 
@@ -26,7 +24,7 @@ class TicketCalculatorActivity : BaseActivity<ActivityCalculatorBinding>(Activit
         // If Amount is Empty it Can't be Calculated
         if(binding.amountExpVal.editText == null || binding.amountExpVal.editText!!.text == null
             || binding.amountExpVal.editText!!.text.toString().isEmpty()) {
-           Utils.getInstance().openSnackBar(snackBarView, "Inserire Importo!")
+           Utils.singleton.openSnackBar(snackBarView, "Inserire Importo!")
             return
         }
 

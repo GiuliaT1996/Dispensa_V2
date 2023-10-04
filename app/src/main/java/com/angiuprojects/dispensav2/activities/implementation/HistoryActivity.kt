@@ -1,6 +1,5 @@
 package com.angiuprojects.dispensav2.activities.implementation
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.angiuprojects.dispensav2.R
 import com.angiuprojects.dispensav2.activities.BaseActivity

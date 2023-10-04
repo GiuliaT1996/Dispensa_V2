@@ -4,8 +4,6 @@ import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.ImageButton
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
 import com.angiuprojects.dispensav2.R
@@ -29,6 +27,6 @@ abstract class BaseActivity<B : ViewBinding> (val bindingFactory: (LayoutInflate
     open fun setBackButtonListener(header: HeaderLayoutBinding, textId: Int?, context: Context) {
         if (textId != null)
             header.activityName.setText(textId)
-        header.backButton.setOnClickListener { Utils.getInstance().changeActivity(context, MainActivity::class.java) }
+        header.backButton.setOnClickListener { Utils.singleton.changeActivity(context, MainActivity::class.java) }
     }
 }

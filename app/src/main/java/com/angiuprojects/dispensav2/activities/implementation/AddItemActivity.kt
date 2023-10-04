@@ -1,16 +1,20 @@
 package com.angiuprojects.dispensav2.activities.implementation
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.AutoCompleteTextView
 import com.angiuprojects.dispensav2.R
 import com.angiuprojects.dispensav2.activities.BaseActivity
 import com.angiuprojects.dispensav2.databinding.ActivityAddItemBinding
+import com.angiuprojects.dispensav2.entities.StorageItem
 import com.angiuprojects.dispensav2.utilities.Constants
-import com.angiuprojects.dispensav2.utilities.ProfileEnum
-import com.angiuprojects.dispensav2.utilities.SectionEnum
+import com.angiuprojects.dispensav2.enums.ProfileEnum
+import com.angiuprojects.dispensav2.enums.SectionEnum
+import com.angiuprojects.dispensav2.utilities.StorageItemUtils
 import com.angiuprojects.dispensav2.utilities.Utils
 import com.google.android.material.textfield.TextInputLayout
 import java.util.*
+import kotlin.reflect.KMutableProperty1
 
 class AddItemActivity : BaseActivity<ActivityAddItemBinding>(ActivityAddItemBinding::inflate) {
 
@@ -22,14 +26,14 @@ class AddItemActivity : BaseActivity<ActivityAddItemBinding>(ActivityAddItemBind
 
         setBackButtonListener(binding.header, null, this)
 
-        Utils.getInstance().createNewDropDown(
+        Utils.singleton.createNewDropDown(
             binding.sezioneAutoComplete,
             this,
             R.drawable.spinner_background,
             SectionEnum.values().mapTo(mutableListOf()){it.formattedName}
         )
 
-        Utils.getInstance().createNewDropDown(
+        Utils.singleton.createNewDropDown(
             binding.profileAutoComplete,
             this,
             R.drawable.spinner_background,
@@ -42,40 +46,70 @@ class AddItemActivity : BaseActivity<ActivityAddItemBinding>(ActivityAddItemBind
     private fun onClickCreateItem() {
         wasEmpty = false
 
-        if(getTextFromACTV(binding.sezioneAutoComplete) == null)
-            Utils.getInstance().openSnackBar(snackBarView, "Inserire sezione!")
-        else if(getTextFromInput(binding.name) == null || getTextFromInput(binding.quantity) == null
-            || getTextFromInput(binding.trigger) == null)
-            Utils.getInstance().openSnackBar(snackBarView, "Inserire tutti i campi obbligatori!")
-        else if(getDate(binding.expDate) == null && !wasEmpty!!)
-            Utils.getInstance().openSnackBar(snackBarView,
+        val storageItem = StorageItem()
+
+        if(getTextFromACTV(binding.sezioneAutoComplete, storageItem, StorageItem::section) == null)
+            Utils.singleton.openSnackBar(snackBarView, "Inserire sezione!")
+        else if(getTextFromInputText(binding.name, storageItem, StorageItem::name) == null
+            || getTextFromInputInt(binding.quantity, storageItem, StorageItem::quantity) == null
+            || getTextFromInputInt(binding.trigger, storageItem, StorageItem::trigger) == null)
+            Utils.singleton.openSnackBar(snackBarView, "Inserire tutti i campi obbligatori!")
+        else if(getDate(binding.expDate, storageItem, StorageItem::expirationDate) == null && !wasEmpty!!)
+            Utils.singleton.openSnackBar(snackBarView,
                 "Il formato della data non è corretto! Inserire una data con il seguente formato: "
                         + Constants.DATE_FORMAT)
-        else if(getTextFromACTV(binding.profileAutoComplete) == null)
-            Utils.getInstance().openSnackBar(snackBarView, "Inserire profilo!")
+        else if(getTextFromACTV(binding.profileAutoComplete, storageItem, StorageItem::profile) == null)
+            Utils.singleton.openSnackBar(snackBarView, "Inserire profilo!")
         else {
-            //TODO CREATE NEW ITEM
+            //TODO SAVE STORAGE ITEM
+            StorageItemUtils.singleton.addStorageItem(storageItem)
         }
     }
 
-    private fun getTextFromInput(text: TextInputLayout): String? {
+    // KMutableProperty1<StorageItem, String> -> SAME AS BICONSUMER IN JAVA - CAN BE USED AS GETTER AND SETTER
+    private fun getTextFromInputText(text: TextInputLayout, storageItem: StorageItem,
+                                 setterFunction: KMutableProperty1<StorageItem, String>): String? {
         return if (text.editText != null && text.editText!!.text != null && text.editText!!.text.toString()
-                .isNotEmpty()
-        ) text.editText!!.text.toString() else null
+                .isNotEmpty()) {
+            setterFunction.set(storageItem, text.editText!!.text.toString())
+            text.editText!!.text.toString()
+        } else null
     }
 
-    private fun getTextFromACTV(text: AutoCompleteTextView): String? {
-        return if (text.text != null && text.text.toString().isNotEmpty() && text.text.toString() != "null"
-        ) text.text.toString() else null
+    private fun getTextFromInputInt(text: TextInputLayout, storageItem: StorageItem,
+                                 setterFunction: KMutableProperty1<StorageItem, Int>): String? {
+        return if (text.editText != null && text.editText!!.text != null && text.editText!!.text.toString()
+                .isNotEmpty()) {
+            try {
+                setterFunction.set(storageItem, text.editText!!.text.toString().toInt())
+            } catch (e: Exception){
+                Log.e(Constants.STORAGE_LOGGER, "Il formato di uno dei campi numerici non è corretto!")
+                return null
+            }
+            text.editText!!.text.toString()
+        } else null
     }
 
-    private fun getDate(dateStr: TextInputLayout): Date? {
+    private fun getTextFromACTV(
+        text: AutoCompleteTextView, storageItem: StorageItem,
+        setterFunction: KMutableProperty1<StorageItem, String>): String? {
+        return if(text.text != null && text.text.toString().isNotEmpty() && text.text.toString() != "null") {
+            setterFunction.set(storageItem, text.text.toString())
+            text.text.toString()
+        } else null
+    }
+
+    private fun getDate(
+        dateStr: TextInputLayout, storageItem: StorageItem,
+        setterFunction: KMutableProperty1<StorageItem, Date?>
+    ): Date? {
         var date: Date? = null
         if (dateStr.editText != null && dateStr.editText!!.text != null && dateStr.editText!!.text.toString()
                 .isNotEmpty()
         ) {
-            date = Utils.getInstance().convertStringToDate(
+            date = Utils.singleton.convertStringToDate(
                 dateStr.editText!!.text.toString().trim { it <= ' ' })
+            if (date != null) setterFunction.set(storageItem, date)
         } else {
             wasEmpty = true
         }
