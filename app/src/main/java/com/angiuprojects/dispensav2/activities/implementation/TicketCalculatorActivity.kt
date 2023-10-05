@@ -14,7 +14,10 @@ class TicketCalculatorActivity : BaseActivity<ActivityCalculatorBinding>(Activit
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setBackButtonListener(binding.header, R.string.ticket_calculator_txt, this)
+        setHeaderListener(binding.header, R.string.ticket_calculator_txt, this,
+            isFilterPresent = false,
+            isSearchPresent = false
+        )
 
         binding.calculateButton.setOnClickListener { onClickCalculate() }
     }

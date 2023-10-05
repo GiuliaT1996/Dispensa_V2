@@ -10,6 +10,9 @@ class HistoryActivity : BaseActivity<ActivityHistoryBinding>(ActivityHistoryBind
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setBackButtonListener(binding.header, R.string.history_txt, this)
+        setHeaderListener(binding.header, R.string.history_txt, this,
+            isFilterPresent = false,
+            isSearchPresent = false
+        )
     }
 }

@@ -12,6 +12,7 @@ class Constants {
 
         lateinit var singleton: Constants
         lateinit var itemList: MutableList<StorageItem>
+        lateinit var itemListFilteredByProfile: MutableList<StorageItem>
 
         lateinit var profileSettings: ProfileSettings
 
@@ -26,6 +27,7 @@ class Constants {
             singleton = Constants()
             itemList = mutableListOf()
             profileSettings = ProfileSettings()
+            itemListFilteredByProfile = mutableListOf()
         }
     }
 }

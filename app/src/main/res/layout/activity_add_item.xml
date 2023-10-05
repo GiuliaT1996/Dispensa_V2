@@ -17,7 +17,7 @@
         android:layout_below="@+id/header">
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/section"
+            android:id="@+id/section_dropdown"
             style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
             android:layout_width="330dp"
             android:layout_height="60dp"
@@ -27,7 +27,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <AutoCompleteTextView
-                android:id="@+id/sezione_auto_complete"
+                android:id="@+id/section_spinner"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/transparent"
@@ -47,7 +47,7 @@
             app:layout_constraintBottom_toTopOf="@+id/quantity"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/section">
+            app:layout_constraintTop_toBottomOf="@id/section_dropdown">
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -100,7 +100,7 @@
             android:layout_width="330dp"
             android:layout_height="60dp"
             app:helperTextTextColor="@color/purple"
-            app:layout_constraintBottom_toTopOf="@+id/profile"
+            app:layout_constraintBottom_toTopOf="@+id/profile_dropdown"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/trigger"
@@ -115,7 +115,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/profile"
+            android:id="@+id/profile_dropdown"
             android:layout_width="330dp"
             android:layout_height="60dp"
             app:layout_constraintBottom_toTopOf="@+id/create_button"
@@ -124,7 +124,7 @@
             app:layout_constraintTop_toBottomOf="@id/exp_date"
             style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu">
             <AutoCompleteTextView
-                android:id="@+id/profile_auto_complete"
+                android:id="@+id/profile_spinner"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textColor="@color/white"
@@ -146,7 +146,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/profile"
+            app:layout_constraintTop_toBottomOf="@id/profile_dropdown"
             app:layout_constraintVertical_bias="1"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

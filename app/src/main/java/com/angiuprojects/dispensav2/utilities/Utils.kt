@@ -34,14 +34,14 @@ class Utils {
     }
 
     fun createNewDropDown(
-        dropdown: AutoCompleteTextView,
+        spinner: AutoCompleteTextView,
         context: Context,
         drawable: Int,
         suggestionList: MutableList<String>
     ) {
         val adapter = ArrayAdapter(context, R.layout.simple_spinner_dropdown_item, suggestionList)
-        dropdown.setAdapter(adapter)
-        dropdown.setDropDownBackgroundDrawable(
+        spinner.setAdapter(adapter)
+        spinner.setDropDownBackgroundDrawable(
             ResourcesCompat.getDrawable(
                 context.resources,
                 drawable,

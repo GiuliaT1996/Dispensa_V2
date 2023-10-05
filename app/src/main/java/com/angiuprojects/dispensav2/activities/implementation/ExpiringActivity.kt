@@ -9,6 +9,9 @@ class ExpiringActivity : BaseActivity<ActivityExpiringBinding>(ActivityExpiringB
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setBackButtonListener(binding.header, R.string.expiring_txt, this)
+        setHeaderListener(binding.header, R.string.expiring_txt, this,
+            isFilterPresent = false,
+            isSearchPresent = false
+        )
     }
 }

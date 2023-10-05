@@ -2,14 +2,13 @@ package com.angiuprojects.dispensav2.activities.implementation
 
 import android.content.res.ColorStateList
 import android.os.Bundle
-import android.util.Log
 import android.widget.ImageButton
 import com.angiuprojects.dispensav2.R
 import com.angiuprojects.dispensav2.activities.BaseActivity
 import com.angiuprojects.dispensav2.databinding.ActivityMainBinding
-import com.angiuprojects.dispensav2.utilities.Constants
 import com.angiuprojects.dispensav2.enums.ProfileButtonStateEnum
 import com.angiuprojects.dispensav2.enums.ProfileEnum
+import com.angiuprojects.dispensav2.utilities.Constants
 import com.angiuprojects.dispensav2.utilities.ReadWriteJsonUtils
 import com.angiuprojects.dispensav2.utilities.Utils
 

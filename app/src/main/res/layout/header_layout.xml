@@ -7,14 +7,100 @@
 
     <ImageButton
         android:id="@+id/back_button"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/icons8_rimuovi_50"
         android:backgroundTint="@drawable/change_color_blue_buttons"
         android:contentDescription="@string/back_button_desc" />
+
+    <ImageButton
+        android:id="@+id/filter_button"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_toStartOf="@+id/back_button"
+        android:layout_marginEnd="10dp"
+        android:layout_alignTop="@+id/back_button"
+        android:backgroundTint="@drawable/change_color_blue_buttons"
+        android:background="@drawable/icons8_filtro_50"
+        android:contentDescription="@string/filter_button_desc"/>
+
+    <ImageButton
+        android:id="@+id/search_button"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_toStartOf="@+id/filter_button"
+        android:layout_marginEnd="10dp"
+        android:layout_alignTop="@+id/back_button"
+        android:backgroundTint="@drawable/change_color_blue_buttons"
+        android:background="@drawable/icons8_ricerca_50"
+        android:contentDescription="@string/search_button_desc"/>
+
+    <ImageButton
+        android:id="@+id/close_button"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_toStartOf="@+id/back_button"
+        android:layout_marginEnd="10dp"
+        android:layout_alignTop="@+id/back_button"
+        android:backgroundTint="@drawable/change_color_blue_buttons"
+        android:background="@drawable/icons8_u_girare_a_sinistra_50"
+        android:scaleY="0.8"
+        android:scaleX="0.7"
+        android:contentDescription="@string/close_button_desc"
+        android:visibility="gone"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/filter_dropdown"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
+        android:layout_width="330dp"
+        android:layout_height="40dp"
+        android:layout_alignTop="@+id/back_button"
+        android:layout_toStartOf="@+id/close_button"
+        android:textColorHint="@color/main_blue"
+        app:endIconTint="@color/main_blue"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
+        android:visibility="gone">
+
+        <AutoCompleteTextView
+            android:id="@+id/filter_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/transparent"
+            android:fontFamily="@font/ubuntu"
+            android:hint="@string/sezione"
+            android:inputType="text"
+            android:textColor="@color/white"
+            android:textColorHint="@color/main_blue" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/search_input"
+        android:layout_width="330dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_toStartOf="@+id/close_button"
+        android:layout_marginStart="10dp"
+        app:backgroundTint="@color/main_blue"
+        app:boxStrokeColor="@color/main_blue"
+        android:layout_marginEnd="10dp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:visibility="gone"
+        tools:ignore="PrivateResource">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/ubuntu"
+            android:hint="@string/search_hint"
+            android:inputType="text"
+            android:textColor="@color/main_blue"
+            android:textSize="13sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
 
     <TextView
         android:id="@+id/activity_name"

@@ -24,9 +24,44 @@ abstract class BaseActivity<B : ViewBinding> (val bindingFactory: (LayoutInflate
         snackBarView = findViewById(android.R.id.content)
     }
 
-    open fun setBackButtonListener(header: HeaderLayoutBinding, textId: Int?, context: Context) {
-        if (textId != null)
-            header.activityName.setText(textId)
-        header.backButton.setOnClickListener { Utils.singleton.changeActivity(context, MainActivity::class.java) }
+    open fun setHeaderListener(header: HeaderLayoutBinding, activityName: Int?, context: Context,
+                               isFilterPresent: Boolean, isSearchPresent: Boolean) {
+        if (activityName != null)
+            header.activityName.setText(activityName)
+        else
+            header.activityName.visibility = View.GONE
+
+        if(!isFilterPresent) header.filterButton.visibility = View.GONE
+        if(!isSearchPresent) header.searchButton.visibility = View.GONE
+
+        header.filterButton.setOnClickListener { setFilterListener(header) }
+        header.searchButton.setOnClickListener { setSearchListener(header) }
+        header.closeButton.setOnClickListener { setCloseListener(header) }
+        header.backButton.setOnClickListener { finish() }
+    }
+
+    open fun setFilterListener(header: HeaderLayoutBinding) {
+        header.filterButton.visibility = View.GONE
+        header.searchButton.visibility = View.GONE
+
+        header.closeButton.visibility = View.VISIBLE
+        header.filterDropdown.visibility = View.VISIBLE
+    }
+
+    open fun setSearchListener(header: HeaderLayoutBinding) {
+        header.filterButton.visibility = View.GONE
+        header.searchButton.visibility = View.GONE
+
+        header.closeButton.visibility = View.VISIBLE
+        header.searchInput.visibility = View.VISIBLE
+    }
+
+    open fun setCloseListener(header: HeaderLayoutBinding) {
+        header.filterButton.visibility = View.VISIBLE
+        header.searchButton.visibility = View.VISIBLE
+
+        header.closeButton.visibility = View.GONE
+        header.filterDropdown.visibility = View.GONE
+        header.searchInput.visibility = View.GONE
     }
 }

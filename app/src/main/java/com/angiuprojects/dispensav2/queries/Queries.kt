@@ -12,7 +12,7 @@ class Queries {
         private val DB_INSTANCE: FirebaseDatabase =
             FirebaseDatabase.getInstance("https://dispensa-v2-default-rtdb.firebaseio.com/")
 
-        private val STORAGE_ITEMS_DB_REFERENCE = "StorageItems"
+        private const val STORAGE_ITEMS_DB_REFERENCE = "StorageItems"
         private lateinit var myRef: DatabaseReference
 
         lateinit var singleton: Queries
@@ -20,7 +20,6 @@ class Queries {
         fun initializeQueries() {
             singleton = Queries()
         }
-
     }
 
     fun getItems() {
@@ -42,7 +41,23 @@ class Queries {
         })
     }
 
-    fun checkItem(storageItem: StorageItem?) : Boolean {
+    fun addStorageItem(s: StorageItem) {
+        myRef = DB_INSTANCE.getReference(STORAGE_ITEMS_DB_REFERENCE)
+        myRef.child(s.name).setValue(s)
+    }
+
+    fun updateStorageItem(s: StorageItem, oldName: String) {
+        myRef = DB_INSTANCE.getReference(STORAGE_ITEMS_DB_REFERENCE)
+        deleteStorageItem(oldName)
+        addStorageItem(s)
+    }
+
+    fun deleteStorageItem(storageItemName: String) {
+        myRef = DB_INSTANCE.getReference(STORAGE_ITEMS_DB_REFERENCE)
+        myRef.child(storageItemName).removeValue()
+    }
+
+    private fun checkItem(storageItem: StorageItem?) : Boolean {
         if (storageItem == null || storageItem.expirationDate == null || storageItem.name.isEmpty()
             || storageItem.section.isEmpty())
             return false

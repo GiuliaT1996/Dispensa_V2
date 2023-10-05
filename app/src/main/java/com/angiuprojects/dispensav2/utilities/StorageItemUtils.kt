@@ -2,6 +2,7 @@ package com.angiuprojects.dispensav2.utilities
 
 import android.util.Log
 import com.angiuprojects.dispensav2.entities.StorageItem
+import com.angiuprojects.dispensav2.queries.Queries
 
 class StorageItemUtils {
 
@@ -16,6 +17,7 @@ class StorageItemUtils {
     fun addStorageItem(storageItem: StorageItem) : Boolean {
         try {
             Constants.itemList.add(storageItem)
+            Queries.singleton.addStorageItem(storageItem)
         } catch (e : Exception) {
             Log.e(Constants.STORAGE_LOGGER, "Non è stato possibile aggiungere l'elemento " + storageItem.name + ": " + e.message.toString())
             return false

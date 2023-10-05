@@ -1,12 +1,13 @@
 <resources>
 
-    <!--App & Activity Names -->
+    <!--App & Header -->
     <string name="app_name">Dispensa V2</string>
     <string name="storage_txt">Dispensa</string>
     <string name="shopping_list_txt">Lista della Spesa</string>
     <string name="expiring_txt">In Scadenza</string>
     <string name="history_txt">Storico</string>
-    <string name="ticket_calculator_txt">Calcolatore Buoni Pasto</string>
+    <string name="ticket_calculator_txt">Calcolatore Buoni Pasto</string>y
+    <string name="search_hint">Cerca</string>
 
     <!-- Logo Activity -->
     <string name="house_of_disage">La Casa del\nDisagio</string>
@@ -63,6 +64,13 @@
     <string name="button_giulia_desc">button giulia</string>
     <string name="button_both_desc">button both</string>
     <string name="back_button_desc">back button</string>
+    <string name="filter_button_desc">filter button</string>
+    <string name="close_button_desc">filter button</string>
+    <string name="search_button_desc">search button</string>
     <string name="logo_desc">logo</string>
+    <string name="test_text">Testo di prova per pop up! Testo di prova per pop up!</string>
+    <string name="ok">OK</string>
+    <string name="yes">SI</string>
+    <string name="no">NO</string>
 
 </resources>

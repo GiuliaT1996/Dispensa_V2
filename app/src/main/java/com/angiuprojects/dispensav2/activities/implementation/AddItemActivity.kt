@@ -1,15 +1,22 @@
 package com.angiuprojects.dispensav2.activities.implementation
 
+import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.AutoCompleteTextView
+import android.widget.Button
+import android.widget.TextView
 import com.angiuprojects.dispensav2.R
 import com.angiuprojects.dispensav2.activities.BaseActivity
 import com.angiuprojects.dispensav2.databinding.ActivityAddItemBinding
 import com.angiuprojects.dispensav2.entities.StorageItem
-import com.angiuprojects.dispensav2.utilities.Constants
 import com.angiuprojects.dispensav2.enums.ProfileEnum
 import com.angiuprojects.dispensav2.enums.SectionEnum
+import com.angiuprojects.dispensav2.queries.Queries
+import com.angiuprojects.dispensav2.utilities.Constants
 import com.angiuprojects.dispensav2.utilities.StorageItemUtils
 import com.angiuprojects.dispensav2.utilities.Utils
 import com.google.android.material.textfield.TextInputLayout
@@ -24,17 +31,20 @@ class AddItemActivity : BaseActivity<ActivityAddItemBinding>(ActivityAddItemBind
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setBackButtonListener(binding.header, null, this)
+        setHeaderListener(binding.header, null, this,
+            isFilterPresent = false,
+            isSearchPresent = false
+        )
 
         Utils.singleton.createNewDropDown(
-            binding.sezioneAutoComplete,
+            binding.sectionSpinner,
             this,
             R.drawable.spinner_background,
             SectionEnum.values().mapTo(mutableListOf()){it.formattedName}
         )
 
         Utils.singleton.createNewDropDown(
-            binding.profileAutoComplete,
+            binding.profileSpinner,
             this,
             R.drawable.spinner_background,
             ProfileEnum.values().mapTo(mutableListOf()){it.formattedName}
@@ -48,7 +58,7 @@ class AddItemActivity : BaseActivity<ActivityAddItemBinding>(ActivityAddItemBind
 
         val storageItem = StorageItem()
 
-        if(getTextFromACTV(binding.sezioneAutoComplete, storageItem, StorageItem::section) == null)
+        if(getTextFromACTV(binding.sectionSpinner, storageItem, StorageItem::section) == null)
             Utils.singleton.openSnackBar(snackBarView, "Inserire sezione!")
         else if(getTextFromInputText(binding.name, storageItem, StorageItem::name) == null
             || getTextFromInputInt(binding.quantity, storageItem, StorageItem::quantity) == null
@@ -58,11 +68,11 @@ class AddItemActivity : BaseActivity<ActivityAddItemBinding>(ActivityAddItemBind
             Utils.singleton.openSnackBar(snackBarView,
                 "Il formato della data non è corretto! Inserire una data con il seguente formato: "
                         + Constants.DATE_FORMAT)
-        else if(getTextFromACTV(binding.profileAutoComplete, storageItem, StorageItem::profile) == null)
+        else if(getTextFromACTV(binding.profileSpinner, storageItem, StorageItem::profile) == null)
             Utils.singleton.openSnackBar(snackBarView, "Inserire profilo!")
         else {
-            //TODO SAVE STORAGE ITEM
             StorageItemUtils.singleton.addStorageItem(storageItem)
+            createPopUp(storageItem.name)
         }
     }
 
@@ -114,6 +124,24 @@ class AddItemActivity : BaseActivity<ActivityAddItemBinding>(ActivityAddItemBind
             wasEmpty = true
         }
         return date
+    }
+
+    private fun onClickOk() {
+        Queries.singleton.getItems()
+        finish()
+    }
+
+    private fun createPopUp(name: String) {
+        val dialog = Dialog(this)
+        val popUpView: View = layoutInflater.inflate(R.layout.pop_up_simple_ok, null)
+        dialog.setContentView(popUpView)
+        val confirmationText = popUpView.findViewById<TextView>(R.id.text)
+        val okButton = popUpView.findViewById<Button>(R.id.ok_button)
+        confirmationText.text =
+            String.format("L'oggetto %s è stato aggiunto alla dispensa.", name)
+        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.show()
+        okButton.setOnClickListener { onClickOk() }
     }
 
 }
