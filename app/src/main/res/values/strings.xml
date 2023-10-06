@@ -86,6 +86,8 @@
     <string name="example_section">Example Section</string>
     <string name="example_quantity">00</string>
     <string name="example_date">05/10/2023</string>
+    <string name="example_added">C = 0</string>
+    <string name="example_already_present">P = 0</string>
     <string name="exp_date_switch_label">Rimuovi Data Scadenza   </string>
 
 

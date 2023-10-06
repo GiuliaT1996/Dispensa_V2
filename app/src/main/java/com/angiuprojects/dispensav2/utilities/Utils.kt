@@ -14,8 +14,12 @@ import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import androidx.viewbinding.ViewBinding
+import com.angiuprojects.dispensav2.adapters.StorageUnitRecyclerAdapter
 import com.angiuprojects.dispensav2.entities.StorageItem
 import com.google.android.material.snackbar.Snackbar
 import java.util.*
@@ -147,5 +151,14 @@ class Utils {
                            property: T)
     : MutableList<StorageItem> {
         return itemList.filter { getFieldFunction.get(it) == property }.sortedBy { it.name }.toMutableList()
+    }
+
+    fun <A: Adapter<V>, V : ViewHolder> setRecyclerAdapter(recyclerView: RecyclerView,
+                                                           context: Context,
+                                                           adapter: A) {
+        val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(context)
+        recyclerView.layoutManager = layoutManager
+        recyclerView.setHasFixedSize(true)
+        recyclerView.adapter = adapter
     }
 }

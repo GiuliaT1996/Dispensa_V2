@@ -59,6 +59,7 @@ class StorageActivity : BaseActivity<ActivityStorageBinding>(ActivityStorageBind
             R.drawable.spinner_background,
             SectionEnum.values().mapTo(mutableListOf()){it.formattedName}
         )
+        //TODO TEST
     }
 
     private fun setStorageItemRecyclerAdapter(itemList: MutableList<StorageItem>) {
