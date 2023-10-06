@@ -1,6 +1,5 @@
 package com.angiuprojects.dispensav2.entities
 
-import java.time.Instant
 import java.util.*
 
 class StorageItem {
@@ -10,7 +9,7 @@ class StorageItem {
     var profile: String = ""
     var quantity: Int = 0
     var trigger: Int = 0
-    var expirationDate: Date? = Date.from(Instant.now())
+    var expirationDate: Date? = null
 
     constructor()
 

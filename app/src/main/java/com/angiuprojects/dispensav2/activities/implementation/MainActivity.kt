@@ -6,6 +6,7 @@ import android.widget.ImageButton
 import com.angiuprojects.dispensav2.R
 import com.angiuprojects.dispensav2.activities.BaseActivity
 import com.angiuprojects.dispensav2.databinding.ActivityMainBinding
+import com.angiuprojects.dispensav2.entities.StorageItem
 import com.angiuprojects.dispensav2.enums.ProfileButtonStateEnum
 import com.angiuprojects.dispensav2.enums.ProfileEnum
 import com.angiuprojects.dispensav2.utilities.Constants
@@ -55,6 +56,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                 ReadWriteJsonUtils.singleton.write(this)
                 imageButton.backgroundTintList =
                     ColorStateList.valueOf(resources.getColor(R.color.yellow, baseContext.theme))
+                Constants.itemListFilteredByProfile.addAll(Utils.singleton.filterItemList(Constants.itemList,StorageItem::profile, profile.formattedName))
             } else {
                 imageButton.backgroundTintList =
                     ColorStateList.valueOf(resources.getColor(R.color.gray, baseContext.theme))
@@ -65,9 +67,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                 ReadWriteJsonUtils.singleton.write(this)
                 imageButton.backgroundTintList =
                     ColorStateList.valueOf(resources.getColor(R.color.gray, baseContext.theme))
+                Constants.itemListFilteredByProfile.removeAll(Utils.singleton.filterItemList(Constants.itemList,StorageItem::profile, profile.formattedName))
             } else {
                 imageButton.backgroundTintList =
                     ColorStateList.valueOf(resources.getColor(R.color.yellow, baseContext.theme))
+                Constants.itemListFilteredByProfile.addAll(Utils.singleton.filterItemList(Constants.itemList,StorageItem::profile, profile.formattedName))
             }
         }
     }

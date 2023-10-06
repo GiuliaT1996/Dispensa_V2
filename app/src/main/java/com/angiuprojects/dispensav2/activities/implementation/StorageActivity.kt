@@ -4,11 +4,14 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.angiuprojects.dispensav2.R
 import com.angiuprojects.dispensav2.activities.BaseActivity
+import com.angiuprojects.dispensav2.adapters.StorageUnitRecyclerAdapter
 import com.angiuprojects.dispensav2.databinding.ActivityStorageBinding
 import com.angiuprojects.dispensav2.databinding.HeaderLayoutBinding
-import com.angiuprojects.dispensav2.enums.ProfileEnum
+import com.angiuprojects.dispensav2.entities.StorageItem
 import com.angiuprojects.dispensav2.enums.SectionEnum
 import com.angiuprojects.dispensav2.utilities.Constants
 import com.angiuprojects.dispensav2.utilities.Utils
@@ -23,6 +26,7 @@ class StorageActivity : BaseActivity<ActivityStorageBinding>(ActivityStorageBind
         )
 
         Constants.itemList.forEach { s -> Log.i(Constants.STORAGE_LOGGER, s.toString() + "\n") }
+        setStorageItemRecyclerAdapter(Constants.itemListFilteredByProfile)
     }
 
     override fun setSearchListener(header: HeaderLayoutBinding) {
@@ -34,8 +38,14 @@ class StorageActivity : BaseActivity<ActivityStorageBinding>(ActivityStorageBind
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                //val filteredList = Utils.filter(4, s.toString())
-                //setRecyclerAdapter(filteredList)
+                if(header.searchInput.editText.toString().isNotEmpty()) {
+                    val filteredList = Utils.singleton.filterItemList(
+                        Constants.itemListFilteredByProfile,
+                        StorageItem::name,
+                        header.searchInput.editText.toString()
+                    )
+                    setStorageItemRecyclerAdapter(filteredList)
+                }
             }
         })
     }
@@ -49,5 +59,14 @@ class StorageActivity : BaseActivity<ActivityStorageBinding>(ActivityStorageBind
             R.drawable.spinner_background,
             SectionEnum.values().mapTo(mutableListOf()){it.formattedName}
         )
+    }
+
+    private fun setStorageItemRecyclerAdapter(itemList: MutableList<StorageItem>) {
+        val recyclerView = findViewById<RecyclerView>(R.id.storage_list)
+        val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(this)
+        recyclerView.layoutManager = layoutManager
+        val adapter = StorageUnitRecyclerAdapter(itemList, this)
+        recyclerView.setHasFixedSize(true)
+        recyclerView.adapter = adapter
     }
 }
