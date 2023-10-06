@@ -2,6 +2,7 @@ package com.angiuprojects.dispensav2.activities.implementation
 
 import android.content.res.ColorStateList
 import android.os.Bundle
+import android.util.Log
 import android.widget.ImageButton
 import com.angiuprojects.dispensav2.R
 import com.angiuprojects.dispensav2.activities.BaseActivity
@@ -22,6 +23,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         setColorProfileButton(binding.girlButton, ProfileEnum.GIULIA, false)
         setColorProfileButton(binding.bothButton, ProfileEnum.COMUNI, false)
 
+        Constants.itemList.forEach { s -> Log.i(Constants.STORAGE_LOGGER, s.toString() + "\n") }
         setOnClickListeners()
     }
 
@@ -50,13 +52,15 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
 
     private fun setColorProfileButton(imageButton: ImageButton, profile: ProfileEnum, isClicked: Boolean) {
 
+        val filteredList = Utils.singleton.filterItemList(Constants.itemList,StorageItem::profile, profile.formattedName)
+
         if(Constants.profileSettings.profileMap[profile]?.equals(ProfileButtonStateEnum.OFF) == true) {
             if(isClicked) {
                 Constants.profileSettings.profileMap[profile] = ProfileButtonStateEnum.ON
                 ReadWriteJsonUtils.singleton.write(this)
                 imageButton.backgroundTintList =
                     ColorStateList.valueOf(resources.getColor(R.color.yellow, baseContext.theme))
-                Constants.itemListFilteredByProfile.addAll(Utils.singleton.filterItemList(Constants.itemList,StorageItem::profile, profile.formattedName))
+                Constants.itemListFilteredByProfile.addAll(filteredList)
             } else {
                 imageButton.backgroundTintList =
                     ColorStateList.valueOf(resources.getColor(R.color.gray, baseContext.theme))
@@ -67,11 +71,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                 ReadWriteJsonUtils.singleton.write(this)
                 imageButton.backgroundTintList =
                     ColorStateList.valueOf(resources.getColor(R.color.gray, baseContext.theme))
-                Constants.itemListFilteredByProfile.removeAll(Utils.singleton.filterItemList(Constants.itemList,StorageItem::profile, profile.formattedName))
+                Constants.itemListFilteredByProfile.removeAll { it.profile == profile.formattedName }
             } else {
                 imageButton.backgroundTintList =
                     ColorStateList.valueOf(resources.getColor(R.color.yellow, baseContext.theme))
-                Constants.itemListFilteredByProfile.addAll(Utils.singleton.filterItemList(Constants.itemList,StorageItem::profile, profile.formattedName))
+                Constants.itemListFilteredByProfile.addAll(filteredList)
             }
         }
     }

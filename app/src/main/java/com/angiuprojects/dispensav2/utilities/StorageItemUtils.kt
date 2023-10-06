@@ -4,6 +4,8 @@ import android.util.Log
 import android.view.View
 import android.widget.AutoCompleteTextView
 import com.angiuprojects.dispensav2.entities.StorageItem
+import com.angiuprojects.dispensav2.enums.ProfileButtonStateEnum
+import com.angiuprojects.dispensav2.enums.ProfileEnum
 import com.angiuprojects.dispensav2.queries.Queries
 import com.google.android.material.textfield.TextInputLayout
 import java.util.*
@@ -22,6 +24,8 @@ class StorageItemUtils {
     fun addStorageItem(storageItem: StorageItem) : Boolean {
         try {
             Constants.itemList.add(storageItem)
+            if(Constants.profileSettings.profileMap[ProfileEnum.fromFormattedName(storageItem.profile)] == ProfileButtonStateEnum.ON)
+                Constants.itemListFilteredByProfile.add(storageItem)
             Queries.singleton.addStorageItem(storageItem)
         } catch (e : Exception) {
             Log.e(Constants.STORAGE_LOGGER, "Non è stato possibile aggiungere l'elemento " + storageItem.name + ": " + e.message.toString())

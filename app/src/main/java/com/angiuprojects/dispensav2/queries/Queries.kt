@@ -59,7 +59,7 @@ class Queries {
     }
 
     private fun checkItem(storageItem: StorageItem?) : Boolean {
-        if (storageItem == null || storageItem.expirationDate == null || storageItem.name.isEmpty()
+        if (storageItem == null || storageItem.name.isEmpty()
             || storageItem.section.isEmpty())
             return false
         return true

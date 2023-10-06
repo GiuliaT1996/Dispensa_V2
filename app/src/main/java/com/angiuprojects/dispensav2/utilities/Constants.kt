@@ -3,6 +3,7 @@ package com.angiuprojects.dispensav2.utilities
 import android.annotation.SuppressLint
 import com.angiuprojects.dispensav2.entities.ProfileSettings
 import com.angiuprojects.dispensav2.entities.StorageItem
+import com.angiuprojects.dispensav2.enums.ProfileEnum
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 
@@ -29,5 +30,6 @@ class Constants {
             profileSettings = ProfileSettings()
             itemListFilteredByProfile = mutableListOf()
         }
+
     }
 }

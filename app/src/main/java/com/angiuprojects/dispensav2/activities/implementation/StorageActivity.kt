@@ -24,8 +24,6 @@ class StorageActivity : BaseActivity<ActivityStorageBinding>(ActivityStorageBind
             isFilterPresent = true,
             isSearchPresent = true
         )
-
-        Constants.itemList.forEach { s -> Log.i(Constants.STORAGE_LOGGER, s.toString() + "\n") }
         setStorageItemRecyclerAdapter(Constants.itemListFilteredByProfile)
     }
 
