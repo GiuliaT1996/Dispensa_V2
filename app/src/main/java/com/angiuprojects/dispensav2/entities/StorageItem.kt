@@ -28,4 +28,18 @@ class StorageItem {
         this.trigger = trigger
         this.expirationDate = expirationDate
     }
+
+    override fun toString(): String {
+        val s = StringBuilder()
+
+        s.append("StorageItem: {\n")
+            .append("Name: " + this.name + "\n")
+            .append("Section: " + this.section + "\n")
+            .append("Profile: " + this.profile + "\n")
+            .append("Quantity: " + this.quantity + "\n")
+            .append("Trigger: " + this.trigger + "\n")
+            .append("Expiration Date: " + this.expirationDate + "\n")
+
+        return s.toString()
+    }
 }

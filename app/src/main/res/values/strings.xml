@@ -15,12 +15,22 @@
 
     <!-- Add Item Activity -->
     <string name="sezione">Sezione</string>
-    <string name="trigger">Trigger *</string>
+    <string name="trigger_obbl">Trigger *</string>
+    <string name="trigger">Trigger</string>
     <string name="date_format">DD/MM/YYYY</string>
     <string name="quantità_obbl">Quantità *</string>
+    <string name="quantity">Quantità</string>
     <string name="nome_obbl">Nome *</string>
+    <string name="name">Nome</string>
     <string name="profile">Profilo</string>
     <string name="crea_button">Crea</string>
+
+    <!-- Storage Activity -->
+    <string name="edit">Modifica</string>
+    <string name="delete">Elimina</string>
+    <string name="line">Linea</string>
+    <string name="plus">Più</string>
+    <string name="minus">Meno</string>
 
     <!-- Calculator Activity -->
     <string name="importo">Importo Buoni Pasto:</string>
@@ -72,5 +82,11 @@
     <string name="ok">OK</string>
     <string name="yes">SI</string>
     <string name="no">NO</string>
+    <string name="example_name">Example Name</string>
+    <string name="example_section">Example Section</string>
+    <string name="example_quantity">00</string>
+    <string name="example_date">05/10/2023</string>
+    <string name="exp_date_switch_label">Rimuovi Data Scadenza   </string>
+
 
 </resources>

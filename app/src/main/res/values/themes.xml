@@ -33,4 +33,15 @@
     <style name="backgroung_activity">
         <item name="background">@color/light_blue</item>
     </style>
+
+    <style name="BrandedSwitch.control" parent="Theme.AppCompat.DayNight.DarkActionBar">
+        <!-- active thumb & track color (30% transparency) -->
+        <item name="colorControlActivated">#FF03DAC5</item>
+        <item name="colorSwitchThumbNormal">#0D4360</item>
+    </style>
+
+    <style name="BrandedSwitch.text" parent="Theme.AppCompat.DayNight.DarkActionBar">
+        <item name="android:textColor">#0D4360</item>
+        <item name="android:textSize">9dp</item>
+    </style>
 </resources>

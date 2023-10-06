@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:scrollbars="vertical"
+    android:layout_height="wrap_content"
+    android:layout_centerInParent="true"
+    android:background="@drawable/pop_up_background">
+
+    <ImageButton
+        android:id="@+id/close_button"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/icons8_rimuovi_50"
+        android:layout_marginStart="314dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="14dp"
+        android:layout_marginBottom="589dp"
+        android:backgroundTint="@drawable/change_color_blue_buttons"
+        android:contentDescription="@string/back_button_desc"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.925"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/section_dropdown"
+        android:layout_width="260dp"
+        android:layout_height="50dp"
+        app:layout_constraintBottom_toTopOf="@+id/profile_dropdown"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/close_button"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu">
+        <AutoCompleteTextView
+            android:id="@+id/section_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColor="@color/main_blue"
+            android:textColorHint="@color/main_blue"
+            android:background="@color/transparent"
+            android:hint="@string/sezione"
+            android:inputType="text" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/profile_dropdown"
+        android:layout_width="260dp"
+        android:layout_height="50dp"
+        app:layout_constraintBottom_toTopOf="@+id/name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/section_dropdown"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu">
+        <AutoCompleteTextView
+            android:id="@+id/profile_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColor="@color/main_blue"
+            android:textColorHint="@color/main_blue"
+            android:background="@color/transparent"
+            android:hint="@string/profile"
+            android:inputType="text" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/name"
+        android:layout_width="260dp"
+        android:layout_height="50dp"
+        app:boxStrokeColor="@color/light_blue"
+        style="Custom_textinputlayout_filledbox"
+        app:layout_constraintBottom_toTopOf="@+id/quantity"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profile_dropdown">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/name"
+            android:background="@color/transparent"
+            android:textColor="@color/main_blue"
+            android:textColorHint="@color/main_blue"
+            android:inputType="text" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/quantity"
+        android:layout_width="260dp"
+        android:layout_height="50dp"
+        style="Custom_textinputlayout_filledbox"
+        app:layout_constraintBottom_toTopOf="@+id/trigger"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:boxStrokeColor="@color/light_blue"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/name">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/quantity"
+            android:background="@color/transparent"
+            android:textColor="@color/main_blue"
+            android:textColorHint="@color/main_blue"
+            android:inputType="number" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/trigger"
+        android:layout_width="260dp"
+        android:layout_height="50dp"
+        style="Custom_textinputlayout_filledbox"
+        app:layout_constraintBottom_toTopOf="@+id/exp_date"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:boxStrokeColor="@color/light_blue"
+        app:layout_constraintTop_toBottomOf="@+id/quantity">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/trigger"
+            android:background="@color/transparent"
+            android:textColor="@color/main_blue"
+            android:textColorHint="@color/main_blue"
+            android:inputType="numberSigned" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/exp_date"
+        android:layout_width="260dp"
+        android:layout_height="50dp"
+        app:layout_constraintBottom_toTopOf="@+id/exp_date_switch"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:boxStrokeColor="@color/light_blue"
+        app:layout_constraintTop_toBottomOf="@+id/trigger">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/transparent"
+            android:textColor="@color/main_blue"
+            android:hint="@string/date_format"
+            android:textColorHint="@color/main_blue"
+            android:inputType="date" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/edit_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/round_button"
+        android:layout_marginBottom="20dp"
+        android:text="@string/edit"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/exp_date_switch" />
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/exp_date_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="20dp"
+        android:text="@string/exp_date_switch_label"
+        app:boxStrokeColor="@color/light_blue"
+        app:layout_constraintBottom_toTopOf="@+id/edit_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/exp_date"
+        app:switchTextAppearance="@style/BrandedSwitch.text"
+        app:theme="@style/BrandedSwitch.control"
+        app:showText="true"
+        android:textColor="@color/main_blue"
+        app:thumbTint="@color/main_blue" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

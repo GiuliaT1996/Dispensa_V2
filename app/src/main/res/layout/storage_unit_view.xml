@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center_vertical"
+    android:paddingStart="12dp"
+    android:paddingTop="6dp"
+    android:forceDarkAllowed="true"
+    android:paddingEnd="12dp"
+    android:paddingBottom="6dp">
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="6dp"
+        android:layout_marginBottom="6dp"
+        android:layout_toStartOf="@+id/quantity"
+        android:autoSizeMaxTextSize="14sp"
+        android:autoSizeMinTextSize="7sp"
+        android:autoSizeTextType="uniform"
+        android:fontFamily="@font/ubuntu"
+        android:text="@string/example_name"
+        android:textStyle="bold"
+        android:textColor="@color/main_blue"/>
+
+    <TextView
+        android:id="@+id/section"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/name"
+        android:layout_alignStart="@+id/name"
+        android:layout_alignTop="@id/exp_date"
+        android:layout_marginEnd="6dp"
+        android:layout_toStartOf="@+id/exp_date"
+        android:fontFamily="@font/ubuntu"
+        android:text="@string/example_section"
+        android:textColor="@color/main_blue"
+        android:textSize="12sp"
+        android:textStyle="normal" />
+
+    <TextView
+        android:id="@+id/quantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:maxWidth="120dp"
+        android:text="@string/example_quantity"
+        android:textSize="12sp"
+        android:textStyle="normal"
+        android:fontFamily="@font/ubuntu"
+        android:textColor="@color/main_blue"/>
+
+    <TextView
+        android:id="@+id/exp_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/quantity"
+        android:text="@string/example_date"
+        android:textSize="12sp"
+        android:maxWidth="120dp"
+        android:textStyle="normal"
+        android:fontFamily="@font/ubuntu"
+        android:textColor="@color/main_blue"/>
+
+    <ImageButton
+        android:id="@+id/plus_button"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_marginEnd="15dp"
+        android:layout_toStartOf="@+id/edit_button"
+        android:layout_above="@+id/minus_button"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/icons8_pi__50"
+        android:backgroundTint="@color/main_blue"
+        android:contentDescription="@string/edit"/>
+
+    <ImageButton
+        android:id="@+id/minus_button"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_alignEnd="@id/plus_button"
+        android:layout_alignTop="@id/delete_button"
+        android:background="@drawable/icons8_meno_50"
+        android:backgroundTint="@color/main_blue"
+        android:contentDescription="@string/edit" />
+
+    <ImageButton
+        android:id="@+id/edit_button"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/icons8_modificare_64"
+        android:backgroundTint="@color/main_blue"
+        android:contentDescription="@string/edit"
+        android:layout_marginTop="5dp"/>
+
+    <ImageButton
+        android:id="@+id/delete_button"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_below="@+id/edit_button"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="7dp"
+        android:scaleX="0.8"
+        android:scaleY="0.85"
+        android:background="@drawable/icons8_rifiuti_50"
+        android:backgroundTint="@color/main_blue"
+        android:contentDescription="@string/delete" />
+
+    <ImageView
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/section"
+        android:background="@color/main_blue"
+        android:foregroundTint="@color/main_blue"
+        app:tint="@color/main_blue"
+        android:layout_marginTop="7dp"
+        android:contentDescription="@string/line"
+        app:srcCompat="@android:drawable/bottom_bar" />
+
+</RelativeLayout>

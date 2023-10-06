@@ -48,7 +48,8 @@ class Queries {
 
     fun updateStorageItem(s: StorageItem, oldName: String) {
         myRef = DB_INSTANCE.getReference(STORAGE_ITEMS_DB_REFERENCE)
-        deleteStorageItem(oldName)
+
+        if(oldName != s.name) deleteStorageItem(oldName)
         addStorageItem(s)
     }
 

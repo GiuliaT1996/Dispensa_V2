@@ -3,12 +3,14 @@ package com.angiuprojects.dispensav2.activities.implementation
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import com.angiuprojects.dispensav2.R
 import com.angiuprojects.dispensav2.activities.BaseActivity
 import com.angiuprojects.dispensav2.databinding.ActivityStorageBinding
 import com.angiuprojects.dispensav2.databinding.HeaderLayoutBinding
 import com.angiuprojects.dispensav2.enums.ProfileEnum
 import com.angiuprojects.dispensav2.enums.SectionEnum
+import com.angiuprojects.dispensav2.utilities.Constants
 import com.angiuprojects.dispensav2.utilities.Utils
 
 class StorageActivity : BaseActivity<ActivityStorageBinding>(ActivityStorageBinding::inflate) {
@@ -19,6 +21,8 @@ class StorageActivity : BaseActivity<ActivityStorageBinding>(ActivityStorageBind
             isFilterPresent = true,
             isSearchPresent = true
         )
+
+        Constants.itemList.forEach { s -> Log.i(Constants.STORAGE_LOGGER, s.toString() + "\n") }
     }
 
     override fun setSearchListener(header: HeaderLayoutBinding) {

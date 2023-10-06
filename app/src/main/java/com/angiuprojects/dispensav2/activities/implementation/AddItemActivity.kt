@@ -1,14 +1,9 @@
 package com.angiuprojects.dispensav2.activities.implementation
 
 import android.app.Dialog
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.AutoCompleteTextView
-import android.widget.Button
-import android.widget.TextView
 import com.angiuprojects.dispensav2.R
 import com.angiuprojects.dispensav2.activities.BaseActivity
 import com.angiuprojects.dispensav2.databinding.ActivityAddItemBinding
@@ -27,6 +22,8 @@ class AddItemActivity : BaseActivity<ActivityAddItemBinding>(ActivityAddItemBind
 
     // wasEmpty is used to handle the case we don't want to add an exp date
     private var wasEmpty: Boolean? = null
+    private lateinit var dialog : Dialog
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -128,20 +125,17 @@ class AddItemActivity : BaseActivity<ActivityAddItemBinding>(ActivityAddItemBind
 
     private fun onClickOk() {
         Queries.singleton.getItems()
+        dialog.dismiss()
         finish()
     }
 
     private fun createPopUp(name: String) {
-        val dialog = Dialog(this)
-        val popUpView: View = layoutInflater.inflate(R.layout.pop_up_simple_ok, null)
-        dialog.setContentView(popUpView)
-        val confirmationText = popUpView.findViewById<TextView>(R.id.text)
-        val okButton = popUpView.findViewById<Button>(R.id.ok_button)
-        confirmationText.text =
-            String.format("L'oggetto %s è stato aggiunto alla dispensa.", name)
-        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog.show()
-        okButton.setOnClickListener { onClickOk() }
+        dialog = Dialog(this)
+        Utils.singleton.createSimpleOKPopUp(
+            String.format("L'oggetto %s è stato aggiunto alla dispensa.", name),
+            dialog,
+            AddItemActivity::onClickOk,
+            this)
     }
 
 }
