@@ -90,6 +90,8 @@
     <string name="example_already_present">P = 0</string>
     <string name="exp_date_switch_label">Rimuovi Data Scadenza   </string>
     <string name="missing_days_example">Mancano 7 giorni alla scadenza</string>
+    <string name="mandatory">IMPORTANTI</string>
+    <string name="optional">OPZIONALI</string>
 
 
 </resources>
