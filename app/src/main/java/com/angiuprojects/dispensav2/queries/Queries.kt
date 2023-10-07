@@ -23,13 +23,13 @@ class Queries {
     }
 
     fun getItems() {
-        Constants.itemList = mutableListOf()
+        Constants.itemMap = mutableMapOf()
         myRef = DB_INSTANCE.getReference(STORAGE_ITEMS_DB_REFERENCE)
         myRef.orderByChild("name").addChildEventListener(object : ChildEventListener {
             override fun onChildAdded(dataSnapshot: DataSnapshot, prevChildKey: String?) {
                 val item: StorageItem? = dataSnapshot.getValue(StorageItem::class.java)
                 if (checkItem(item)) {
-                    Constants.itemList.add(item!!)
+                    Constants.itemMap[item!!.name] = item
                     Log.i(Constants.STORAGE_LOGGER,
                         "Name : " + dataSnapshot.key + " - Section : " + item.section)
                 }

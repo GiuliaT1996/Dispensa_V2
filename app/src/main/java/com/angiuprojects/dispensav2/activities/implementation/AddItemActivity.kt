@@ -2,8 +2,6 @@ package com.angiuprojects.dispensav2.activities.implementation
 
 import android.app.Dialog
 import android.os.Bundle
-import android.util.Log
-import android.widget.AutoCompleteTextView
 import com.angiuprojects.dispensav2.R
 import com.angiuprojects.dispensav2.activities.BaseActivity
 import com.angiuprojects.dispensav2.databinding.ActivityAddItemBinding
@@ -14,8 +12,6 @@ import com.angiuprojects.dispensav2.queries.Queries
 import com.angiuprojects.dispensav2.utilities.Constants
 import com.angiuprojects.dispensav2.utilities.StorageItemUtils
 import com.angiuprojects.dispensav2.utilities.Utils
-import com.google.android.material.textfield.TextInputLayout
-import kotlin.reflect.KMutableProperty1
 
 class AddItemActivity : BaseActivity<ActivityAddItemBinding>(ActivityAddItemBinding::inflate) {
 
@@ -71,9 +67,9 @@ class AddItemActivity : BaseActivity<ActivityAddItemBinding>(ActivityAddItemBind
         }
     }
 
-    private fun onClickOk() {
+    private fun onClickOk(dialog: Dialog?) {
         Queries.singleton.getItems()
-        dialog.dismiss()
+        dialog?.dismiss()
         finish()
     }
 
@@ -82,8 +78,7 @@ class AddItemActivity : BaseActivity<ActivityAddItemBinding>(ActivityAddItemBind
         Utils.singleton.createSimpleOKPopUp(
             String.format("L'oggetto %s è stato aggiunto alla dispensa.", name),
             dialog,
-            AddItemActivity::onClickOk,
-            this)
+            this::onClickOk)
     }
 
 }

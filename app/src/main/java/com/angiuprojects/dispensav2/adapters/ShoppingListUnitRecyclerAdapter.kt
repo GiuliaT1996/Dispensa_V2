@@ -28,6 +28,7 @@ class ShoppingListUnitRecyclerAdapter(private val dataSet: MutableList<StorageIt
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ShoppingListUnitViewHolder {
+        dataSet.sortBy { it.name }
         binding = ShoppingListUnitViewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         if(isInit) addedQuantityList = MutableList(dataSet.size) {0}
         isInit = false

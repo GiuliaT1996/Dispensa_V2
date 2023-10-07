@@ -1,32 +1,31 @@
 package com.angiuprojects.dispensav2.utilities
 
+import android.R
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
-import androidx.core.content.res.ResourcesCompat
-import android.R
-import android.app.Dialog
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
-import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.TextView
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import androidx.viewbinding.ViewBinding
-import com.angiuprojects.dispensav2.adapters.StorageUnitRecyclerAdapter
 import com.angiuprojects.dispensav2.entities.StorageItem
 import com.google.android.material.snackbar.Snackbar
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.ZoneId
 import java.util.*
-import kotlin.reflect.KFunction1
-import kotlin.reflect.KFunction3
-import kotlin.reflect.KFunction5
-import kotlin.reflect.KMutableProperty1
+import kotlin.reflect.*
 
 class Utils {
 
@@ -89,11 +88,11 @@ class Utils {
         } else ""
     }
 
-    fun <T> createSimpleOKPopUp(message: String, dialog: Dialog?, onClickOk: KFunction1<T, Unit>, invoker: T) {
+    fun createSimpleOKPopUp(message: String, dialog: Dialog?, onClickOk: KFunction1<Dialog?, Unit>) {
         val popUpView = commonCodePopUp(dialog, com.angiuprojects.dispensav2.R.layout.pop_up_simple_ok)
         popUpView?.findViewById<TextView>(com.angiuprojects.dispensav2.R.id.text)?.text = message
         val okButton = popUpView?.findViewById<Button>(com.angiuprojects.dispensav2.R.id.ok_button)
-        okButton?.setOnClickListener { onClickOk.invoke(invoker) }
+        okButton?.setOnClickListener { onClickOk.invoke(dialog) }
     }
 
     //delete expiration date // Method version impossible to generalize - checks exp date
@@ -146,11 +145,11 @@ class Utils {
         return binding
     }
 
-    fun <T> filterItemList(itemList: MutableList<StorageItem>,
+    fun <T> filterItemMap(itemMap: MutableMap<String, StorageItem>,
                            getFieldFunction: KMutableProperty1<StorageItem, T>,
                            property: T)
-    : MutableList<StorageItem> {
-        return itemList.filter { getFieldFunction.get(it) == property }.sortedBy { it.name }.toMutableList()
+    : MutableMap<String, StorageItem> {
+        return itemMap.filter { getFieldFunction.get(it.value) == property }.toMutableMap()
     }
 
     fun <A: Adapter<V>, V : ViewHolder> setRecyclerAdapter(recyclerView: RecyclerView,
@@ -160,5 +159,53 @@ class Utils {
         recyclerView.layoutManager = layoutManager
         recyclerView.setHasFixedSize(true)
         recyclerView.adapter = adapter
+    }
+
+    fun setPhrase(date: Date): String {
+        val days: Long = getDaysFromExpiration(date)
+        val phrase: String = if (days == -1L) {
+            "è scaduto da " + days * -1 + " giorno."
+        } else if (days < -1) {
+            "è scaduto da " + days * -1 + " giorni."
+        } else if (days == 1L) {
+            "scade domani!"
+        } else if (days > 1) {
+            "scade tra $days giorni."
+        } else {
+            "scade oggi!"
+        }
+        return phrase
+    }
+
+    private fun getDaysFromExpiration(date: Date): Long {
+        val localDate: LocalDate = convertDateToLocalDate(date) ?: return 0
+        return getDiffDays(localDate, LocalDate.now())
+    }
+
+    private fun convertDateToLocalDate(date: Date?): LocalDate? {
+        return if (date != null) {
+            try {
+                LocalDateTime.ofInstant(date.toInstant(), ZoneId.of("Europe/Rome")).toLocalDate()
+            } catch (e: Exception) {
+                Log.e(Constants.STORAGE_LOGGER, "Il formato della data non è corretto")
+                null
+            }
+        } else null
+    }
+
+    private fun getDiffDays(startDate: LocalDate, endDate: LocalDate): Long {
+        return if (startDate.isBefore(endDate)) getDiffDaysFromStartToEnd(
+            startDate,
+            endDate
+        ) * -1 else if (startDate.isAfter(endDate)) {
+            getDiffDaysFromStartToEnd(
+                endDate,
+                startDate
+            )
+        } else 0
+    }
+
+    private fun getDiffDaysFromStartToEnd(startDate: LocalDate, endDate: LocalDate): Long {
+        return endDate.dayOfYear + (endDate.year - startDate.year) * 365L - startDate.dayOfYear
     }
 }

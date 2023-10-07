@@ -3,7 +3,6 @@ package com.angiuprojects.dispensav2.utilities
 import android.annotation.SuppressLint
 import com.angiuprojects.dispensav2.entities.ProfileSettings
 import com.angiuprojects.dispensav2.entities.StorageItem
-import com.angiuprojects.dispensav2.enums.ProfileEnum
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 
@@ -12,8 +11,8 @@ class Constants {
     companion object {
 
         lateinit var singleton: Constants
-        lateinit var itemList: MutableList<StorageItem>
-        lateinit var itemListFilteredByProfile: MutableList<StorageItem>
+        lateinit var itemMap: MutableMap<String, StorageItem>
+        lateinit var itemMapFilteredByProfile: MutableMap<String, StorageItem>
 
         lateinit var profileSettings: ProfileSettings
 
@@ -26,9 +25,9 @@ class Constants {
 
         fun initializeConstants() {
             singleton = Constants()
-            itemList = mutableListOf()
+            itemMap = mutableMapOf()
             profileSettings = ProfileSettings()
-            itemListFilteredByProfile = mutableListOf()
+            itemMapFilteredByProfile = mutableMapOf()
         }
 
     }

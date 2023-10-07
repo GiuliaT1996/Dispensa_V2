@@ -1,5 +1,6 @@
 package com.angiuprojects.dispensav2.activities.implementation
 
+import android.app.Dialog
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.util.Log
@@ -23,8 +24,18 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         setColorProfileButton(binding.girlButton, ProfileEnum.GIULIA, false)
         setColorProfileButton(binding.bothButton, ProfileEnum.COMUNI, false)
 
-        Constants.itemList.forEach { s -> Log.i(Constants.STORAGE_LOGGER, s.toString() + "\n") }
+        Constants.itemMap.forEach { s -> Log.i(Constants.STORAGE_LOGGER, s.toString() + "\n") }
         setOnClickListeners()
+
+        ExpiringActivity.filterExpiringItems().forEach {
+            val dialog = Dialog(this)
+            Utils.singleton.createSimpleOKPopUp(it.name + " " + it.expirationDate?.let { it1 ->
+                Utils.singleton.setPhrase(it1) }, dialog, this::onClickCloseDialog)
+        }
+    }
+
+    private fun onClickCloseDialog(dialog: Dialog?) {
+        dialog?.dismiss()
     }
 
     private fun setOnClickListeners() {
@@ -52,7 +63,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
 
     private fun setColorProfileButton(imageButton: ImageButton, profile: ProfileEnum, isClicked: Boolean) {
 
-        val filteredList = Utils.singleton.filterItemList(Constants.itemList,StorageItem::profile, profile.formattedName)
+        val filteredMap = Utils.singleton.filterItemMap(Constants.itemMap,StorageItem::profile, profile.formattedName)
 
         if(Constants.profileSettings.profileMap[profile]?.equals(ProfileButtonStateEnum.OFF) == true) {
             if(isClicked) {
@@ -60,7 +71,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                 ReadWriteJsonUtils.singleton.write(this)
                 imageButton.backgroundTintList =
                     ColorStateList.valueOf(resources.getColor(R.color.yellow, baseContext.theme))
-                Constants.itemListFilteredByProfile.addAll(filteredList)
+                Constants.itemMapFilteredByProfile.putAll(filteredMap)
             } else {
                 imageButton.backgroundTintList =
                     ColorStateList.valueOf(resources.getColor(R.color.gray, baseContext.theme))
@@ -71,11 +82,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                 ReadWriteJsonUtils.singleton.write(this)
                 imageButton.backgroundTintList =
                     ColorStateList.valueOf(resources.getColor(R.color.gray, baseContext.theme))
-                Constants.itemListFilteredByProfile.removeAll { it.profile == profile.formattedName }
+                Constants.itemMapFilteredByProfile.entries.removeIf{ it.value.profile == profile.formattedName }
             } else {
                 imageButton.backgroundTintList =
                     ColorStateList.valueOf(resources.getColor(R.color.yellow, baseContext.theme))
-                Constants.itemListFilteredByProfile.addAll(filteredList)
+                Constants.itemMapFilteredByProfile.putAll(filteredMap)
             }
         }
     }

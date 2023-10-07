@@ -1,7 +1,6 @@
 package com.angiuprojects.dispensav2.activities.implementation
 
 import android.os.Bundle
-import androidx.recyclerview.widget.RecyclerView
 import com.angiuprojects.dispensav2.R
 import com.angiuprojects.dispensav2.activities.BaseActivity
 import com.angiuprojects.dispensav2.adapters.ShoppingListUnitRecyclerAdapter
@@ -28,9 +27,7 @@ class ShoppingListActivity : BaseActivity<ActivityShoppingListBinding>(ActivityS
 
     private fun filterShoppingList() : MutableList<StorageItem> {
         //TODO add optional (trigger = -1)
-        return Constants.itemListFilteredByProfile
-            .filter { it.quantity <= it.trigger }
-            .sortedBy { it.name }
-            .toMutableList()
+        return Constants.itemMapFilteredByProfile
+            .filter { it.value.quantity <= it.value.trigger }.values.toMutableList()
     }
 }

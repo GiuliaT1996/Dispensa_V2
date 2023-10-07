@@ -40,6 +40,7 @@ class StorageUnitRecyclerAdapter(private val dataSet: MutableList<StorageItem>, 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StorageUnitViewHolder {
+        dataSet.sortBy { it.name }
         binding = StorageUnitViewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return StorageUnitViewHolder(binding)
     }
@@ -131,8 +132,10 @@ class StorageUnitRecyclerAdapter(private val dataSet: MutableList<StorageItem>, 
                 newStorageItem.expirationDate = oldStorageItem.expirationDate
 
             //TODO STORICO
-            Constants.itemList[Constants.itemList.indexOf(oldStorageItem)] = newStorageItem
-            Constants.itemListFilteredByProfile[Constants.itemListFilteredByProfile.indexOf(oldStorageItem)] = newStorageItem
+            Constants.itemMap.remove(oldStorageItem.name)
+            Constants.itemMap[newStorageItem.name] = newStorageItem
+            Constants.itemMapFilteredByProfile.remove(oldStorageItem.name)
+            Constants.itemMapFilteredByProfile[newStorageItem.name] = newStorageItem
             Queries.singleton.updateStorageItem(newStorageItem, oldStorageItem.name)
             dataSet[holder.adapterPosition] = newStorageItem
             this.notifyItemChanged(holder.adapterPosition)
@@ -194,8 +197,8 @@ class StorageUnitRecyclerAdapter(private val dataSet: MutableList<StorageItem>, 
     private fun onClickDelete(s: StorageItem, holder: StorageUnitViewHolder) {
         //TODO STORICO
         dataSet.remove(s)
-        Constants.itemList.remove(s)
-        Constants.itemListFilteredByProfile.remove(s)
+        Constants.itemMap.remove(s.name)
+        Constants.itemMapFilteredByProfile.remove(s.name)
         Queries.singleton.deleteStorageItem(s.name)
         this.notifyItemRemoved(holder.adapterPosition)
         dialog.dismiss()
