@@ -27,7 +27,8 @@ class LoaderActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         initializeSingletons()
-        Queries.singleton.getItems()
+        Queries.singleton.getStorageItems()
+        Queries.singleton.getHistoryItems()
         ReadWriteJsonUtils.singleton.getProfileSettings(this)
 
         animateImage(this, binding.logoImage)

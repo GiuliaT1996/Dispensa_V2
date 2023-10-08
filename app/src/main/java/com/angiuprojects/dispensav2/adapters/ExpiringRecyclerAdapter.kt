@@ -9,8 +9,8 @@ import com.angiuprojects.dispensav2.databinding.ExpiringUnitViewBinding
 import com.angiuprojects.dispensav2.entities.StorageItem
 import com.angiuprojects.dispensav2.utilities.Utils
 
-class ExpiringUnitRecyclerAdapter(private val dataSet: MutableList<StorageItem>)
-    : Adapter<ExpiringUnitRecyclerAdapter.ExpiringUnitViewHolder>() {
+class ExpiringRecyclerAdapter(private val dataSet: MutableList<StorageItem>)
+    : Adapter<ExpiringRecyclerAdapter.ExpiringUnitViewHolder>() {
 
     private lateinit var binding: ExpiringUnitViewBinding
 

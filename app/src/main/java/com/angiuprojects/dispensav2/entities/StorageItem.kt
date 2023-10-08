@@ -2,16 +2,13 @@ package com.angiuprojects.dispensav2.entities
 
 import java.util.*
 
-class StorageItem {
+class StorageItem() : ItemInterface() {
 
-    var name: String = ""
     var section: String = ""
     var profile: String = ""
     var quantity: Int = 0
     var trigger: Int = 0
     var expirationDate: Date? = null
-
-    constructor()
 
     constructor(
         name: String,
@@ -19,7 +16,7 @@ class StorageItem {
         profile: String,
         quantity: Int,
         trigger: Int,
-        expirationDate: Date?) {
+        expirationDate: Date?) : this() {
         this.name = name
         this.section = section
         this.quantity = quantity

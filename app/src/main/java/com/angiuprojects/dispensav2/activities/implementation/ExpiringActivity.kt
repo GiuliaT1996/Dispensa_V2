@@ -3,7 +3,7 @@ package com.angiuprojects.dispensav2.activities.implementation
 import android.os.Bundle
 import com.angiuprojects.dispensav2.R
 import com.angiuprojects.dispensav2.activities.BaseActivity
-import com.angiuprojects.dispensav2.adapters.ExpiringUnitRecyclerAdapter
+import com.angiuprojects.dispensav2.adapters.ExpiringRecyclerAdapter
 import com.angiuprojects.dispensav2.databinding.ActivityExpiringBinding
 import com.angiuprojects.dispensav2.entities.StorageItem
 import com.angiuprojects.dispensav2.utilities.Constants
@@ -23,7 +23,7 @@ class ExpiringActivity : BaseActivity<ActivityExpiringBinding>(ActivityExpiringB
 
         Utils.singleton.setRecyclerAdapter(findViewById(R.id.expiring_list),
             this,
-            ExpiringUnitRecyclerAdapter(filterExpiringItems())
+            ExpiringRecyclerAdapter(filterExpiringItems())
         )
     }
 

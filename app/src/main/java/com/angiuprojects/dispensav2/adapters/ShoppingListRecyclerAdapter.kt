@@ -1,17 +1,22 @@
 package com.angiuprojects.dispensav2.adapters
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.angiuprojects.dispensav2.databinding.ShoppingListUnitViewBinding
+import com.angiuprojects.dispensav2.entities.HistoryItem
 import com.angiuprojects.dispensav2.entities.StorageItem
+import com.angiuprojects.dispensav2.enums.HistoryActionEnum
 import com.angiuprojects.dispensav2.queries.Queries
+import com.angiuprojects.dispensav2.utilities.Constants
+import java.util.*
 
-class ShoppingListUnitRecyclerAdapter(private val dataSet: MutableList<StorageItem>)
-    :RecyclerView.Adapter<ShoppingListUnitRecyclerAdapter.ShoppingListUnitViewHolder>() {
+class ShoppingListRecyclerAdapter(private val dataSet: MutableList<StorageItem>)
+    :RecyclerView.Adapter<ShoppingListRecyclerAdapter.ShoppingListUnitViewHolder>() {
 
     private lateinit var binding: ShoppingListUnitViewBinding
     private lateinit var addedQuantityList: MutableList<Int>
@@ -55,14 +60,22 @@ class ShoppingListUnitRecyclerAdapter(private val dataSet: MutableList<StorageIt
     }
 
     private fun updateQuantityField(s: StorageItem, holder: ShoppingListUnitViewHolder) {
-        //TODO STORICO
+        val historyItem = HistoryItem(s.name, Date(), HistoryActionEnum.UPDATE, addedQuantityList[holder.adapterPosition])
+        if(addedQuantityList[holder.adapterPosition] == 0) {
+            holder.check.isChecked = false
+            return
+        }
         s.quantity = s.quantity + addedQuantityList[holder.adapterPosition]
         addedQuantityList[holder.adapterPosition] = 0
-        Queries.singleton.updateStorageItem(s, s.name)
+        Queries.singleton.updateItem(s, s.name, Queries.STORAGE_ITEMS_DB_REFERENCE)
+        Constants.historyItemList.add(historyItem)
+        Queries.singleton.addItem(historyItem, Queries.HISTORY_ITEMS_DB_REFERENCE)
         if(s.quantity > s.trigger) {
             dataSet.remove(s)
             addedQuantityList.removeAt(holder.adapterPosition)
             notifyItemRemoved(holder.adapterPosition)
+            holder.itemView.visibility = View.GONE
+            holder.itemView.visibility = View.VISIBLE
         }
         else notifyItemChanged(holder.adapterPosition)
     }

@@ -5,13 +5,16 @@ import android.os.Bundle
 import com.angiuprojects.dispensav2.R
 import com.angiuprojects.dispensav2.activities.BaseActivity
 import com.angiuprojects.dispensav2.databinding.ActivityAddItemBinding
+import com.angiuprojects.dispensav2.entities.HistoryItem
 import com.angiuprojects.dispensav2.entities.StorageItem
+import com.angiuprojects.dispensav2.enums.HistoryActionEnum
 import com.angiuprojects.dispensav2.enums.ProfileEnum
 import com.angiuprojects.dispensav2.enums.SectionEnum
 import com.angiuprojects.dispensav2.queries.Queries
 import com.angiuprojects.dispensav2.utilities.Constants
 import com.angiuprojects.dispensav2.utilities.StorageItemUtils
 import com.angiuprojects.dispensav2.utilities.Utils
+import java.util.*
 
 class AddItemActivity : BaseActivity<ActivityAddItemBinding>(ActivityAddItemBinding::inflate) {
 
@@ -61,14 +64,16 @@ class AddItemActivity : BaseActivity<ActivityAddItemBinding>(ActivityAddItemBind
         else if(StorageItemUtils.singleton.getTextFromACTV(binding.profileSpinner, storageItem, StorageItem::profile) == null)
             Utils.singleton.openSnackBar(snackBarView, "Inserire profilo!")
         else {
-            //TODO STORICO
+            val historyItem = HistoryItem(storageItem.name, Date(), HistoryActionEnum.INSERT, storageItem.quantity)
+            Constants.historyItemList.add(historyItem)
+            Queries.singleton.addItem(historyItem, Queries.HISTORY_ITEMS_DB_REFERENCE)
             StorageItemUtils.singleton.addStorageItem(storageItem)
             createPopUp(storageItem.name)
         }
     }
 
     private fun onClickOk(dialog: Dialog?) {
-        Queries.singleton.getItems()
+        Queries.singleton.getStorageItems()
         dialog?.dismiss()
         finish()
     }

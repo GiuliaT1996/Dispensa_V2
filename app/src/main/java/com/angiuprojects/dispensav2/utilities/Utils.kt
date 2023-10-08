@@ -21,9 +21,11 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import androidx.viewbinding.ViewBinding
 import com.angiuprojects.dispensav2.entities.StorageItem
 import com.google.android.material.snackbar.Snackbar
+import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneId
+import java.time.temporal.ChronoUnit
 import java.util.*
 import kotlin.reflect.*
 
@@ -207,5 +209,9 @@ class Utils {
 
     private fun getDiffDaysFromStartToEnd(startDate: LocalDate, endDate: LocalDate): Long {
         return endDate.dayOfYear + (endDate.year - startDate.year) * 365L - startDate.dayOfYear
+    }
+
+    fun getHoursFromDate(date: Date) : Long {
+        return ChronoUnit.HOURS.between(date.toInstant(), Instant.now())
     }
 }

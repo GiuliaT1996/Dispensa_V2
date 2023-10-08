@@ -26,7 +26,7 @@ class StorageItemUtils {
             Constants.itemMap[storageItem.name] = storageItem
             if(Constants.profileSettings.profileMap[ProfileEnum.fromFormattedName(storageItem.profile)] == ProfileButtonStateEnum.ON)
                 Constants.itemMapFilteredByProfile[storageItem.name] = storageItem
-            Queries.singleton.addStorageItem(storageItem)
+            Queries.singleton.addItem(storageItem, Queries.STORAGE_ITEMS_DB_REFERENCE)
         } catch (e : Exception) {
             Log.e(Constants.STORAGE_LOGGER, "Non è stato possibile aggiungere l'elemento " + storageItem.name + ": " + e.message.toString())
             return false

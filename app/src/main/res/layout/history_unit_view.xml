@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp">
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxWidth="320dp"
+        android:text="@string/example_name"
+        android:textAllCaps="true"
+        android:textColor="@color/yellow"
+        android:layout_toStartOf="@+id/time"
+        android:layout_alignParentStart="true"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:maxWidth="100dp"
+        android:layout_centerVertical="true"
+        android:text="@string/example_time"
+        android:textColor="@color/yellow"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/action"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/name"
+        android:maxWidth="320dp"
+        android:text="@string/example_action"
+        android:textColor="@color/yellow"
+        android:layout_toStartOf="@+id/time"
+        android:layout_alignParentStart="true"
+        android:textSize="16sp" />
+
+    <ImageView
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/action"
+        android:layout_marginTop="7dp"
+        android:contentDescription="@string/line"
+        android:backgroundTint="@color/main_blue"
+        android:background = "@android:drawable/bottom_bar"/>
+</RelativeLayout>

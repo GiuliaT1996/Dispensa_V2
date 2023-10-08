@@ -19,6 +19,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Constants.appIsStarting = false
 
         setColorProfileButton(binding.boyButton, ProfileEnum.ANTONIO, false)
         setColorProfileButton(binding.girlButton, ProfileEnum.GIULIA, false)

@@ -6,7 +6,7 @@ import android.widget.ImageButton
 import androidx.recyclerview.widget.RecyclerView
 import com.angiuprojects.dispensav2.R
 import com.angiuprojects.dispensav2.activities.BaseActivity
-import com.angiuprojects.dispensav2.adapters.ShoppingListUnitRecyclerAdapter
+import com.angiuprojects.dispensav2.adapters.ShoppingListRecyclerAdapter
 import com.angiuprojects.dispensav2.databinding.ActivityShoppingListBinding
 import com.angiuprojects.dispensav2.entities.StorageItem
 import com.angiuprojects.dispensav2.utilities.Constants
@@ -28,11 +28,11 @@ class ShoppingListActivity : BaseActivity<ActivityShoppingListBinding>(ActivityS
 
         Utils.singleton.setRecyclerAdapter(findViewById(R.id.shopping_list_mandatory),
             this,
-            ShoppingListUnitRecyclerAdapter(filterShoppingList(isOptional = false)))
+            ShoppingListRecyclerAdapter(filterShoppingList(isOptional = false)))
 
         Utils.singleton.setRecyclerAdapter(findViewById(R.id.shopping_list_optional),
             this,
-            ShoppingListUnitRecyclerAdapter(filterShoppingList(isOptional = true)))
+            ShoppingListRecyclerAdapter(filterShoppingList(isOptional = true)))
     }
 
     private fun filterShoppingList(isOptional: Boolean) : MutableList<StorageItem> {

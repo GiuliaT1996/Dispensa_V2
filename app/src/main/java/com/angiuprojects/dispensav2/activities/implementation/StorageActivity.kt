@@ -6,8 +6,8 @@ import android.text.Editable
 import android.text.TextWatcher
 import com.angiuprojects.dispensav2.R
 import com.angiuprojects.dispensav2.activities.BaseActivity
-import com.angiuprojects.dispensav2.adapters.ShoppingListUnitRecyclerAdapter
-import com.angiuprojects.dispensav2.adapters.StorageUnitRecyclerAdapter
+import com.angiuprojects.dispensav2.adapters.ShoppingListRecyclerAdapter
+import com.angiuprojects.dispensav2.adapters.StorageRecyclerAdapter
 import com.angiuprojects.dispensav2.databinding.ActivityStorageBinding
 import com.angiuprojects.dispensav2.databinding.HeaderLayoutBinding
 import com.angiuprojects.dispensav2.entities.StorageItem
@@ -25,7 +25,7 @@ class StorageActivity : BaseActivity<ActivityStorageBinding>(ActivityStorageBind
         )
         Utils.singleton.setRecyclerAdapter(findViewById(R.id.storage_list),
             this,
-            StorageUnitRecyclerAdapter(Constants.itemMapFilteredByProfile.values.toMutableList(), this)
+            StorageRecyclerAdapter(Constants.itemMapFilteredByProfile.values.toMutableList(), this)
         )
     }
 
@@ -48,7 +48,7 @@ class StorageActivity : BaseActivity<ActivityStorageBinding>(ActivityStorageBind
                     )
                     Utils.singleton.setRecyclerAdapter(findViewById(R.id.storage_list),
                         context,
-                        ShoppingListUnitRecyclerAdapter(filteredMap.values.toMutableList())
+                        ShoppingListRecyclerAdapter(filteredMap.values.toMutableList())
                     )
                 }
             }

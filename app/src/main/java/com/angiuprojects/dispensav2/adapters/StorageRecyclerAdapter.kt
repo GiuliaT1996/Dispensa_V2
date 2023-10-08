@@ -11,18 +11,21 @@ import androidx.recyclerview.widget.RecyclerView
 import com.angiuprojects.dispensav2.R
 import com.angiuprojects.dispensav2.databinding.PopUpModifyStorageItemBinding
 import com.angiuprojects.dispensav2.databinding.StorageUnitViewBinding
+import com.angiuprojects.dispensav2.entities.HistoryItem
 import com.angiuprojects.dispensav2.entities.StorageItem
+import com.angiuprojects.dispensav2.enums.HistoryActionEnum
 import com.angiuprojects.dispensav2.enums.ProfileEnum
 import com.angiuprojects.dispensav2.enums.SectionEnum
 import com.angiuprojects.dispensav2.queries.Queries
 import com.angiuprojects.dispensav2.utilities.Constants
 import com.angiuprojects.dispensav2.utilities.StorageItemUtils
 import com.angiuprojects.dispensav2.utilities.Utils
+import java.util.*
 import kotlin.reflect.KMutableProperty1
 import kotlin.reflect.KFunction4
 
-class StorageUnitRecyclerAdapter(private val dataSet: MutableList<StorageItem>, private val context: Context)
-    : RecyclerView.Adapter<StorageUnitRecyclerAdapter.StorageUnitViewHolder>(){
+class StorageRecyclerAdapter(private val dataSet: MutableList<StorageItem>, private val context: Context)
+    : RecyclerView.Adapter<StorageRecyclerAdapter.StorageUnitViewHolder>(){
 
     private lateinit var binding: StorageUnitViewBinding
     private lateinit var dialog: Dialog
@@ -70,7 +73,7 @@ class StorageUnitRecyclerAdapter(private val dataSet: MutableList<StorageItem>, 
         Utils.singleton.createYesNoPopUp(
             "Eliminare la data di scadenza?",
             dialog,
-            StorageUnitRecyclerAdapter::onClickDeleteExpDate,
+            StorageRecyclerAdapter::onClickDeleteExpDate,
             this,
             s,
             num,
@@ -89,8 +92,10 @@ class StorageUnitRecyclerAdapter(private val dataSet: MutableList<StorageItem>, 
     ) {
         if (deleteExpDate) s.expirationDate = null
         s.quantity = s.quantity + num
-        //TODO STORICO
-        Queries.singleton.updateStorageItem(s, s.name)
+        val historyItem = HistoryItem(s.name, Date(), HistoryActionEnum.UPDATE, num)
+        Constants.historyItemList.add(historyItem)
+        Queries.singleton.addItem(historyItem, Queries.HISTORY_ITEMS_DB_REFERENCE)
+        Queries.singleton.updateItem(s, s.name, Queries.STORAGE_ITEMS_DB_REFERENCE)
         this.notifyItemChanged(holder.adapterPosition)
     }
 
@@ -131,12 +136,14 @@ class StorageUnitRecyclerAdapter(private val dataSet: MutableList<StorageItem>, 
             if(newStorageItem.expirationDate == null && !binding.expDateSwitch.isChecked)
                 newStorageItem.expirationDate = oldStorageItem.expirationDate
 
-            //TODO STORICO
             Constants.itemMap.remove(oldStorageItem.name)
             Constants.itemMap[newStorageItem.name] = newStorageItem
             Constants.itemMapFilteredByProfile.remove(oldStorageItem.name)
             Constants.itemMapFilteredByProfile[newStorageItem.name] = newStorageItem
-            Queries.singleton.updateStorageItem(newStorageItem, oldStorageItem.name)
+            val historyItem = HistoryItem(newStorageItem.name, Date(), HistoryActionEnum.UPDATE, (newStorageItem.quantity - oldStorageItem.quantity))
+            Constants.historyItemList.add(historyItem)
+            Queries.singleton.addItem(historyItem, Queries.HISTORY_ITEMS_DB_REFERENCE)
+            Queries.singleton.updateItem(newStorageItem, oldStorageItem.name, Queries.STORAGE_ITEMS_DB_REFERENCE)
             dataSet[holder.adapterPosition] = newStorageItem
             this.notifyItemChanged(holder.adapterPosition)
             dialog.dismiss()
@@ -188,18 +195,20 @@ class StorageUnitRecyclerAdapter(private val dataSet: MutableList<StorageItem>, 
         Utils.singleton.createYesNoPopUp(
             String.format("Sei sicuro di voler eliminare %s?", s.name),
             dialog,
-            StorageUnitRecyclerAdapter::onClickDelete,
+            StorageRecyclerAdapter::onClickDelete,
             this,
             s,
             holder)
     }
 
     private fun onClickDelete(s: StorageItem, holder: StorageUnitViewHolder) {
-        //TODO STORICO
+        val historyItem = HistoryItem(s.name, Date(), HistoryActionEnum.DELETE, s.quantity)
         dataSet.remove(s)
+        Constants.historyItemList.add(historyItem)
         Constants.itemMap.remove(s.name)
         Constants.itemMapFilteredByProfile.remove(s.name)
-        Queries.singleton.deleteStorageItem(s.name)
+        Queries.singleton.addItem(historyItem, Queries.HISTORY_ITEMS_DB_REFERENCE)
+        Queries.singleton.deleteStorageItem(s.name, Queries.STORAGE_ITEMS_DB_REFERENCE)
         this.notifyItemRemoved(holder.adapterPosition)
         dialog.dismiss()
     }
