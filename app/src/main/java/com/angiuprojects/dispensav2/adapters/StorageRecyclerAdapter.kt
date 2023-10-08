@@ -117,6 +117,11 @@ class StorageRecyclerAdapter(private val dataSet: MutableList<StorageItem>, priv
         val getDateResponse = StorageItemUtils.singleton.getDate(binding.expDate, newStorageItem,
             StorageItem::expirationDate, binding.expDateSwitch.isChecked)
 
+        if(!ProfileEnum.getFormattedNames().containsKey(binding.profileSpinner.text.toString().trim()))
+            binding.profileSpinner.setText("")
+        if(!SectionEnum.getFormattedNames().containsKey(binding.sectionSpinner.text.toString().trim()))
+            binding.sectionSpinner.setText("")
+
         if(getDateResponse.first == null && !getDateResponse.second) {
             Utils.singleton.openSnackBar(snackBarView,
                 "Il formato della data non è corretto! Inserire una data con il seguente formato: "
@@ -167,13 +172,13 @@ class StorageRecyclerAdapter(private val dataSet: MutableList<StorageItem>, priv
             Utils.singleton.createNewDropDown(
                 binding.sectionSpinner,
                 context,
-                R.drawable.spinner_background,
+                R.drawable.small_pop_up_background,
                 SectionEnum.values().mapTo(mutableListOf()){it.formattedName}
             )
             Utils.singleton.createNewDropDown(
                 binding.profileSpinner,
                 context,
-                R.drawable.spinner_background,
+                R.drawable.small_pop_up_background,
                 ProfileEnum.values().mapTo(mutableListOf()){it.formattedName}
             )
         }

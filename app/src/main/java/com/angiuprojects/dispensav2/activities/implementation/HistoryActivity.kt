@@ -50,7 +50,8 @@ class HistoryActivity : BaseActivity<ActivityHistoryBinding>(ActivityHistoryBind
             var totalQuantity = 0
             pair.second.forEach { totalQuantity += it.modifiedQuantity }
             pair.first.modifiedQuantity = totalQuantity
-            mergedList.add(pair.first)
+            if(totalQuantity != 0)
+                mergedList.add(pair.first)
         }
         return mergedList.sortedBy { it.lastUpdate }.reversed().toMutableList()
     }

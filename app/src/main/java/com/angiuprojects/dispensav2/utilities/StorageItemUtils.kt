@@ -24,8 +24,10 @@ class StorageItemUtils {
     fun addStorageItem(storageItem: StorageItem) : Boolean {
         try {
             Constants.itemMap[storageItem.name] = storageItem
+
             if(Constants.profileSettings.profileMap[ProfileEnum.fromFormattedName(storageItem.profile)] == ProfileButtonStateEnum.ON)
                 Constants.itemMapFilteredByProfile[storageItem.name] = storageItem
+
             Queries.singleton.addItem(storageItem, Queries.STORAGE_ITEMS_DB_REFERENCE)
         } catch (e : Exception) {
             Log.e(Constants.STORAGE_LOGGER, "Non è stato possibile aggiungere l'elemento " + storageItem.name + ": " + e.message.toString())
@@ -59,7 +61,7 @@ class StorageItemUtils {
         return if (text.editText != null && text.editText!!.text != null && text.editText!!.text.toString()
                 .isNotEmpty()) {
             setterFunction.set(storageItem, text.editText!!.text.toString())
-            text.editText!!.text.toString()
+            text.editText!!.text.toString().trim()
         } else null
     }
 
@@ -69,7 +71,7 @@ class StorageItemUtils {
         text as AutoCompleteTextView
         return if(text.text != null && text.text.toString().isNotEmpty() && text.text.toString() != "null") {
             setterFunction.set(storageItem, text.text.toString())
-            text.text.toString()
+            text.text.toString().trim()
         } else null
     }
 
@@ -79,7 +81,7 @@ class StorageItemUtils {
         return if (text.editText != null && text.editText!!.text != null && text.editText!!.text.toString()
                 .isNotEmpty()) {
             try {
-                setterFunction.set(storageItem, text.editText!!.text.toString().toInt())
+                setterFunction.set(storageItem, text.editText!!.text.toString().trim().toInt())
             } catch (e: Exception){
                 Log.e(Constants.STORAGE_LOGGER, "Il formato di uno dei campi numerici non è corretto!")
                 return null

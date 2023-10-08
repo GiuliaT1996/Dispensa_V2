@@ -63,6 +63,10 @@ class AddItemActivity : BaseActivity<ActivityAddItemBinding>(ActivityAddItemBind
                         + Constants.DATE_FORMAT)
         else if(StorageItemUtils.singleton.getTextFromACTV(binding.profileSpinner, storageItem, StorageItem::profile) == null)
             Utils.singleton.openSnackBar(snackBarView, "Inserire profilo!")
+        else if(Constants.itemMap.containsKey(storageItem.name)) {
+            Utils.singleton.openSnackBar(snackBarView,
+                "Esiste già un oggetto con nome " + storageItem.name)
+        }
         else {
             val historyItem = HistoryItem(storageItem.name, Date(), HistoryActionEnum.INSERT, storageItem.quantity)
             Constants.historyItemList.add(historyItem)
@@ -73,7 +77,6 @@ class AddItemActivity : BaseActivity<ActivityAddItemBinding>(ActivityAddItemBind
     }
 
     private fun onClickOk(dialog: Dialog?) {
-        Queries.singleton.getStorageItems()
         dialog?.dismiss()
         finish()
     }

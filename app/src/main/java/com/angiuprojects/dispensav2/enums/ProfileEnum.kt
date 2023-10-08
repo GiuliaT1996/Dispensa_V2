@@ -6,5 +6,6 @@ enum class ProfileEnum(val formattedName: String) {
     companion object {
         private val map = values().associateBy(ProfileEnum::formattedName)
         fun fromFormattedName(formattedName: String) = map[formattedName]
+        fun getFormattedNames() = map
     }
 }

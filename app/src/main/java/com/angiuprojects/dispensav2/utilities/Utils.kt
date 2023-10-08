@@ -1,6 +1,5 @@
 package com.angiuprojects.dispensav2.utilities
 
-import android.R
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
@@ -19,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import androidx.viewbinding.ViewBinding
+import com.angiuprojects.dispensav2.R
 import com.angiuprojects.dispensav2.entities.StorageItem
 import com.google.android.material.snackbar.Snackbar
 import java.time.Instant
@@ -57,7 +57,7 @@ class Utils {
         drawable: Int,
         suggestionList: MutableList<String>
     ) {
-        val adapter = ArrayAdapter(context, R.layout.simple_spinner_dropdown_item, suggestionList)
+        val adapter = ArrayAdapter(context, R.layout.spinner_dropdown_item_view, suggestionList)
         spinner.setAdapter(adapter)
         spinner.setDropDownBackgroundDrawable(
             ResourcesCompat.getDrawable(
@@ -145,13 +145,6 @@ class Utils {
         dialog.show()
 
         return binding
-    }
-
-    fun <T> filterItemMap(itemMap: MutableMap<String, StorageItem>,
-                           getFieldFunction: KMutableProperty1<StorageItem, T>,
-                           property: T)
-    : MutableMap<String, StorageItem> {
-        return itemMap.filter { getFieldFunction.get(it.value) == property }.toMutableMap()
     }
 
     fun <A: Adapter<V>, V : ViewHolder> setRecyclerAdapter(recyclerView: RecyclerView,

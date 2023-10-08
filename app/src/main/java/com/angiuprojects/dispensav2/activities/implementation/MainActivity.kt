@@ -64,27 +64,50 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
 
     private fun setColorProfileButton(imageButton: ImageButton, profile: ProfileEnum, isClicked: Boolean) {
 
-        val filteredMap = Utils.singleton.filterItemMap(Constants.itemMap,StorageItem::profile, profile.formattedName)
+        Log.i(Constants.STORAGE_LOGGER, "ISCLICKED = " + isClicked)
+        Log.i(Constants.STORAGE_LOGGER, "PROFILE = " + profile.formattedName)
+
+        Log.i(Constants.STORAGE_LOGGER, "ITEM MAP")
+        Constants.itemMap.forEach { Log.i(Constants.STORAGE_LOGGER, it.value.toString()) }
+
+        val filteredMap = Constants.itemMap.filter { it.value.profile.trim() == profile.formattedName }
+
+        Log.i(Constants.STORAGE_LOGGER, "FILTER MAP")
+        filteredMap.forEach { Log.i(Constants.STORAGE_LOGGER, it.value.toString()) }
 
         if(Constants.profileSettings.profileMap[profile]?.equals(ProfileButtonStateEnum.OFF) == true) {
             if(isClicked) {
+                Log.i(Constants.STORAGE_LOGGER, "ENTERED IS CLICKED OFF -> ON")
+
                 Constants.profileSettings.profileMap[profile] = ProfileButtonStateEnum.ON
                 ReadWriteJsonUtils.singleton.write(this)
                 imageButton.backgroundTintList =
                     ColorStateList.valueOf(resources.getColor(R.color.yellow, baseContext.theme))
+
+                Log.i(Constants.STORAGE_LOGGER, "FILTER MAP: \n")
+                filteredMap.forEach {Log.i(Constants.STORAGE_LOGGER, it.value.toString())}
+
                 Constants.itemMapFilteredByProfile.putAll(filteredMap)
             } else {
+
+                Log.i(Constants.STORAGE_LOGGER, "ENTERED !IS CLICKED OFF")
+
                 imageButton.backgroundTintList =
                     ColorStateList.valueOf(resources.getColor(R.color.gray, baseContext.theme))
             }
         } else{
             if(isClicked) {
+
+                Log.i(Constants.STORAGE_LOGGER, "ENTERED IS CLICKED ON -> OFF")
+
                 Constants.profileSettings.profileMap[profile] = ProfileButtonStateEnum.OFF
                 ReadWriteJsonUtils.singleton.write(this)
                 imageButton.backgroundTintList =
                     ColorStateList.valueOf(resources.getColor(R.color.gray, baseContext.theme))
                 Constants.itemMapFilteredByProfile.entries.removeIf{ it.value.profile == profile.formattedName }
             } else {
+                Log.i(Constants.STORAGE_LOGGER, "ENTERED !IS CLICKED ON")
+
                 imageButton.backgroundTintList =
                     ColorStateList.valueOf(resources.getColor(R.color.yellow, baseContext.theme))
                 Constants.itemMapFilteredByProfile.putAll(filteredMap)

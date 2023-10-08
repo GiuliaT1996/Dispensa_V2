@@ -5,6 +5,8 @@
     android:scrollbars="vertical"
     android:layout_height="wrap_content"
     android:layout_centerInParent="true"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp"
     android:background="@drawable/pop_up_background">
 
     <ImageButton
@@ -41,6 +43,7 @@
             android:textColor="@color/main_blue"
             android:textColorHint="@color/main_blue"
             android:background="@color/transparent"
+            android:fontFamily="@font/ubuntu"
             android:hint="@string/sezione"
             android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -61,6 +64,7 @@
             android:textColor="@color/main_blue"
             android:textColorHint="@color/main_blue"
             android:background="@color/transparent"
+            android:fontFamily="@font/ubuntu"
             android:hint="@string/profile"
             android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -84,6 +88,7 @@
             android:background="@color/transparent"
             android:textColor="@color/main_blue"
             android:textColorHint="@color/main_blue"
+            android:fontFamily="@font/ubuntu"
             android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -106,6 +111,7 @@
             android:background="@color/transparent"
             android:textColor="@color/main_blue"
             android:textColorHint="@color/main_blue"
+            android:fontFamily="@font/ubuntu"
             android:inputType="number" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -128,6 +134,7 @@
             android:background="@color/transparent"
             android:textColor="@color/main_blue"
             android:textColorHint="@color/main_blue"
+            android:fontFamily="@font/ubuntu"
             android:inputType="numberSigned" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -147,6 +154,7 @@
             android:background="@color/transparent"
             android:textColor="@color/main_blue"
             android:hint="@string/date_format"
+            android:fontFamily="@font/ubuntu"
             android:textColorHint="@color/main_blue"
             android:inputType="date" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -172,6 +180,7 @@
         android:paddingBottom="20dp"
         android:text="@string/exp_date_switch_label"
         app:boxStrokeColor="@color/light_blue"
+        android:fontFamily="@font/ubuntu"
         app:layout_constraintBottom_toTopOf="@+id/edit_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
