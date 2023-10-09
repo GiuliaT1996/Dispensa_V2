@@ -53,7 +53,7 @@ class ShoppingListRecyclerAdapter(private val dataSet: MutableList<StorageItem>)
     }
 
     private fun onClickPlusMinus(num: Int, holder: ShoppingListUnitViewHolder) {
-        if(addedQuantityList[holder.adapterPosition] + num > 0) {
+        if(addedQuantityList[holder.adapterPosition] + num >= 0) {
             addedQuantityList[holder.adapterPosition] = addedQuantityList[holder.adapterPosition] + num
             notifyItemChanged(holder.adapterPosition)
         }

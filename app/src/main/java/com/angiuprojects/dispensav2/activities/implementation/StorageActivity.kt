@@ -45,7 +45,8 @@ class StorageActivity : BaseActivity<ActivityStorageBinding>(ActivityStorageBind
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if(header.searchInput.editText.toString().isNotEmpty()) {
                     if(s != null) {
-                        val filteredMap = Constants.itemMapFilteredByProfile.filter { it.key.contains(s) }
+                        val filteredMap = Constants.itemMapFilteredByProfile.filter { it.key.lowercase()
+                            .contains(s.toString().trim().lowercase()) }
                         Utils.singleton.setRecyclerAdapter(findViewById(R.id.storage_list),
                             context,
                             StorageRecyclerAdapter(filteredMap.values.toMutableList(), context)
