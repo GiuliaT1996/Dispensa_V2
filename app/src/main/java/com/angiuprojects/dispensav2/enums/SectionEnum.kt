@@ -18,7 +18,7 @@ enum class SectionEnum(val formattedName: String) {
     ALTRO("Altro");
 
     companion object {
-        private val map = ProfileEnum.values().associateBy(ProfileEnum::formattedName)
+        private val map = SectionEnum.values().associateBy(SectionEnum::formattedName)
         fun fromFormattedName(formattedName: String) = map[formattedName]
         fun getFormattedNames() = map
     }

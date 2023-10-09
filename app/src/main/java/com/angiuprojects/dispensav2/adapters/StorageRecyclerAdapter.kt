@@ -14,6 +14,7 @@ import com.angiuprojects.dispensav2.databinding.StorageUnitViewBinding
 import com.angiuprojects.dispensav2.entities.HistoryItem
 import com.angiuprojects.dispensav2.entities.StorageItem
 import com.angiuprojects.dispensav2.enums.HistoryActionEnum
+import com.angiuprojects.dispensav2.enums.ProfileButtonStateEnum
 import com.angiuprojects.dispensav2.enums.ProfileEnum
 import com.angiuprojects.dispensav2.enums.SectionEnum
 import com.angiuprojects.dispensav2.queries.Queries
@@ -24,7 +25,7 @@ import java.util.*
 import kotlin.reflect.KMutableProperty1
 import kotlin.reflect.KFunction4
 
-class StorageRecyclerAdapter(private val dataSet: MutableList<StorageItem>, private val context: Context)
+class StorageRecyclerAdapter(private var dataSet: MutableList<StorageItem>, private val context: Context)
     : RecyclerView.Adapter<StorageRecyclerAdapter.StorageUnitViewHolder>(){
 
     private lateinit var binding: StorageUnitViewBinding
@@ -143,17 +144,22 @@ class StorageRecyclerAdapter(private val dataSet: MutableList<StorageItem>, priv
 
             Constants.itemMap.remove(oldStorageItem.name)
             Constants.itemMap[newStorageItem.name] = newStorageItem
-            Constants.itemMapFilteredByProfile.remove(oldStorageItem.name)
-            Constants.itemMapFilteredByProfile[newStorageItem.name] = newStorageItem
             val historyItem = HistoryItem(newStorageItem.name, Date(), HistoryActionEnum.UPDATE, (newStorageItem.quantity - oldStorageItem.quantity))
             Constants.historyItemList.add(historyItem)
             Queries.singleton.addItem(historyItem, Queries.HISTORY_ITEMS_DB_REFERENCE)
             Queries.singleton.updateItem(newStorageItem, oldStorageItem.name, Queries.STORAGE_ITEMS_DB_REFERENCE)
             dataSet[holder.adapterPosition] = newStorageItem
             this.notifyItemChanged(holder.adapterPosition)
+            refreshDataSet()
             dialog.dismiss()
         }
 
+    }
+
+    private fun refreshDataSet() {
+        Utils.singleton.refreshProfileList()
+        dataSet = Constants.itemMapFilteredByProfile.values.sortedBy { it.name }.toMutableList()
+        notifyDataSetChanged()
     }
 
     private fun <T> checkIfNewIsPopulated(
@@ -213,7 +219,7 @@ class StorageRecyclerAdapter(private val dataSet: MutableList<StorageItem>, priv
         Constants.itemMap.remove(s.name)
         Constants.itemMapFilteredByProfile.remove(s.name)
         Queries.singleton.addItem(historyItem, Queries.HISTORY_ITEMS_DB_REFERENCE)
-        Queries.singleton.deleteStorageItem(s.name, Queries.STORAGE_ITEMS_DB_REFERENCE)
+        Queries.singleton.deleteItem(s.name, Queries.STORAGE_ITEMS_DB_REFERENCE)
         this.notifyItemRemoved(holder.adapterPosition)
         dialog.dismiss()
     }

@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import androidx.viewbinding.ViewBinding
 import com.angiuprojects.dispensav2.R
 import com.angiuprojects.dispensav2.entities.StorageItem
+import com.angiuprojects.dispensav2.enums.ProfileButtonStateEnum
 import com.google.android.material.snackbar.Snackbar
 import java.time.Instant
 import java.time.LocalDate
@@ -206,5 +207,15 @@ class Utils {
 
     fun getHoursFromDate(date: Date) : Long {
         return ChronoUnit.HOURS.between(date.toInstant(), Instant.now())
+    }
+
+    fun refreshProfileList() {
+        Constants.itemMapFilteredByProfile = mutableMapOf()
+        Constants.profileSettings.profileMap.forEach { (profileEnum, profileButtonStateEnum) ->
+            if(profileButtonStateEnum == ProfileButtonStateEnum.ON) {
+                val filteredMap = Constants.itemMap.filter { it.value.profile.trim() == profileEnum.formattedName }
+                Constants.itemMapFilteredByProfile.putAll(filteredMap)
+            }
+        }
     }
 }
