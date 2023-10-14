@@ -20,6 +20,7 @@
         android:layout_marginStart="15dp"
         android:text="@string/example_name"
         android:textStyle="bold"
+        android:layout_marginEnd="20dp"
         android:textColor="@color/main_blue"/>
 
     <TextView
@@ -33,6 +34,8 @@
         android:textSize="12sp"
         android:textStyle="normal"
         android:fontFamily="@font/ubuntu"
+        android:layout_toStartOf="@+id/plus_button"
+        android:layout_marginEnd="30dp"
         android:textColor="@color/main_blue"/>
 
     <TextView
@@ -47,6 +50,7 @@
         android:maxWidth="120dp"
         android:textStyle="normal"
         android:fontFamily="@font/ubuntu"
+        android:layout_alignEnd="@id/added"
         android:textColor="@color/main_blue"/>
 
     <ImageButton

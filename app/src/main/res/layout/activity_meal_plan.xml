@@ -37,21 +37,23 @@
         <TextView
             android:id="@+id/monday"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:text="@string/monday_example"
             android:fontFamily="@font/ubuntu"
             android:textColor="@color/main_blue"
-            app:layout_constraintBottom_toTopOf="@id/tuesday"
+            android:layout_marginTop="80dp"
+            app:layout_constraintTop_toTopOf="@id/monday_meal"
             app:layout_constraintEnd_toStartOf="@id/monday_meal"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintBottom_toBottomOf="@id/monday_meal"/>
 
         <!--add theme -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/monday_meal"
             android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@id/tuesday"
+            android:layout_height="60dp"
+            app:theme="@style/Widget.AppTheme.TextInputLayout.FilledBox.Dense"
+            app:layout_constraintBottom_toTopOf="@id/tuesday_meal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/monday"
             app:layout_constraintTop_toTopOf="parent">
@@ -69,24 +71,26 @@
         <TextView
             android:id="@+id/tuesday"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
+            android:layout_marginTop="80dp"
             android:text="@string/monday_example"
             android:fontFamily="@font/ubuntu"
             android:textColor="@color/main_blue"
-            app:layout_constraintBottom_toTopOf="@id/wednesday"
+            app:layout_constraintTop_toTopOf="@id/tuesday_meal"
             app:layout_constraintEnd_toStartOf="@id/tuesday_meal"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/monday"/>
+            app:layout_constraintBottom_toBottomOf="@id/tuesday_meal"/>
 
         <!--add theme -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tuesday_meal"
             android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@id/wednesday"
+            android:layout_height="60dp"
+            app:theme="@style/Widget.AppTheme.TextInputLayout.FilledBox.Dense"
+            app:layout_constraintBottom_toTopOf="@id/wednesday_meal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/tuesday"
-            app:layout_constraintTop_toBottomOf="@id/monday">
+            app:layout_constraintTop_toBottomOf="@id/monday_meal">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -101,24 +105,26 @@
         <TextView
             android:id="@+id/wednesday"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
+            android:layout_marginTop="80dp"
             android:text="@string/monday_example"
             android:fontFamily="@font/ubuntu"
             android:textColor="@color/main_blue"
-            app:layout_constraintBottom_toTopOf="@id/thursday"
+            app:layout_constraintTop_toTopOf="@id/wednesday_meal"
             app:layout_constraintEnd_toStartOf="@id/wednesday_meal"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tuesday"/>
+            app:layout_constraintBottom_toBottomOf="@id/wednesday_meal"/>
 
         <!--add theme -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/wednesday_meal"
             android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@id/thursday"
+            android:layout_height="60dp"
+            app:theme="@style/Widget.AppTheme.TextInputLayout.FilledBox.Dense"
+            app:layout_constraintBottom_toTopOf="@id/thursday_meal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/wednesday"
-            app:layout_constraintTop_toBottomOf="@id/tuesday">
+            app:layout_constraintTop_toBottomOf="@id/tuesday_meal">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -133,24 +139,26 @@
         <TextView
             android:id="@+id/thursday"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
+            android:layout_marginTop="80dp"
             android:text="@string/monday_example"
             android:fontFamily="@font/ubuntu"
             android:textColor="@color/main_blue"
-            app:layout_constraintBottom_toTopOf="@id/friday"
+            app:layout_constraintTop_toTopOf="@id/thursday_meal"
             app:layout_constraintEnd_toStartOf="@id/thursday_meal"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/wednesday"/>
+            app:layout_constraintBottom_toBottomOf="@id/thursday_meal"/>
 
         <!--add theme -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/thursday_meal"
             android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@id/friday"
+            android:layout_height="60dp"
+            app:theme="@style/Widget.AppTheme.TextInputLayout.FilledBox.Dense"
+            app:layout_constraintBottom_toTopOf="@id/friday_meal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/thursday"
-            app:layout_constraintTop_toBottomOf="@id/wednesday">
+            app:layout_constraintTop_toBottomOf="@id/wednesday_meal">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -165,24 +173,26 @@
         <TextView
             android:id="@+id/friday"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
+            android:layout_marginTop="80dp"
             android:text="@string/monday_example"
             android:fontFamily="@font/ubuntu"
             android:textColor="@color/main_blue"
-            app:layout_constraintBottom_toTopOf="@id/saturday"
+            app:layout_constraintTop_toTopOf="@id/friday_meal"
             app:layout_constraintEnd_toStartOf="@id/friday_meal"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/thursday"/>
+            app:layout_constraintBottom_toBottomOf="@id/friday_meal"/>
 
         <!--add theme -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/friday_meal"
             android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@id/saturday"
+            android:layout_height="60dp"
+            app:theme="@style/Widget.AppTheme.TextInputLayout.FilledBox.Dense"
+            app:layout_constraintBottom_toTopOf="@id/saturday_meal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/friday"
-            app:layout_constraintTop_toBottomOf="@id/thursday">
+            app:layout_constraintTop_toBottomOf="@id/thursday_meal">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -197,24 +207,26 @@
         <TextView
             android:id="@+id/saturday"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
+            android:layout_marginTop="80dp"
             android:text="@string/monday_example"
             android:fontFamily="@font/ubuntu"
             android:textColor="@color/main_blue"
-            app:layout_constraintBottom_toTopOf="@id/sunday"
+            app:layout_constraintTop_toTopOf="@id/saturday_meal"
             app:layout_constraintEnd_toStartOf="@id/saturday_meal"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/friday"/>
+            app:layout_constraintBottom_toBottomOf="@id/saturday_meal"/>
 
         <!--add theme -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/saturday_meal"
             android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@id/sunday"
+            android:layout_height="60dp"
+            app:theme="@style/Widget.AppTheme.TextInputLayout.FilledBox.Dense"
+            app:layout_constraintBottom_toTopOf="@id/sunday_meal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/saturday"
-            app:layout_constraintTop_toBottomOf="@id/friday">
+            app:layout_constraintTop_toBottomOf="@id/friday_meal">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -230,21 +242,23 @@
         <TextView
             android:id="@+id/sunday"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
+            android:layout_marginTop="80dp"
             android:text="@string/monday_example"
             android:fontFamily="@font/ubuntu"
             android:textColor="@color/main_blue"
-            app:layout_constraintTop_toBottomOf="@id/saturday"
+            app:layout_constraintTop_toTopOf="@id/sunday_meal"
             app:layout_constraintEnd_toStartOf="@id/sunday_meal"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintBottom_toBottomOf="@id/sunday_meal"/>
 
         <!--add theme -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/sunday_meal"
             android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/saturday"
+            android:layout_height="60dp"
+            app:theme="@style/Widget.AppTheme.TextInputLayout.FilledBox.Dense"
+            app:layout_constraintTop_toBottomOf="@id/saturday_meal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/sunday"
             app:layout_constraintBottom_toBottomOf="parent">

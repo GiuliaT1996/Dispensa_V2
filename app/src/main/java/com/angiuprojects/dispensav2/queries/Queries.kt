@@ -7,6 +7,8 @@ import com.angiuprojects.dispensav2.entities.ItemInterface
 import com.angiuprojects.dispensav2.entities.StorageItem
 import com.angiuprojects.dispensav2.utilities.Constants
 import com.google.firebase.database.*
+import java.time.Instant
+import java.time.temporal.ChronoUnit
 import java.util.*
 
 class Queries {
@@ -73,8 +75,8 @@ class Queries {
                 if (Constants.appIsStarting && item?.lastUpdate?.compareTo(Date())!! <= 1) {
                     Constants.historyItemList.add(item)
                 }
-                if(item?.lastUpdate?.compareTo(Date())!! > 10)
-                    deleteItem(item.lastUpdate.time.toString(), HISTORY_ITEMS_DB_REFERENCE)
+                if(ChronoUnit.HOURS.between(item?.lastUpdate?.toInstant(), Instant.now()) > 100)
+                    deleteItem(item?.lastUpdate?.time.toString(), HISTORY_ITEMS_DB_REFERENCE)
             }
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {}
             override fun onChildRemoved(snapshot: DataSnapshot) {}

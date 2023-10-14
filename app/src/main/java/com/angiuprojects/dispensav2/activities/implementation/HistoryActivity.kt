@@ -37,7 +37,8 @@ class HistoryActivity : BaseActivity<ActivityHistoryBinding>(ActivityHistoryBind
         hList.forEach { h1 ->
             val sameItems = hList.filter { h2 -> h2.storageName == h1.storageName && h2.action == h1.action
                     && ChronoUnit.HOURS.between(h1.lastUpdate.toInstant(), Instant.now()) ==
-                    ChronoUnit.HOURS.between(h2.lastUpdate.toInstant(), Instant.now())}.toMutableList()
+                    ChronoUnit.HOURS.between(h2.lastUpdate.toInstant(), Instant.now())
+                    && ChronoUnit.HOURS.between(h1.lastUpdate.toInstant(), Instant.now()) < 25}.toMutableList()
 
             val key = h1.storageName + "/" + h1.action + "/" +
                     ChronoUnit.HOURS.between(h1.lastUpdate.toInstant(), Instant.now())

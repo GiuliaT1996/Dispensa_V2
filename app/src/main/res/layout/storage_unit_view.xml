@@ -17,7 +17,7 @@
         android:layout_alignParentStart="true"
         android:layout_marginStart="6dp"
         android:layout_marginTop="14dp"
-        android:layout_marginEnd="6dp"
+        android:layout_marginEnd="15dp"
         android:layout_marginBottom="6dp"
         android:layout_toStartOf="@+id/quantity"
         android:autoSizeMaxTextSize="14sp"
@@ -35,7 +35,7 @@
         android:layout_below="@+id/name"
         android:layout_alignStart="@+id/name"
         android:layout_alignTop="@id/exp_date"
-        android:layout_marginEnd="6dp"
+        android:layout_marginEnd="15dp"
         android:layout_toStartOf="@+id/exp_date"
         android:fontFamily="@font/ubuntu"
         android:text="@string/example_section"
@@ -49,11 +49,11 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
-        android:maxWidth="120dp"
         android:text="@string/example_quantity"
         android:textSize="12sp"
         android:textStyle="normal"
         android:fontFamily="@font/ubuntu"
+        android:layout_alignEnd="@+id/exp_date"
         android:textColor="@color/main_blue"/>
 
     <TextView
@@ -65,9 +65,10 @@
         android:layout_below="@+id/quantity"
         android:text="@string/example_date"
         android:textSize="12sp"
-        android:maxWidth="120dp"
         android:textStyle="normal"
         android:fontFamily="@font/ubuntu"
+        android:layout_toStartOf="@id/minus_button"
+        android:layout_marginEnd="20dp"
         android:textColor="@color/main_blue"/>
 
     <ImageButton
