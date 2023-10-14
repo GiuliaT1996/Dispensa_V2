@@ -86,6 +86,19 @@
         android:contentDescription="@string/history_button_desc" />
 
     <ImageButton
+        android:id="@+id/meal_plan_button"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:background="@drawable/calendar"
+        android:backgroundTint="@drawable/change_color_yellow_buttons"
+        android:layout_alignEnd="@+id/calculator_button"
+        android:layout_above="@+id/history_button"
+        android:layout_marginBottom="10dp"
+        android:scaleY="0.8"
+        android:scaleX="0.8"
+        android:contentDescription="@string/history_button_desc"/>
+
+    <ImageButton
         android:id="@+id/boy_button"
         android:layout_width="60dp"
         android:layout_height="60dp"

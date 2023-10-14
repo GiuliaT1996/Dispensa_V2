@@ -2,8 +2,6 @@ package com.angiuprojects.dispensav2.activities
 
 import android.content.Context
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.widget.ImageView
@@ -37,6 +35,7 @@ class LoaderActivity : AppCompatActivity() {
         //ConvertUtils.singleton.getItems()
         //Queries.singleton.getStoricoItem()
         ReadWriteJsonUtils.singleton.getProfileSettings(this)
+        ReadWriteJsonUtils.singleton.getMealPlan(this)
 
         animateImage(this, binding.logoImage)
         animateText(binding.houseTxt)

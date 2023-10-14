@@ -1,9 +1,7 @@
 package com.angiuprojects.dispensav2.utilities
 
 import android.annotation.SuppressLint
-import com.angiuprojects.dispensav2.entities.HistoryItem
-import com.angiuprojects.dispensav2.entities.ProfileSettings
-import com.angiuprojects.dispensav2.entities.StorageItem
+import com.angiuprojects.dispensav2.entities.*
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 
@@ -15,6 +13,7 @@ class Constants {
         lateinit var itemMap: MutableMap<String, StorageItem>
         lateinit var itemMapFilteredByProfile: MutableMap<String, StorageItem>
         lateinit var historyItemList: MutableList<HistoryItem>
+        lateinit var mealPlan: MealPlan
         var appIsStarting: Boolean = true
 
         lateinit var profileSettings: ProfileSettings
@@ -32,6 +31,7 @@ class Constants {
             profileSettings = ProfileSettings()
             itemMapFilteredByProfile = mutableMapOf()
             historyItemList = mutableListOf()
+            mealPlan = MealPlan(sortedMapOf())
         }
 
     }

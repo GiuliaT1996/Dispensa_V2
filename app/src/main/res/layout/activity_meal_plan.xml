@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.implementation.MealPlanActivity">
+
+    <include android:id="@+id/header" layout="@layout/header_layout" />
+
+    <ImageButton
+        android:id="@+id/left"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/icons8_gi__squadrato_100"
+        android:rotation="90"
+        android:layout_below="@id/header"
+        android:layout_marginStart="10dp"
+        android:backgroundTint="@drawable/change_color_blue_buttons"/>
+
+    <ImageButton
+        android:id="@+id/right"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/icons8_gi__squadrato_100"
+        android:rotation="-90"
+        android:layout_below="@id/header"
+        android:layout_marginEnd="10dp"
+        android:backgroundTint="@drawable/change_color_blue_buttons"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/header">
+
+        <TextView
+            android:id="@+id/monday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/monday_example"
+            android:fontFamily="@font/ubuntu"
+            android:textColor="@color/main_blue"
+            app:layout_constraintBottom_toTopOf="@id/tuesday"
+            app:layout_constraintEnd_toStartOf="@id/monday_meal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <!--add theme -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/monday_meal"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/tuesday"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/monday"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/transparent"
+                android:textColor="@color/white"
+                android:fontFamily="@font/ubuntu"
+                android:inputType="text" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/tuesday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/monday_example"
+            android:fontFamily="@font/ubuntu"
+            android:textColor="@color/main_blue"
+            app:layout_constraintBottom_toTopOf="@id/wednesday"
+            app:layout_constraintEnd_toStartOf="@id/tuesday_meal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/monday"/>
+
+        <!--add theme -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tuesday_meal"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/wednesday"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tuesday"
+            app:layout_constraintTop_toBottomOf="@id/monday">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/transparent"
+                android:textColor="@color/white"
+                android:fontFamily="@font/ubuntu"
+                android:inputType="text" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/wednesday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/monday_example"
+            android:fontFamily="@font/ubuntu"
+            android:textColor="@color/main_blue"
+            app:layout_constraintBottom_toTopOf="@id/thursday"
+            app:layout_constraintEnd_toStartOf="@id/wednesday_meal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tuesday"/>
+
+        <!--add theme -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/wednesday_meal"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/thursday"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/wednesday"
+            app:layout_constraintTop_toBottomOf="@id/tuesday">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/transparent"
+                android:textColor="@color/white"
+                android:fontFamily="@font/ubuntu"
+                android:inputType="text" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/thursday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/monday_example"
+            android:fontFamily="@font/ubuntu"
+            android:textColor="@color/main_blue"
+            app:layout_constraintBottom_toTopOf="@id/friday"
+            app:layout_constraintEnd_toStartOf="@id/thursday_meal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/wednesday"/>
+
+        <!--add theme -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/thursday_meal"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/friday"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/thursday"
+            app:layout_constraintTop_toBottomOf="@id/wednesday">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/transparent"
+                android:textColor="@color/white"
+                android:fontFamily="@font/ubuntu"
+                android:inputType="text" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/friday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/monday_example"
+            android:fontFamily="@font/ubuntu"
+            android:textColor="@color/main_blue"
+            app:layout_constraintBottom_toTopOf="@id/saturday"
+            app:layout_constraintEnd_toStartOf="@id/friday_meal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/thursday"/>
+
+        <!--add theme -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/friday_meal"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/saturday"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/friday"
+            app:layout_constraintTop_toBottomOf="@id/thursday">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/transparent"
+                android:textColor="@color/white"
+                android:fontFamily="@font/ubuntu"
+                android:inputType="text" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/saturday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/monday_example"
+            android:fontFamily="@font/ubuntu"
+            android:textColor="@color/main_blue"
+            app:layout_constraintBottom_toTopOf="@id/sunday"
+            app:layout_constraintEnd_toStartOf="@id/saturday_meal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/friday"/>
+
+        <!--add theme -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/saturday_meal"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/sunday"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/saturday"
+            app:layout_constraintTop_toBottomOf="@id/friday">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/transparent"
+                android:textColor="@color/white"
+                android:fontFamily="@font/ubuntu"
+                android:inputType="text" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <TextView
+            android:id="@+id/sunday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/monday_example"
+            android:fontFamily="@font/ubuntu"
+            android:textColor="@color/main_blue"
+            app:layout_constraintTop_toBottomOf="@id/saturday"
+            app:layout_constraintEnd_toStartOf="@id/sunday_meal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <!--add theme -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/sunday_meal"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/saturday"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/sunday"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/transparent"
+                android:textColor="@color/white"
+                android:fontFamily="@font/ubuntu"
+                android:inputType="text" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</RelativeLayout>

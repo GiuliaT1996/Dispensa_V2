@@ -8,7 +8,6 @@ import android.widget.ImageButton
 import com.angiuprojects.dispensav2.R
 import com.angiuprojects.dispensav2.activities.BaseActivity
 import com.angiuprojects.dispensav2.databinding.ActivityMainBinding
-import com.angiuprojects.dispensav2.entities.StorageItem
 import com.angiuprojects.dispensav2.enums.ProfileButtonStateEnum
 import com.angiuprojects.dispensav2.enums.ProfileEnum
 import com.angiuprojects.dispensav2.utilities.Constants
@@ -25,7 +24,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         setColorProfileButton(binding.girlButton, ProfileEnum.GIULIA, false)
         setColorProfileButton(binding.bothButton, ProfileEnum.COMUNI, false)
 
-        Constants.itemMap.forEach { s -> Log.i(Constants.STORAGE_LOGGER, s.toString() + "\n") }
         setOnClickListeners()
 
         ExpiringActivity.filterExpiringItems().forEach {
@@ -46,6 +44,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         binding.storageButton.setOnClickListener { onClickOpenSelectedActivity(StorageActivity::class.java) }
         binding.shoppingListButton.setOnClickListener { onClickOpenSelectedActivity(ShoppingListActivity::class.java) }
         binding.expiringButton.setOnClickListener { onClickOpenSelectedActivity(ExpiringActivity::class.java) }
+        binding.mealPlanButton.setOnClickListener { onClickOpenSelectedActivity(MealPlanActivity::class.java) }
 
         /*
             START LIST YELLOW BUTTONS
@@ -66,7 +65,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         if(Constants.profileSettings.profileMap[profile]?.equals(ProfileButtonStateEnum.OFF) == true) {
             if(isClicked) {
                 Constants.profileSettings.profileMap[profile] = ProfileButtonStateEnum.ON
-                ReadWriteJsonUtils.singleton.write(this)
+                ReadWriteJsonUtils.singleton.write(this, ReadWriteJsonUtils.singleton.profileFileName, Constants.profileSettings)
                 imageButton.backgroundTintList =
                     ColorStateList.valueOf(resources.getColor(R.color.yellow, baseContext.theme))
             } else {
@@ -76,7 +75,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         } else{
             if(isClicked) {
                 Constants.profileSettings.profileMap[profile] = ProfileButtonStateEnum.OFF
-                ReadWriteJsonUtils.singleton.write(this)
+                ReadWriteJsonUtils.singleton.write(this, ReadWriteJsonUtils.singleton.profileFileName, Constants.profileSettings)
                 imageButton.backgroundTintList =
                     ColorStateList.valueOf(resources.getColor(R.color.gray, baseContext.theme))
             } else {

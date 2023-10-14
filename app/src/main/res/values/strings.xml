@@ -6,7 +6,8 @@
     <string name="shopping_list_txt">Lista della Spesa</string>
     <string name="expiring_txt">In Scadenza</string>
     <string name="history_txt">Storico</string>
-    <string name="ticket_calculator_txt">Calcolatore Buoni Pasto</string>y
+    <string name="ticket_calculator_txt">Calcolatore Buoni Pasto</string>
+    <string name="meal_plan_txt">Piano Settimanale</string>
     <string name="search_hint">Cerca</string>
 
     <!-- Logo Activity -->
@@ -94,6 +95,7 @@
     <string name="missing_days_example">Mancano 7 giorni alla scadenza</string>
     <string name="mandatory">IMPORTANTI</string>
     <string name="optional">OPZIONALI</string>
+    <string name="monday_example">Lunedì 00</string>
 
 
 </resources>

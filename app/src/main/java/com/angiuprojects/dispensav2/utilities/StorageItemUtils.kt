@@ -60,8 +60,12 @@ class StorageItemUtils {
         text as TextInputLayout
         return if (text.editText != null && text.editText!!.text != null && text.editText!!.text.toString()
                 .isNotEmpty()) {
-            setterFunction.set(storageItem, text.editText!!.text.toString())
-            text.editText!!.text.toString().trim()
+            val formattedText = text.editText!!.text.toString().trim().replace(".", "-")
+                .replace("$", " ").replace("#", " ")
+                .replace("[", " ").replace("]", " ")
+                .replace("/", "-").replace("\\", "-")
+            setterFunction.set(storageItem, formattedText)
+            formattedText
         } else null
     }
 
