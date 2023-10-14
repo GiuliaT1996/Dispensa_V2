@@ -33,8 +33,13 @@ class Queries {
         myRef.orderByChild("name").addChildEventListener(object : ChildEventListener {
             override fun onChildAdded(dataSnapshot: DataSnapshot, prevChildKey: String?) {
                 val item: StorageItem? = dataSnapshot.getValue(StorageItem::class.java)
-                if (Constants.appIsStarting && checkStorageItem(item)) {
-                    Constants.itemMap[item!!.name] = item
+                try {
+                    if (Constants.appIsStarting && checkStorageItem(item)) {
+                        Constants.itemMap[item!!.name] = item
+                    }
+                } catch (e : java.lang.Exception) {
+                    Log.e(Constants.STORAGE_LOGGER, "Errore recupero item: \n"
+                    + e.printStackTrace())
                 }
             }
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {}
