@@ -4,17 +4,14 @@ import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.widget.AdapterView
-import android.widget.AdapterView.OnItemSelectedListener
 import com.angiuprojects.dispensav2.R
 import com.angiuprojects.dispensav2.activities.BaseActivity
-import com.angiuprojects.dispensav2.adapters.ShoppingListRecyclerAdapter
 import com.angiuprojects.dispensav2.adapters.StorageRecyclerAdapter
 import com.angiuprojects.dispensav2.databinding.ActivityStorageBinding
 import com.angiuprojects.dispensav2.databinding.HeaderLayoutBinding
-import com.angiuprojects.dispensav2.entities.StorageItem
-import com.angiuprojects.dispensav2.enums.SectionEnum
+import com.angiuprojects.dispensav2.entities.Section
 import com.angiuprojects.dispensav2.utilities.Constants
+import com.angiuprojects.dispensav2.utilities.StorageItemUtils
 import com.angiuprojects.dispensav2.utilities.Utils
 import java.util.*
 
@@ -26,9 +23,10 @@ class StorageActivity : BaseActivity<ActivityStorageBinding>(ActivityStorageBind
             isFilterPresent = true,
             isSearchPresent = true
         )
+        StorageItemUtils.singleton.filterByProfile()
         Utils.singleton.setRecyclerAdapter(findViewById(R.id.storage_list),
             this,
-            StorageRecyclerAdapter(Constants.itemMapFilteredByProfile.values.toMutableList(), this)
+            StorageRecyclerAdapter(Constants.itemMap.values.toMutableList(), this)
         )
     }
 
@@ -45,7 +43,8 @@ class StorageActivity : BaseActivity<ActivityStorageBinding>(ActivityStorageBind
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if(header.searchInput.editText.toString().isNotEmpty()) {
                     if(s != null) {
-                        val filteredMap = Constants.itemMapFilteredByProfile.filter { it.key.lowercase()
+                        StorageItemUtils.singleton.filterByProfile()
+                        val filteredMap = Constants.itemMap.filter { it.key.lowercase()
                             .contains(s.toString().trim().lowercase()) }
                         Utils.singleton.setRecyclerAdapter(findViewById(R.id.storage_list),
                             context,
@@ -64,7 +63,8 @@ class StorageActivity : BaseActivity<ActivityStorageBinding>(ActivityStorageBind
             header.filterSpinner,
             this,
             R.drawable.spinner_background,
-            SectionEnum.values().mapTo(mutableListOf()){it.formattedName}
+            Constants.sectionList.map(Section::name)
+                .toCollection(mutableListOf())
         )
 
         val context: Context = this
@@ -72,8 +72,9 @@ class StorageActivity : BaseActivity<ActivityStorageBinding>(ActivityStorageBind
         header.filterSpinner.setOnItemClickListener { parent, _, position, _ ->
             run {
                 val section = parent.getItemAtPosition(position) as String
-                val filteredMap = Constants.itemMapFilteredByProfile.filter {
-                    it.value.section.trim().lowercase(Locale.ROOT) == section.trim().lowercase(Locale.ROOT)
+                StorageItemUtils.singleton.filterByProfile()
+                val filteredMap = Constants.itemMap.filter {
+                    it.value.section.name.trim().lowercase(Locale.ROOT) == section.trim().lowercase(Locale.ROOT)
                 }
                 Utils.singleton.setRecyclerAdapter(findViewById(R.id.storage_list),
                     context,
@@ -89,9 +90,11 @@ class StorageActivity : BaseActivity<ActivityStorageBinding>(ActivityStorageBind
         header.filterSpinner.text = null
         header.searchInput.editText?.setText("")
 
+        StorageItemUtils.singleton.filterByProfile()
+
         Utils.singleton.setRecyclerAdapter(findViewById(R.id.storage_list),
             this,
-            StorageRecyclerAdapter(Constants.itemMapFilteredByProfile.values.toMutableList(), this)
+            StorageRecyclerAdapter(Constants.itemMap.values.toMutableList(), this)
         )
     }
 }

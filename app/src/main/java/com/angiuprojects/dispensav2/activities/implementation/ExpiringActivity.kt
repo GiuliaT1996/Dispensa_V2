@@ -6,11 +6,12 @@ import com.angiuprojects.dispensav2.activities.BaseActivity
 import com.angiuprojects.dispensav2.adapters.ExpiringRecyclerAdapter
 import com.angiuprojects.dispensav2.databinding.ActivityExpiringBinding
 import com.angiuprojects.dispensav2.entities.StorageItem
+import com.angiuprojects.dispensav2.entities.WhereCondition
+import com.angiuprojects.dispensav2.enums.ComparatorEnum
+import com.angiuprojects.dispensav2.enums.ConditionEnum
+import com.angiuprojects.dispensav2.queries.Queries
 import com.angiuprojects.dispensav2.utilities.Constants
 import com.angiuprojects.dispensav2.utilities.Utils
-import java.time.Instant
-import java.time.temporal.ChronoUnit
-import java.util.*
 
 class ExpiringActivity : BaseActivity<ActivityExpiringBinding>(ActivityExpiringBinding::inflate) {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,8 +30,11 @@ class ExpiringActivity : BaseActivity<ActivityExpiringBinding>(ActivityExpiringB
 
     companion object {
         fun filterExpiringItems() : MutableList<StorageItem> {
-            return Constants.itemMap.filter { it.value.expirationDate != null && it.value.expirationDate!! <
-                    Date.from(Instant.now().plus(7, ChronoUnit.DAYS)) }.values.toMutableList()
+            val whereConditions = mutableListOf<WhereCondition>()
+            val c = WhereCondition("exp_date", "DATEADD(day, 7, GETDATE())", ComparatorEnum.LS, ConditionEnum.AND, false)
+            whereConditions.add(c)
+            Queries.singleton.selectItemsQuery(whereConditions)
+            return Constants.itemMap.values.toMutableList()
         }
     }
 

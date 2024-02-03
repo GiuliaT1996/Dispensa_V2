@@ -35,12 +35,12 @@ class ReadWriteJsonUtils {
             try {
                 Constants.profileSettings = Gson().fromJson(json, ProfileSettings::class.java)
                 Log.i(Constants.STORAGE_LOGGER, "ProfileSettings " + Constants.profileSettings.toString())
-                return
+                if(!Constants.profileSettings.profileList.isNullOrEmpty()) return
             } catch (e: Exception) {
                 Log.e(Constants.STORAGE_LOGGER, "Error converting file in json. \n" + e.message)
             }
         }
-        Constants.profileSettings = ProfileSettings()
+        Constants.profileSettings = ProfileSettings(Constants.profileList)
     }
 
     fun getMealPlan(context: Context) {

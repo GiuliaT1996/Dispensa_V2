@@ -9,7 +9,13 @@ import com.angiuprojects.dispensav2.activities.BaseActivity
 import com.angiuprojects.dispensav2.adapters.ShoppingListRecyclerAdapter
 import com.angiuprojects.dispensav2.databinding.ActivityShoppingListBinding
 import com.angiuprojects.dispensav2.entities.StorageItem
+import com.angiuprojects.dispensav2.entities.WhereCondition
+import com.angiuprojects.dispensav2.enums.ComparatorEnum
+import com.angiuprojects.dispensav2.enums.ConditionEnum
+import com.angiuprojects.dispensav2.enums.ProfileButtonStateEnum
+import com.angiuprojects.dispensav2.queries.Queries
 import com.angiuprojects.dispensav2.utilities.Constants
+import com.angiuprojects.dispensav2.utilities.StorageItemUtils
 import com.angiuprojects.dispensav2.utilities.Utils
 
 class ShoppingListActivity : BaseActivity<ActivityShoppingListBinding>(ActivityShoppingListBinding::inflate) {
@@ -35,10 +41,10 @@ class ShoppingListActivity : BaseActivity<ActivityShoppingListBinding>(ActivityS
             ShoppingListRecyclerAdapter(filterShoppingList(isOptional = true)))
     }
 
-    private fun filterShoppingList(isOptional: Boolean) : MutableList<StorageItem> {
-        return Constants.itemMapFilteredByProfile
-            .filter { (isOptional && it.value.quantity == 0 && it.value.trigger < 0)
-                    || (!isOptional && it.value.quantity <= it.value.trigger) }.values.toMutableList()
+    private fun filterShoppingList(isOptional: Boolean) : MutableList<StorageItem> { //todo filter by profile
+        StorageItemUtils.singleton.filterByProfile()
+        return Constants.itemMap.filter { (isOptional && it.value.quantity == 0 && it.value.trigger < 0)
+                   || (!isOptional && it.value.quantity <= it.value.trigger) }.values.toMutableList()
     }
 
     private fun expand(expandButton: ImageButton, recyclerView: RecyclerView) {

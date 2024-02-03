@@ -67,9 +67,9 @@ class ShoppingListRecyclerAdapter(private val dataSet: MutableList<StorageItem>)
         }
         s.quantity = s.quantity + addedQuantityList[holder.adapterPosition]
         addedQuantityList[holder.adapterPosition] = 0
-        Queries.singleton.updateItem(s, s.name, Queries.STORAGE_ITEMS_DB_REFERENCE)
+        Queries.singleton.updateItem(s, s) //todo olditem
         Constants.historyItemList.add(historyItem)
-        Queries.singleton.addItem(historyItem, Queries.HISTORY_ITEMS_DB_REFERENCE)
+       // Queries.singleton.addItem(historyItem, Queries.HISTORY_ITEMS_DB_REFERENCE) //todo
         if(s.quantity > s.trigger) {
             dataSet.remove(s)
             addedQuantityList.removeAt(holder.adapterPosition)

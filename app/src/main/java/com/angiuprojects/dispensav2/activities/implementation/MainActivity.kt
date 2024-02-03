@@ -3,13 +3,12 @@ package com.angiuprojects.dispensav2.activities.implementation
 import android.app.Dialog
 import android.content.res.ColorStateList
 import android.os.Bundle
-import android.util.Log
 import android.widget.ImageButton
 import com.angiuprojects.dispensav2.R
 import com.angiuprojects.dispensav2.activities.BaseActivity
 import com.angiuprojects.dispensav2.databinding.ActivityMainBinding
+import com.angiuprojects.dispensav2.entities.Profile
 import com.angiuprojects.dispensav2.enums.ProfileButtonStateEnum
-import com.angiuprojects.dispensav2.enums.ProfileEnum
 import com.angiuprojects.dispensav2.utilities.Constants
 import com.angiuprojects.dispensav2.utilities.ReadWriteJsonUtils
 import com.angiuprojects.dispensav2.utilities.Utils
@@ -18,11 +17,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Constants.appIsStarting = false
 
-        setColorProfileButton(binding.boyButton, ProfileEnum.ANTONIO, false)
-        setColorProfileButton(binding.girlButton, ProfileEnum.GIULIA, false)
-        setColorProfileButton(binding.bothButton, ProfileEnum.COMUNI, false)
+        Constants.profileSettings.profileList.forEach { p -> setColorProfileButton(p, false) }
 
         setOnClickListeners()
 
@@ -56,16 +52,16 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         /*
             START LIST SELECTION BUTTONS
          */
-        binding.boyButton.setOnClickListener { setColorProfileButton(binding.boyButton, ProfileEnum.ANTONIO, true) }
-        binding.girlButton.setOnClickListener { setColorProfileButton(binding.girlButton, ProfileEnum.GIULIA, true) }
-        binding.bothButton.setOnClickListener { setColorProfileButton(binding.bothButton, ProfileEnum.COMUNI, true) }
+        Constants.profileSettings.profileList.forEach { p -> getImageButtonFromProfile(p)?.setOnClickListener { setColorProfileButton(p, true) } }
     }
 
-    private fun setColorProfileButton(imageButton: ImageButton, profile: ProfileEnum, isClicked: Boolean) {
-        if(Constants.profileSettings.profileMap[profile]?.equals(ProfileButtonStateEnum.OFF) == true) {
+    private fun setColorProfileButton(profile: Profile, isClicked: Boolean) {
+
+        val imageButton = getImageButtonFromProfile(profile) ?: return
+
+        if(profile.state == ProfileButtonStateEnum.OFF) {
             if(isClicked) {
-                Constants.profileSettings.profileMap[profile] = ProfileButtonStateEnum.ON
-                ReadWriteJsonUtils.singleton.write(this, ReadWriteJsonUtils.singleton.profileFileName, Constants.profileSettings)
+                profile.state = ProfileButtonStateEnum.ON
                 imageButton.backgroundTintList =
                     ColorStateList.valueOf(resources.getColor(R.color.yellow, baseContext.theme))
             } else {
@@ -74,8 +70,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
             }
         } else{
             if(isClicked) {
-                Constants.profileSettings.profileMap[profile] = ProfileButtonStateEnum.OFF
-                ReadWriteJsonUtils.singleton.write(this, ReadWriteJsonUtils.singleton.profileFileName, Constants.profileSettings)
+                profile.state = ProfileButtonStateEnum.OFF
                 imageButton.backgroundTintList =
                     ColorStateList.valueOf(resources.getColor(R.color.gray, baseContext.theme))
             } else {
@@ -83,11 +78,19 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                     ColorStateList.valueOf(resources.getColor(R.color.yellow, baseContext.theme))
             }
         }
-
-        Utils.singleton.refreshProfileList()
+        ReadWriteJsonUtils.singleton.write(this, ReadWriteJsonUtils.singleton.profileFileName, Constants.profileSettings)
     }
 
     private fun <T> onClickOpenSelectedActivity(clazz: Class<T>) {
         Utils.singleton.changeActivity(this, clazz)
+    }
+
+    private fun getImageButtonFromProfile(p: Profile) : ImageButton? {
+        return when(p.image) {
+            "BOY" -> binding.boyButton
+            "GIRL" -> binding.girlButton
+            "BOTH" -> binding.bothButton
+            else -> null
+        }
     }
 }

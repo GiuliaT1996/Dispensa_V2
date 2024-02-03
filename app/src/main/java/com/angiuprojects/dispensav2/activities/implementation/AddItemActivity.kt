@@ -8,8 +8,8 @@ import com.angiuprojects.dispensav2.databinding.ActivityAddItemBinding
 import com.angiuprojects.dispensav2.entities.HistoryItem
 import com.angiuprojects.dispensav2.entities.StorageItem
 import com.angiuprojects.dispensav2.enums.HistoryActionEnum
-import com.angiuprojects.dispensav2.enums.ProfileEnum
-import com.angiuprojects.dispensav2.enums.SectionEnum
+import com.angiuprojects.dispensav2.entities.Profile
+import com.angiuprojects.dispensav2.entities.Section
 import com.angiuprojects.dispensav2.queries.Queries
 import com.angiuprojects.dispensav2.utilities.Constants
 import com.angiuprojects.dispensav2.utilities.StorageItemUtils
@@ -33,14 +33,16 @@ class AddItemActivity : BaseActivity<ActivityAddItemBinding>(ActivityAddItemBind
             binding.sectionSpinner,
             this,
             R.drawable.spinner_background,
-            SectionEnum.values().mapTo(mutableListOf()){it.formattedName}
+            Constants.sectionList.map(Section::name)
+                .toCollection(mutableListOf())
         )
 
         Utils.singleton.createNewDropDown(
             binding.profileSpinner,
             this,
             R.drawable.spinner_background,
-            ProfileEnum.values().mapTo(mutableListOf()){it.formattedName}
+            Constants.profileList.map(Profile::name)
+                .toCollection(mutableListOf())
         )
 
         binding.createButton.setOnClickListener { onClickCreateItem() }
@@ -63,14 +65,10 @@ class AddItemActivity : BaseActivity<ActivityAddItemBinding>(ActivityAddItemBind
                         + Constants.DATE_FORMAT)
         else if(StorageItemUtils.singleton.getTextFromACTV(binding.profileSpinner, storageItem, StorageItem::profile) == null)
             Utils.singleton.openSnackBar(snackBarView, "Inserire profilo!")
-        else if(Constants.itemMap.containsKey(storageItem.name)) {
-            Utils.singleton.openSnackBar(snackBarView,
-                "Esiste già un oggetto con nome " + storageItem.name)
-        }
         else {
             val historyItem = HistoryItem(storageItem.name, Date(), HistoryActionEnum.INSERT, storageItem.quantity)
             Constants.historyItemList.add(historyItem)
-            Queries.singleton.addItem(historyItem, Queries.HISTORY_ITEMS_DB_REFERENCE)
+            //Queries.singleton.addItem(historyItem, Queries.HISTORY_ITEMS_DB_REFERENCE) //TODO
             StorageItemUtils.singleton.addStorageItem(storageItem)
             createPopUp(storageItem.name)
         }

@@ -3,12 +3,15 @@ package com.angiuprojects.dispensav2.utilities
 import android.util.Log
 import android.view.View
 import android.widget.AutoCompleteTextView
+import com.angiuprojects.dispensav2.entities.ItemInterface
 import com.angiuprojects.dispensav2.entities.StorageItem
+import com.angiuprojects.dispensav2.entities.WhereCondition
+import com.angiuprojects.dispensav2.enums.ComparatorEnum
+import com.angiuprojects.dispensav2.enums.ConditionEnum
 import com.angiuprojects.dispensav2.enums.ProfileButtonStateEnum
-import com.angiuprojects.dispensav2.enums.ProfileEnum
 import com.angiuprojects.dispensav2.queries.Queries
 import com.google.android.material.textfield.TextInputLayout
-import java.util.*
+import java.util.Date
 import kotlin.reflect.KMutableProperty1
 
 class StorageItemUtils {
@@ -23,12 +26,8 @@ class StorageItemUtils {
 
     fun addStorageItem(storageItem: StorageItem) : Boolean {
         try {
-            Constants.itemMap[storageItem.name] = storageItem
-
-            if(Constants.profileSettings.profileMap[ProfileEnum.fromFormattedName(storageItem.profile)] == ProfileButtonStateEnum.ON)
-                Constants.itemMapFilteredByProfile[storageItem.name] = storageItem
-
-            Queries.singleton.addItem(storageItem, Queries.STORAGE_ITEMS_DB_REFERENCE)
+            //todo esiste già?
+            Queries.singleton.insertItem(storageItem)
         } catch (e : Exception) {
             Log.e(Constants.STORAGE_LOGGER, "Non è stato possibile aggiungere l'elemento " + storageItem.name + ": " + e.message.toString())
             return false
@@ -69,12 +68,14 @@ class StorageItemUtils {
         } else null
     }
 
-    fun getTextFromACTV(
+    inline fun <reified T : ItemInterface> getTextFromACTV(
         text: View, storageItem: StorageItem,
-        setterFunction: KMutableProperty1<StorageItem, String>): String? {
+        setterFunction: KMutableProperty1<StorageItem, T>): String? {
         text as AutoCompleteTextView
         return if(text.text != null && text.text.toString().isNotEmpty() && text.text.toString() != "null") {
-            setterFunction.set(storageItem, text.text.toString())
+            val className = T::class.qualifiedName
+            val item = className?.let { Class.forName(it).getDeclaredConstructor().newInstance() } as T
+            setterFunction.set(storageItem, item)
             text.text.toString().trim()
         } else null
     }
@@ -92,5 +93,17 @@ class StorageItemUtils {
             }
             text.editText!!.text.toString()
         } else null
+    }
+
+    fun filterByProfile() {
+        val whereConditions = mutableListOf<WhereCondition>()
+        Constants.profileSettings.profileList.forEach {
+                p -> if(p.state == ProfileButtonStateEnum.ON) {
+                    val c = WhereCondition("profile", "'${p.name}'", ComparatorEnum.EQ, ConditionEnum.OR, null)
+                    whereConditions.add(c)
+                }
+        }
+        if(whereConditions.isNotEmpty()) Queries.singleton.selectItemsQuery(whereConditions)
+        else Constants.itemMap = mutableMapOf()
     }
 }

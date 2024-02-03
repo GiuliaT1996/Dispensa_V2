@@ -29,8 +29,11 @@ class LoaderActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         initializeSingletons()
-        Queries.singleton.getStorageItems()
-        Queries.singleton.getHistoryItems()
+        //Queries.singleton.getStorageItems()
+        //Queries.singleton.getHistoryItems()
+
+        Queries.singleton.executeQuery("select * from section", Queries::selectSections)
+        Queries.singleton.executeQuery("select * from profile", Queries::selectProfiles)
 
         //ConvertUtils.singleton.getItems()
         //Queries.singleton.getStoricoItem()

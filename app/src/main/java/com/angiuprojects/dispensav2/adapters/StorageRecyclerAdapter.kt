@@ -14,8 +14,8 @@ import com.angiuprojects.dispensav2.databinding.StorageUnitViewBinding
 import com.angiuprojects.dispensav2.entities.HistoryItem
 import com.angiuprojects.dispensav2.entities.StorageItem
 import com.angiuprojects.dispensav2.enums.HistoryActionEnum
-import com.angiuprojects.dispensav2.enums.ProfileEnum
-import com.angiuprojects.dispensav2.enums.SectionEnum
+import com.angiuprojects.dispensav2.entities.Profile
+import com.angiuprojects.dispensav2.entities.Section
 import com.angiuprojects.dispensav2.queries.Queries
 import com.angiuprojects.dispensav2.utilities.Constants
 import com.angiuprojects.dispensav2.utilities.StorageItemUtils
@@ -51,7 +51,7 @@ class StorageRecyclerAdapter(private var dataSet: MutableList<StorageItem>, priv
     override fun onBindViewHolder(holder: StorageUnitViewHolder, position: Int) {
         with(dataSet[position]) {
             holder.name.text = name
-            holder.section.text = section
+            holder.section.text = section.name
             holder.expirationDate.text = Utils.singleton.convertDateToString(expirationDate)
             holder.quantity.text = quantity.toString()
             holder.plusButton.setOnClickListener { onClickPlusMinus(1, this, holder) }
@@ -94,8 +94,8 @@ class StorageRecyclerAdapter(private var dataSet: MutableList<StorageItem>, priv
         s.quantity = s.quantity + num
         val historyItem = HistoryItem(s.name, Date(), HistoryActionEnum.UPDATE, num)
         Constants.historyItemList.add(historyItem)
-        Queries.singleton.addItem(historyItem, Queries.HISTORY_ITEMS_DB_REFERENCE)
-        Queries.singleton.updateItem(s, s.name, Queries.STORAGE_ITEMS_DB_REFERENCE)
+        //Queries.singleton.addItem(historyItem, Queries.HISTORY_ITEMS_DB_REFERENCE) //todo
+        Queries.singleton.updateItem(s, s) //todo
         this.notifyItemChanged(holder.adapterPosition)
     }
 
@@ -117,10 +117,12 @@ class StorageRecyclerAdapter(private var dataSet: MutableList<StorageItem>, priv
         val getDateResponse = StorageItemUtils.singleton.getDate(binding.expDate, newStorageItem,
             StorageItem::expirationDate, binding.expDateSwitch.isChecked)
 
-        if(!ProfileEnum.getFormattedNames().containsKey(binding.profileSpinner.text.toString().trim()))
+
+        if(Constants.profileList.find { p -> p.name == binding.profileSpinner.text.toString().trim() } == null)
             binding.profileSpinner.setText("")
-        if(!SectionEnum.getFormattedNames().containsKey(binding.sectionSpinner.text.toString().trim()))
+        if(Constants.sectionList.find { s -> s.name == binding.sectionSpinner.text.toString().trim() } == null)
             binding.sectionSpinner.setText("")
+
 
         if(getDateResponse.first == null && !getDateResponse.second) {
             Utils.singleton.openSnackBar(snackBarView,
@@ -141,12 +143,13 @@ class StorageRecyclerAdapter(private var dataSet: MutableList<StorageItem>, priv
             if(newStorageItem.expirationDate == null && !binding.expDateSwitch.isChecked)
                 newStorageItem.expirationDate = oldStorageItem.expirationDate
 
-            Constants.itemMap.remove(oldStorageItem.name)
-            Constants.itemMap[newStorageItem.name] = newStorageItem
+            //todo query
+            //Constants.itemMap.remove(oldStorageItem.name)
+            //Constants.itemMap[newStorageItem.name] = newStorageItem
             val historyItem = HistoryItem(newStorageItem.name, Date(), HistoryActionEnum.UPDATE, (newStorageItem.quantity - oldStorageItem.quantity))
             Constants.historyItemList.add(historyItem)
-            Queries.singleton.addItem(historyItem, Queries.HISTORY_ITEMS_DB_REFERENCE)
-            Queries.singleton.updateItem(newStorageItem, oldStorageItem.name, Queries.STORAGE_ITEMS_DB_REFERENCE)
+            //Queries.singleton.addItem(historyItem, Queries.HISTORY_ITEMS_DB_REFERENCE) //todo
+            Queries.singleton.updateItem(newStorageItem, oldStorageItem)
             dataSet[holder.adapterPosition] = newStorageItem
             this.notifyItemChanged(holder.adapterPosition)
             refreshDataSet()
@@ -156,8 +159,7 @@ class StorageRecyclerAdapter(private var dataSet: MutableList<StorageItem>, priv
     }
 
     private fun refreshDataSet() {
-        Utils.singleton.refreshProfileList()
-        dataSet = Constants.itemMapFilteredByProfile.values.sortedBy { it.name }.toMutableList()
+        //dataSet = Constants.itemMapFilteredByProfile.values.sortedBy { it.name }.toMutableList() //todo query
         notifyDataSetChanged()
     }
 
@@ -178,13 +180,15 @@ class StorageRecyclerAdapter(private var dataSet: MutableList<StorageItem>, priv
                 binding.sectionSpinner,
                 context,
                 R.drawable.small_pop_up_background,
-                SectionEnum.values().mapTo(mutableListOf()){it.formattedName}
+                Constants.sectionList.map(Section::name)
+                    .toCollection(mutableListOf())
             )
             Utils.singleton.createNewDropDown(
                 binding.profileSpinner,
                 context,
                 R.drawable.small_pop_up_background,
-                ProfileEnum.values().mapTo(mutableListOf()){it.formattedName}
+                Constants.profileList.map(Profile::name)
+                    .toCollection(mutableListOf())
             )
         }
     }
@@ -196,8 +200,8 @@ class StorageRecyclerAdapter(private var dataSet: MutableList<StorageItem>, priv
         binding?.expDate?.hint = String.format("Data Scadenza: %s",  Utils.singleton.convertDateToString(s.expirationDate))
 
         binding?.expDateSwitch?.setOnCheckedChangeListener { _, isChecked -> binding.expDate.isEnabled = isChecked }
-        binding?.sectionSpinner?.setText(s.section)
-        binding?.profileSpinner?.setText(s.profile)
+        binding?.sectionSpinner?.setText(s.section.name)
+        binding?.profileSpinner?.setText(s.profile.name)
     }
 
     private fun deleteButton(s: StorageItem, holder: StorageUnitViewHolder) {
@@ -215,10 +219,8 @@ class StorageRecyclerAdapter(private var dataSet: MutableList<StorageItem>, priv
         val historyItem = HistoryItem(s.name, Date(), HistoryActionEnum.DELETE, s.quantity)
         dataSet.remove(s)
         Constants.historyItemList.add(historyItem)
-        Constants.itemMap.remove(s.name)
-        Constants.itemMapFilteredByProfile.remove(s.name)
-        Queries.singleton.addItem(historyItem, Queries.HISTORY_ITEMS_DB_REFERENCE)
-        Queries.singleton.deleteItem(s.name, Queries.STORAGE_ITEMS_DB_REFERENCE)
+        //Queries.singleton.addItem(historyItem, Queries.HISTORY_ITEMS_DB_REFERENCE) //todo
+        //Queries.singleton.deleteItem(s.name, Queries.STORAGE_ITEMS_DB_REFERENCE)
         this.notifyItemRemoved(holder.adapterPosition)
         dialog.dismiss()
     }
