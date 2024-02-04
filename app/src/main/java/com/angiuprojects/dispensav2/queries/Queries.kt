@@ -41,6 +41,8 @@ class Queries {
         }
     }
 
+    lateinit var conn: Connection
+
     fun insertItem(storageItem: StorageItem) {
         try {
             executeQuery(insertQueryBuilder("storage", storageItem), null)
@@ -120,7 +122,7 @@ class Queries {
         }
     }
 
-    private fun connectToDB() : Connection {
+    fun connectToDB() {
         Class.forName("net.sourceforge.jtds.jdbc.Driver").getDeclaredConstructor().newInstance()
         val connString =
             "jdbc:jtds:sqlserver://storageserverdatabase.database.windows.net:1433/storage_db;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;ssl=request;loginTimeout=30;"
@@ -130,16 +132,13 @@ class Queries {
         val policy = ThreadPolicy.Builder().permitAll().build()
         StrictMode.setThreadPolicy(policy)
 
-        val conn = DriverManager.getConnection(connString, username, password)
+        conn = DriverManager.getConnection(connString, username, password)
         Log.w("Connection", "open")
-        return conn
     }
 
     fun executeQuery(query: String, function: KFunction2<Queries, ResultSet?, Unit>?) : ResultSet? {
         try {
             try {
-                val conn = connectToDB()
-
                 var resultSet : ResultSet? = null
 
                 val stmt: Statement = conn.createStatement()
