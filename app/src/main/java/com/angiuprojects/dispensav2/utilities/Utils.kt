@@ -11,6 +11,7 @@ import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -212,5 +213,21 @@ class Utils {
 
     fun <T : ItemInterface> findByName(name: String, list: List<T>) : T? {
         return list.find { it.name.trim() == name.trim() }
+    }
+
+    fun expand(expandButton: ImageButton, recyclerView: RecyclerView) {
+        if(recyclerView.visibility == View.VISIBLE) {
+            expandButton.rotation = -90F
+            recyclerView.visibility = View.GONE
+        } else {
+            expandButton.rotation = 0F
+            recyclerView.visibility = View.VISIBLE
+        }
+    }
+
+    fun filterOptionalMandatoryList(isOptional: Boolean, itemMap: MutableMap<String, StorageItem>) : MutableList<StorageItem> {
+        return itemMap
+            .filter { (isOptional && it.value.quantity == 0 && it.value.trigger < 0)
+                    || (!isOptional && it.value.quantity <= it.value.trigger) }.values.toMutableList()
     }
 }
