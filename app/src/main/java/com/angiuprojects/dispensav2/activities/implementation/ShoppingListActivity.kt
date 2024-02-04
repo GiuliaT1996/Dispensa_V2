@@ -1,15 +1,12 @@
 package com.angiuprojects.dispensav2.activities.implementation
 
 import android.os.Bundle
-import android.view.View
-import android.widget.ImageButton
-import androidx.recyclerview.widget.RecyclerView
 import com.angiuprojects.dispensav2.R
 import com.angiuprojects.dispensav2.activities.BaseActivity
 import com.angiuprojects.dispensav2.adapters.ShoppingListRecyclerAdapter
 import com.angiuprojects.dispensav2.databinding.ActivityShoppingListBinding
-import com.angiuprojects.dispensav2.entities.StorageItem
 import com.angiuprojects.dispensav2.utilities.Constants
+import com.angiuprojects.dispensav2.utilities.StorageItemUtils
 import com.angiuprojects.dispensav2.utilities.Utils
 
 class ShoppingListActivity : BaseActivity<ActivityShoppingListBinding>(ActivityShoppingListBinding::inflate) {
@@ -23,31 +20,17 @@ class ShoppingListActivity : BaseActivity<ActivityShoppingListBinding>(ActivityS
             isSearchPresent = false
         )
 
+        StorageItemUtils.singleton.filterByProfile()
+
         binding.expandMandatory.setOnClickListener { Utils.singleton.expand(binding.expandMandatory, binding.shoppingListMandatory) }
         binding.expandOptional.setOnClickListener { Utils.singleton.expand(binding.expandOptional, binding.shoppingListOptional) }
 
         Utils.singleton.setRecyclerAdapter(findViewById(R.id.shopping_list_mandatory),
             this,
-            ShoppingListRecyclerAdapter(Utils.singleton.filterOptionalMandatoryList(isOptional = false, Constants.itemMapFilteredByProfile)))
+            ShoppingListRecyclerAdapter(Utils.singleton.filterOptionalMandatoryList(isOptional = false, Constants.itemMap)))
 
         Utils.singleton.setRecyclerAdapter(findViewById(R.id.shopping_list_optional),
             this,
-            ShoppingListRecyclerAdapter(filterShoppingList(isOptional = true)))
-    }
-
-    private fun filterShoppingList(isOptional: Boolean) : MutableList<StorageItem> {
-        return Constants.itemMapFilteredByProfile
-            .filter { (isOptional && it.value.quantity == 0 && it.value.trigger < 0)
-                    || (!isOptional && it.value.quantity <= it.value.trigger) }.values.toMutableList()
-    }
-
-    private fun expand(expandButton: ImageButton, recyclerView: RecyclerView) {
-        if(recyclerView.visibility == View.VISIBLE) {
-            expandButton.rotation = -90F
-            recyclerView.visibility = View.GONE
-        } else {
-            expandButton.rotation = 0F
-            recyclerView.visibility = View.VISIBLE
-        }
+            ShoppingListRecyclerAdapter(Utils.singleton.filterOptionalMandatoryList(isOptional = true, Constants.itemMap)))
     }
 }
