@@ -10,8 +10,8 @@ import com.angiuprojects.dispensav2.adapters.StorageRecyclerAdapter
 import com.angiuprojects.dispensav2.databinding.ActivityStorageBinding
 import com.angiuprojects.dispensav2.databinding.HeaderLayoutBinding
 import com.angiuprojects.dispensav2.entities.Section
+import com.angiuprojects.dispensav2.entities.StorageItem
 import com.angiuprojects.dispensav2.utilities.Constants
-import com.angiuprojects.dispensav2.utilities.StorageItemUtils
 import com.angiuprojects.dispensav2.utilities.Utils
 import java.util.Locale
 
@@ -56,17 +56,13 @@ class StorageActivity : BaseActivity<ActivityStorageBinding>(ActivityStorageBind
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if(header.searchInput.editText.toString().isNotEmpty()) {
                     if(s != null) {
-                        val filteredOptList = optionalList.filter { it.name.lowercase()
-                            .contains(s.toString().trim().lowercase()) }.toMutableList()
-                        val filteredManList = mandatoryList.filter { it.name.lowercase()
-                            .contains(s.toString().trim().lowercase()) }.toMutableList()
                         Utils.singleton.setRecyclerAdapter(findViewById(R.id.storage_list_mandatory),
                             context,
-                            StorageRecyclerAdapter(filteredManList, context))
+                            StorageRecyclerAdapter(getFilteredListFromPartialName(mandatoryList, s.toString()), context))
 
                         Utils.singleton.setRecyclerAdapter(findViewById(R.id.storage_list_optional),
                             context,
-                            StorageRecyclerAdapter(filteredOptList, context))
+                            StorageRecyclerAdapter(getFilteredListFromPartialName(optionalList, s.toString()), context))
                     }
                 }
             }
@@ -89,21 +85,26 @@ class StorageActivity : BaseActivity<ActivityStorageBinding>(ActivityStorageBind
         header.filterSpinner.setOnItemClickListener { parent, _, position, _ ->
             run {
                 val section = parent.getItemAtPosition(position) as String
-                val filteredManList = mandatoryList.filter {
-                    it.section.trim().lowercase(Locale.ROOT) == section.trim().lowercase(Locale.ROOT)
-                }.toMutableList()
-                val filteredOptList = optionalList.filter {
-                    it.section.trim().lowercase(Locale.ROOT) == section.trim().lowercase(Locale.ROOT)
-                }.toMutableList()
                 Utils.singleton.setRecyclerAdapter(findViewById(R.id.storage_list_mandatory),
                     context,
-                    StorageRecyclerAdapter(filteredManList, context))
+                    StorageRecyclerAdapter(getFilteredListFromSection(mandatoryList, section), context))
 
                 Utils.singleton.setRecyclerAdapter(findViewById(R.id.storage_list_optional),
                     context,
-                    StorageRecyclerAdapter(filteredOptList, context))
+                    StorageRecyclerAdapter(getFilteredListFromSection(optionalList, section), context))
             }
         }
+    }
+
+    private fun getFilteredListFromPartialName(list: MutableList<StorageItem>, strToCompare: String) : MutableList<StorageItem> {
+        return list.filter { it.name.lowercase()
+            .contains(strToCompare.trim().lowercase()) }.toMutableList()
+    }
+
+    private fun getFilteredListFromSection(list: MutableList<StorageItem>, strToCompare: String) : MutableList<StorageItem> {
+        return list.filter {
+            it.section.name.trim().lowercase(Locale.ROOT) == strToCompare.trim().lowercase(Locale.ROOT)
+        }.toMutableList()
     }
 
     override fun setCloseListener(header: HeaderLayoutBinding) {
