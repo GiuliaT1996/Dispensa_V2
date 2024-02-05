@@ -23,6 +23,7 @@ import com.angiuprojects.dispensav2.R
 import com.angiuprojects.dispensav2.entities.ItemInterface
 import com.angiuprojects.dispensav2.entities.StorageItem
 import com.google.android.material.snackbar.Snackbar
+import java.text.DateFormat
 import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -94,6 +95,17 @@ class Utils {
         } else ""
     }
 
+    fun convertDateToString(date: Date?, df: DateFormat) : String {
+        return if (date != null) {
+            try {
+                df.format(date)
+            } catch (e: Exception) {
+                Log.e(Constants.STORAGE_LOGGER, "Il formato della data non è corretto")
+                ""
+            }
+        } else ""
+    }
+
     fun createSimpleOKPopUp(message: String, dialog: Dialog?, onClickOk: KFunction1<Dialog?, Unit>) {
         val popUpView = commonCodePopUp(dialog, R.layout.pop_up_simple_ok)
         popUpView?.findViewById<TextView>(R.id.text)?.text = message
@@ -103,8 +115,8 @@ class Utils {
 
     //delete expiration date // Method version impossible to generalize - checks exp date
     fun <T : Adapter<V>, V> createYesNoPopUp(message: String, dialog: Dialog?,
-                                              onClickDeleteExpDate: KFunction5<T, StorageItem, Int, V, Boolean, Unit>,
-                                              invoker: T, s: StorageItem, num: Int, holder: V) {
+                                             onClickDeleteExpDate: KFunction5<T, StorageItem, Int, V, Boolean, Unit>,
+                                             invoker: T, s: StorageItem, num: Int, holder: V) {
         val popUpView = commonCodePopUp(dialog, R.layout.pop_up_yes_no)
         popUpView?.findViewById<TextView>(R.id.text)?.text = message
         val yesButton = popUpView?.findViewById<Button>(R.id.yes_button)

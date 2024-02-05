@@ -1,8 +1,10 @@
 package com.angiuprojects.dispensav2.queries
 
+import android.annotation.SuppressLint
 import android.os.StrictMode
 import android.os.StrictMode.ThreadPolicy
 import android.util.Log
+import com.angiuprojects.dispensav2.entities.ItemDTO
 import com.angiuprojects.dispensav2.entities.ItemInterface
 import com.angiuprojects.dispensav2.entities.Profile
 import com.angiuprojects.dispensav2.entities.Section
@@ -18,7 +20,10 @@ import java.lang.reflect.Method
 import java.sql.Connection
 import java.sql.DriverManager
 import java.sql.ResultSet
+import java.sql.SQLException
 import java.sql.Statement
+import java.text.SimpleDateFormat
+import java.util.Date
 import kotlin.reflect.KFunction2
 import kotlin.text.StringBuilder
 
@@ -43,26 +48,25 @@ class Queries {
 
     private lateinit var conn: Connection
 
-    fun insertItem(storageItem: StorageItem) : Boolean{
-        try {
-            executeQuery(insertQueryBuilder("storage", storageItem), null)
+    fun insertItem(storageItem: StorageItem) : Int{
+        return try {
+            executeInsertUpdate(insertQueryBuilder("storage", storageItem))
         } catch(e: Exception) {
             Log.e(Constants.STORAGE_LOGGER, "Error inserting storage item " + e.message)
-            return false
+            0
         }
-        return true
     }
 
     fun updateItem(newItem: StorageItem, oldItem: StorageItem) {
         try {
-            executeQuery(updateQueryBuilder("storage", newItem, oldItem), null)
+            executeInsertUpdate(updateQueryBuilder("storage", newItem, oldItem)) //todo check res
         } catch(e: Exception) {
             Log.e(Constants.STORAGE_LOGGER, "Error updating storage item " + e.message)
         }
     }
 
     fun selectItemsQuery(whereConditions: MutableList<WhereCondition>) {
-        executeQuery(selectQueryBuilder("storage", whereConditions), Queries::selectItems)
+        executeSelect(selectQueryBuilder("storage", whereConditions), Queries::selectItems)
     }
 
     private fun selectItems(res: ResultSet?) {
@@ -138,18 +142,16 @@ class Queries {
         Log.w("Connection", "open")
     }
 
-    fun executeQuery(query: String, function: KFunction2<Queries, ResultSet?, Unit>?) : ResultSet? {
+    fun executeSelect(query: String, function: KFunction2<Queries, ResultSet?, Unit>) : ResultSet? {
         try {
             try {
-                var resultSet : ResultSet? = null
+                val resultSet : ResultSet?
 
                 while(conn.isClosed) connectToDB()
 
                 val stmt: Statement = conn.createStatement()
-                if(function != null) {
-                    resultSet = stmt.executeQuery(query)
-                    function.invoke(this, resultSet)
-                } else stmt.executeUpdate(query)
+                resultSet = stmt.executeQuery(query)
+                function.invoke(this, resultSet)
                 resultSet?.close()
                 stmt.close()
                 //conn.close()
@@ -161,6 +163,22 @@ class Queries {
             e.printStackTrace()
         }
         return null
+    }
+
+    private fun executeInsertUpdate(query: String) : Int {
+        try {
+            while(conn.isClosed) connectToDB()
+            val stmt: Statement = conn.createStatement()
+            val res = stmt.executeUpdate(query)
+            stmt.close()
+            return res
+        } catch(sqlE: SQLException) {
+            sqlE.printStackTrace()
+            if(sqlE.sqlState == "23000") return -1 //todo handle changename
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+        }
+        return 0
     }
     /*
         fun getStorageItems() {
@@ -257,33 +275,55 @@ class Queries {
     }
 
     private fun <T : ItemInterface> insertQueryBuilder(tableName: String, item: T) : String {
-        val fields = item.javaClass.declaredFields.asList().map { f -> f.name.replaceFirstChar { f.name.substring(0,1).uppercase() } }
+        val itemDTOList = getItemDTOListFromFields(item)
         val query : StringBuilder = java.lang.StringBuilder()
-        query.append("INSERT INTO ").append(tableName) // todo inserire lista colonne
-            .append("(")
-            .append(fields.map { f -> getValue(item, f) }.joinToString { "," })
+        val valuesSb = StringBuilder()
+        val fieldsSb = StringBuilder()
+        itemDTOList.forEach {
+            val value = getValue(item, item.javaClass.getMethod("get${it.fieldName}"))
+            if(!it.isNullable || value != "") {
+                fieldsSb.append(it.columnName).append(",")
+                valuesSb.append(getFormattedValue(value)).append(",")
+            }
+        }
+        fieldsSb.deleteCharAt(fieldsSb.lastIndex)
+        valuesSb.deleteCharAt(valuesSb.lastIndex)
+        query.append("INSERT INTO ").append(tableName)
+            .append(" (")
+            .append(fieldsSb)
             .append(")")
             .append(" VALUES ").append("(")
-            .append(fields.map { f -> getValue(item, f) }.joinToString { "," })
+            .append(valuesSb)
             .append(")")
         Log.i(Constants.QUERY_LOGGER, "Query: $query")
         return query.toString()
     }
 
-    private fun getField(field: String) { // todo generalize column enum
-
+    private fun <T: ItemInterface> getItemDTOListFromFields(item: T) : List<ItemDTO> {
+        val fields = item.javaClass.fields.toMutableList()
+        fields.addAll(item.javaClass.declaredFields)
+        val fieldNames = fields.map { f -> f.name.replaceFirstChar { f.name.substring(0,1).uppercase() } }
+        return fieldNames.map { f -> item.getItemDTOFromField(f) }.requireNoNulls()
     }
 
-    private fun <T: ItemInterface> getValue(item: T, field: String) : String {
+    private fun getFormattedValue(value: String) : String {
         val valueStr = StringBuilder()
         valueStr.append("'")
-        var value = item.javaClass.getMethod("get$field").invoke(item)
-        if(value != null && ItemInterface::class.javaObjectType.isAssignableFrom(value.javaClass)) value = (value as ItemInterface).name
-        if(value == null || value == "null") value = ""
         valueStr.append(value)
         valueStr.append("'")
 
         return valueStr.toString()
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    private fun <T: ItemInterface> getValue(item: T, m: Method) : String {
+        val res = m.invoke(item)
+        var value = ""
+        if(res == null || res == "null") value = ""
+        else if(ItemInterface::class.javaObjectType.isAssignableFrom(res.javaClass)) value = (res as ItemInterface).name
+        else if(Date::class.javaObjectType.isAssignableFrom(res.javaClass)) value = Utils.singleton.convertDateToString(res as Date, SimpleDateFormat("yyyy-MM-dd hh:mm:ss"))
+        else value = res.toString()
+        return value
     }
 
     private fun <T : ItemInterface> updateQueryBuilder(tableName: String, newItem: T, oldItem: T) : String {
@@ -302,7 +342,7 @@ class Queries {
         val string = StringBuilder()
         val res = m.invoke(newItem)
         if(res != m.invoke(oldItem)) {
-            string.append(" ").append(newItem.getFieldFromMethod(m)).append(" = ").append(res)
+            string.append(" ").append(newItem.getItemDTOFromField(m.name)).append(" = ").append(res) //todo fix
         }
         return string.toString()
     }

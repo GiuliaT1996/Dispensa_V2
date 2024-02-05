@@ -25,15 +25,13 @@ class StorageItemUtils {
         }
     }
 
-    fun addStorageItem(storageItem: StorageItem) : Boolean {
-        try {
-            //todo esiste già?
-            if(!Queries.singleton.insertItem(storageItem)) return false
+    fun addStorageItem(storageItem: StorageItem) : Int {
+        return try {
+            Queries.singleton.insertItem(storageItem)
         } catch (e : Exception) {
             Log.e(Constants.STORAGE_LOGGER, "Non è stato possibile aggiungere l'elemento " + storageItem.name + ": " + e.message.toString())
-            return false
+            0
         }
-        return true
     }
 
     fun getDate(dateStr: TextInputLayout, storageItem: StorageItem,

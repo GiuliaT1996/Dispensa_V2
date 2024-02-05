@@ -41,14 +41,14 @@ class StorageItem() : ItemInterface() {
         return s.toString()
     }
 
-    override fun getFieldFromMethod(m: Method): String? {
-        return when(m.name) { //todo use reflection as in queries
-            "name" -> StorageItemColumnEnum.NAME.columnName
-            "section" -> StorageItemColumnEnum.SECTION.columnName
-            "profile" -> StorageItemColumnEnum.PROFILE.columnName
-            "quantity" -> StorageItemColumnEnum.QUANTITY.columnName
-            "trigger" -> StorageItemColumnEnum.TRIGGER.columnName
-            "expirationDate" -> StorageItemColumnEnum.EXP_DATE.columnName
+    override fun getItemDTOFromField(f: String): ItemDTO? {
+        return when(f) {
+            StorageItemColumnEnum.NAME.fieldName -> ItemDTO(StorageItemColumnEnum.NAME.fieldName, StorageItemColumnEnum.NAME.columnName, StorageItemColumnEnum.NAME.isNullable)
+            StorageItemColumnEnum.SECTION.fieldName -> ItemDTO(StorageItemColumnEnum.SECTION.fieldName, StorageItemColumnEnum.SECTION.columnName, StorageItemColumnEnum.SECTION.isNullable)
+            StorageItemColumnEnum.PROFILE.fieldName -> ItemDTO(StorageItemColumnEnum.PROFILE.fieldName, StorageItemColumnEnum.PROFILE.columnName, StorageItemColumnEnum.PROFILE.isNullable)
+            StorageItemColumnEnum.QUANTITY.fieldName -> ItemDTO(StorageItemColumnEnum.QUANTITY.fieldName, StorageItemColumnEnum.QUANTITY.columnName, StorageItemColumnEnum.QUANTITY.isNullable)
+            StorageItemColumnEnum.TRIGGER.fieldName -> ItemDTO(StorageItemColumnEnum.TRIGGER.fieldName, StorageItemColumnEnum.TRIGGER.columnName, StorageItemColumnEnum.TRIGGER.isNullable)
+            StorageItemColumnEnum.EXP_DATE.fieldName -> ItemDTO(StorageItemColumnEnum.EXP_DATE.fieldName, StorageItemColumnEnum.EXP_DATE.columnName, StorageItemColumnEnum.EXP_DATE.isNullable)
             else -> null
         }
     }

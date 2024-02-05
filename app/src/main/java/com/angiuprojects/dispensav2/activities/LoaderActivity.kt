@@ -32,8 +32,8 @@ class LoaderActivity : AppCompatActivity() {
         //Queries.singleton.getStorageItems()
         //Queries.singleton.getHistoryItems()
         Queries.singleton.connectToDB()
-        Queries.singleton.executeQuery("select * from section", Queries::selectSections)
-        Queries.singleton.executeQuery("select * from profile", Queries::selectProfiles)
+        Queries.singleton.executeSelect("select * from section", Queries::selectSections)
+        Queries.singleton.executeSelect("select * from profile", Queries::selectProfiles)
 
         //ConvertUtils.singleton.getItems()
         //Queries.singleton.getStoricoItem()

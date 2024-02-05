@@ -69,8 +69,7 @@ class AddItemActivity : BaseActivity<ActivityAddItemBinding>(ActivityAddItemBind
             Constants.historyItemList.add(historyItem)
             //Queries.singleton.addItem(historyItem, Queries.HISTORY_ITEMS_DB_REFERENCE) //TODO
             val ins = StorageItemUtils.singleton.addStorageItem(storageItem)
-            val message = if(ins) "L'oggetto %s è stato aggiunto alla dispensa." else "Non è stato possibile aggiungere l'oggetto %s alla dispensa."
-            createPopUp(storageItem.name, message)
+            createPopUp(storageItem.name, ins)
         }
     }
 
@@ -79,12 +78,19 @@ class AddItemActivity : BaseActivity<ActivityAddItemBinding>(ActivityAddItemBind
         finish()
     }
 
-    private fun createPopUp(name: String, message: String) {
+    private fun onClickRetry(dialog: Dialog?) {
+        dialog?.dismiss()
+    }
+
+    private fun createPopUp(name: String, insRes: Int) {
         dialog = Dialog(this)
+        val message = if(insRes > 0) "L'oggetto %s è stato aggiunto alla dispensa."
+        else if (insRes == -1) "Esiste già un oggetto che si chiama %s."
+        else "Non è stato possibile aggiungere l'oggetto %s alla dispensa."
         Utils.singleton.createSimpleOKPopUp(
             String.format(message, name),
             dialog,
-            this::onClickOk)
+            if(insRes != -1) this::onClickOk else this::onClickRetry)
     }
 
 }

@@ -11,8 +11,4 @@ class Profile() : ItemInterface() {
         this.state = state
         this.image = image
     }
-
-    override fun getFieldList(): List<String> {
-        return listOf("name", "profile_button_state", "profile_image")
-    }
 }
