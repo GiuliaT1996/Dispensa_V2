@@ -27,10 +27,10 @@ class ShoppingListActivity : BaseActivity<ActivityShoppingListBinding>(ActivityS
 
         Utils.singleton.setRecyclerAdapter(findViewById(R.id.shopping_list_mandatory),
             this,
-            ShoppingListRecyclerAdapter(Utils.singleton.filterOptionalMandatoryList(isOptional = false, Constants.itemMap)))
+            ShoppingListRecyclerAdapter(Utils.singleton.filterOptionalMandatoryList(isOptional = false, false, Constants.itemMap)))
 
         Utils.singleton.setRecyclerAdapter(findViewById(R.id.shopping_list_optional),
             this,
-            ShoppingListRecyclerAdapter(Utils.singleton.filterOptionalMandatoryList(isOptional = true, Constants.itemMap)))
+            ShoppingListRecyclerAdapter(Utils.singleton.filterOptionalMandatoryList(isOptional = true, false, Constants.itemMap)))
     }
 }
