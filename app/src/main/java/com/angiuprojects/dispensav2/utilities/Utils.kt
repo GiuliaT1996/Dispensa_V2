@@ -93,9 +93,9 @@ class Utils {
     }
 
     fun createSimpleOKPopUp(message: String, dialog: Dialog?, onClickOk: KFunction1<Dialog?, Unit>) {
-        val popUpView = commonCodePopUp(dialog, com.angiuprojects.dispensav2.R.layout.pop_up_simple_ok)
-        popUpView?.findViewById<TextView>(com.angiuprojects.dispensav2.R.id.text)?.text = message
-        val okButton = popUpView?.findViewById<Button>(com.angiuprojects.dispensav2.R.id.ok_button)
+        val popUpView = commonCodePopUp(dialog, R.layout.pop_up_simple_ok)
+        popUpView?.findViewById<TextView>(R.id.text)?.text = message
+        val okButton = popUpView?.findViewById<Button>(R.id.ok_button)
         okButton?.setOnClickListener { onClickOk.invoke(dialog) }
     }
 
@@ -103,11 +103,11 @@ class Utils {
     fun <T : Adapter<V>, V> createYesNoPopUp(message: String, dialog: Dialog?,
                                               onClickDeleteExpDate: KFunction5<T, StorageItem, Int, V, Boolean, Unit>,
                                               invoker: T, s: StorageItem, num: Int, holder: V) {
-        val popUpView = commonCodePopUp(dialog, com.angiuprojects.dispensav2.R.layout.pop_up_yes_no)
-        popUpView?.findViewById<TextView>(com.angiuprojects.dispensav2.R.id.text)?.text = message
-        val yesButton = popUpView?.findViewById<Button>(com.angiuprojects.dispensav2.R.id.yes_button)
+        val popUpView = commonCodePopUp(dialog, R.layout.pop_up_yes_no)
+        popUpView?.findViewById<TextView>(R.id.text)?.text = message
+        val yesButton = popUpView?.findViewById<Button>(R.id.yes_button)
         yesButton?.setOnClickListener { onClickDeleteExpDate.invoke(invoker, s, num, holder, true) }
-        val noButton = popUpView?.findViewById<Button>(com.angiuprojects.dispensav2.R.id.no_button)
+        val noButton = popUpView?.findViewById<Button>(R.id.no_button)
         noButton?.setOnClickListener { onClickDeleteExpDate.invoke(invoker, s, num, holder, false) }
     }
 
@@ -115,11 +115,11 @@ class Utils {
     fun <T : Adapter<V>, V> createYesNoPopUp(message: String, dialog: Dialog?,
                                              onClickYes : KFunction3<T, StorageItem, V, Unit>,
                                              invoker: T, s: StorageItem, holder: V) {
-        val popUpView = commonCodePopUp(dialog, com.angiuprojects.dispensav2.R.layout.pop_up_yes_no)
-        popUpView?.findViewById<TextView>(com.angiuprojects.dispensav2.R.id.text)?.text = message
-        val yesButton = popUpView?.findViewById<Button>(com.angiuprojects.dispensav2.R.id.yes_button)
+        val popUpView = commonCodePopUp(dialog, R.layout.pop_up_yes_no)
+        popUpView?.findViewById<TextView>(R.id.text)?.text = message
+        val yesButton = popUpView?.findViewById<Button>(R.id.yes_button)
         yesButton?.setOnClickListener { onClickYes.invoke(invoker, s, holder) }
-        val noButton = popUpView?.findViewById<Button>(com.angiuprojects.dispensav2.R.id.no_button)
+        val noButton = popUpView?.findViewById<Button>(R.id.no_button)
         noButton?.setOnClickListener { dialog?.dismiss() }
     }
 
