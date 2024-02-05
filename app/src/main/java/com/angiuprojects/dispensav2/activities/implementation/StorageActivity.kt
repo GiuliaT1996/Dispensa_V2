@@ -28,11 +28,11 @@ class StorageActivity : BaseActivity<ActivityStorageBinding>(ActivityStorageBind
 
         Utils.singleton.setRecyclerAdapter(findViewById(R.id.storage_list_mandatory),
             this,
-            StorageRecyclerAdapter(Utils.singleton.filterOptionalMandatoryList(isOptional = false, Constants.itemMapFilteredByProfile), this))
+            StorageRecyclerAdapter(Utils.singleton.filterOptionalMandatoryList(isOptional = false, false, Constants.itemMapFilteredByProfile), this))
 
         Utils.singleton.setRecyclerAdapter(findViewById(R.id.storage_list_optional),
             this,
-            StorageRecyclerAdapter(Utils.singleton.filterOptionalMandatoryList(isOptional = true, Constants.itemMapFilteredByProfile), this))
+            StorageRecyclerAdapter(Utils.singleton.filterOptionalMandatoryList(isOptional = true, false, Constants.itemMapFilteredByProfile), this))
     }
 
     override fun setSearchListener(header: HeaderLayoutBinding) {
@@ -52,11 +52,11 @@ class StorageActivity : BaseActivity<ActivityStorageBinding>(ActivityStorageBind
                             .contains(s.toString().trim().lowercase()) }.toMutableMap()
                         Utils.singleton.setRecyclerAdapter(findViewById(R.id.storage_list_mandatory),
                             context,
-                            StorageRecyclerAdapter(Utils.singleton.filterOptionalMandatoryList(isOptional = false, filteredMap), context))
+                            StorageRecyclerAdapter(Utils.singleton.filterOptionalMandatoryList(isOptional = false, false, filteredMap), context))
 
                         Utils.singleton.setRecyclerAdapter(findViewById(R.id.storage_list_optional),
                             context,
-                            StorageRecyclerAdapter(Utils.singleton.filterOptionalMandatoryList(isOptional = true, filteredMap), context))
+                            StorageRecyclerAdapter(Utils.singleton.filterOptionalMandatoryList(isOptional = true, false, filteredMap), context))
                     }
                 }
             }
@@ -83,11 +83,11 @@ class StorageActivity : BaseActivity<ActivityStorageBinding>(ActivityStorageBind
                 }.toMutableMap()
                 Utils.singleton.setRecyclerAdapter(findViewById(R.id.storage_list_mandatory),
                     context,
-                    StorageRecyclerAdapter(Utils.singleton.filterOptionalMandatoryList(isOptional = false, filteredMap), context))
+                    StorageRecyclerAdapter(Utils.singleton.filterOptionalMandatoryList(isOptional = false, false, filteredMap), context))
 
                 Utils.singleton.setRecyclerAdapter(findViewById(R.id.storage_list_optional),
                     context,
-                    StorageRecyclerAdapter(Utils.singleton.filterOptionalMandatoryList(isOptional = true, filteredMap), context))
+                    StorageRecyclerAdapter(Utils.singleton.filterOptionalMandatoryList(isOptional = true, false, filteredMap), context))
             }
         }
     }
@@ -99,10 +99,10 @@ class StorageActivity : BaseActivity<ActivityStorageBinding>(ActivityStorageBind
         header.searchInput.editText?.setText("")
         Utils.singleton.setRecyclerAdapter(findViewById(R.id.storage_list_mandatory),
             this,
-            StorageRecyclerAdapter(Utils.singleton.filterOptionalMandatoryList(isOptional = false, Constants.itemMapFilteredByProfile), this))
+            StorageRecyclerAdapter(Utils.singleton.filterOptionalMandatoryList(isOptional = false, false, Constants.itemMapFilteredByProfile), this))
 
         Utils.singleton.setRecyclerAdapter(findViewById(R.id.storage_list_optional),
             this,
-            StorageRecyclerAdapter(Utils.singleton.filterOptionalMandatoryList(isOptional = true, Constants.itemMapFilteredByProfile), this))
+            StorageRecyclerAdapter(Utils.singleton.filterOptionalMandatoryList(isOptional = true, false, Constants.itemMapFilteredByProfile), this))
     }
 }

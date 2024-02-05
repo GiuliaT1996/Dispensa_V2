@@ -230,9 +230,11 @@ class Utils {
         }
     }
 
-    fun filterOptionalMandatoryList(isOptional: Boolean, itemMap: MutableMap<String, StorageItem>) : MutableList<StorageItem> {
+    fun filterOptionalMandatoryList(isOptional: Boolean, isShoppingList: Boolean, itemMap: MutableMap<String, StorageItem>) : MutableList<StorageItem> {
         return itemMap
-            .filter { (isOptional && it.value.quantity == 0 && it.value.trigger < 0)
-                    || (!isOptional && it.value.quantity <= it.value.trigger) }.values.toMutableList()
+            .filter { (isOptional && isShoppingList && it.value.quantity == 0 && it.value.trigger < 0)
+                    || (isOptional && !isShoppingList && it.value.trigger < 0)
+                    || (!isOptional && isShoppingList && it.value.quantity <= it.value.trigger)
+                    || (!isOptional && !isShoppingList && it.value.trigger >= 0)}.values.toMutableList()
     }
 }
