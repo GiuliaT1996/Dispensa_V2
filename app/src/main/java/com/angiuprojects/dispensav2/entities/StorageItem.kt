@@ -42,7 +42,7 @@ class StorageItem() : ItemInterface() {
     }
 
     override fun getFieldFromMethod(m: Method): String? {
-        return when(m.name) {
+        return when(m.name) { //todo use reflection as in queries
             "name" -> StorageItemColumnEnum.NAME.columnName
             "section" -> StorageItemColumnEnum.SECTION.columnName
             "profile" -> StorageItemColumnEnum.PROFILE.columnName

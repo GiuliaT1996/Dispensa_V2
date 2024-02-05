@@ -21,7 +21,7 @@ import com.angiuprojects.dispensav2.utilities.Constants
 import com.angiuprojects.dispensav2.utilities.StorageItemUtils
 import com.angiuprojects.dispensav2.utilities.Utils
 import java.util.*
-import kotlin.reflect.KFunction4
+import kotlin.reflect.KFunction5
 import kotlin.reflect.KMutableProperty1
 
 class StorageRecyclerAdapter(private var dataSet: MutableList<StorageItem>, private val context: Context)
@@ -130,15 +130,15 @@ class StorageRecyclerAdapter(private var dataSet: MutableList<StorageItem>, priv
                         + Constants.DATE_FORMAT)
         } else {
             checkIfNewIsPopulated(binding.sectionSpinner, newStorageItem, oldStorageItem, StorageItem::section,
-                StorageItemUtils::getTextFromACTV, StorageItemUtils.singleton)
+                StorageItemUtils::getTextFromACTV, StorageItemUtils.singleton, Constants.sectionList)
             checkIfNewIsPopulated(binding.name, newStorageItem, oldStorageItem, StorageItem::name,
-                StorageItemUtils::getTextFromInputText, StorageItemUtils.singleton)
+                StorageItemUtils::getTextFromInputText, StorageItemUtils.singleton, null)
             checkIfNewIsPopulated(binding.profileSpinner, newStorageItem, oldStorageItem, StorageItem::profile,
-                StorageItemUtils::getTextFromACTV, StorageItemUtils.singleton)
+                StorageItemUtils::getTextFromACTV, StorageItemUtils.singleton, Constants.profileList)
             checkIfNewIsPopulated(binding.quantity, newStorageItem, oldStorageItem, StorageItem::quantity,
-                StorageItemUtils::getTextFromInputInt, StorageItemUtils.singleton)
+                StorageItemUtils::getTextFromInputInt, StorageItemUtils.singleton, null)
             checkIfNewIsPopulated(binding.trigger, newStorageItem, oldStorageItem, StorageItem::trigger,
-                StorageItemUtils::getTextFromInputInt, StorageItemUtils.singleton)
+                StorageItemUtils::getTextFromInputInt, StorageItemUtils.singleton, null)
 
             if(newStorageItem.expirationDate == null && !binding.expDateSwitch.isChecked)
                 newStorageItem.expirationDate = oldStorageItem.expirationDate
@@ -167,10 +167,11 @@ class StorageRecyclerAdapter(private var dataSet: MutableList<StorageItem>, priv
         view: View, newStorageItem: StorageItem,
         oldStorageItem: StorageItem,
         getSetFieldFunction: KMutableProperty1<StorageItem, T>,
-        getResultStringFunction: KFunction4<StorageItemUtils, View, StorageItem, KMutableProperty1<StorageItem, T>, String?>,
-        invoker: StorageItemUtils
+        getResultStringFunction: KFunction5<StorageItemUtils, View, StorageItem, KMutableProperty1<StorageItem, T>, MutableList<T>?, String?>,
+        invoker: StorageItemUtils,
+        itemList: MutableList<T>?
     ) {
-        if(getResultStringFunction.invoke(invoker, view, newStorageItem, getSetFieldFunction) == null)
+        if(getResultStringFunction.invoke(invoker, view, newStorageItem, getSetFieldFunction, itemList) == null)
             getSetFieldFunction.set(newStorageItem, getSetFieldFunction.get(oldStorageItem))
     }
 

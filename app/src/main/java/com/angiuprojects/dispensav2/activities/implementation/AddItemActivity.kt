@@ -6,15 +6,14 @@ import com.angiuprojects.dispensav2.R
 import com.angiuprojects.dispensav2.activities.BaseActivity
 import com.angiuprojects.dispensav2.databinding.ActivityAddItemBinding
 import com.angiuprojects.dispensav2.entities.HistoryItem
-import com.angiuprojects.dispensav2.entities.StorageItem
-import com.angiuprojects.dispensav2.enums.HistoryActionEnum
 import com.angiuprojects.dispensav2.entities.Profile
 import com.angiuprojects.dispensav2.entities.Section
-import com.angiuprojects.dispensav2.queries.Queries
+import com.angiuprojects.dispensav2.entities.StorageItem
+import com.angiuprojects.dispensav2.enums.HistoryActionEnum
 import com.angiuprojects.dispensav2.utilities.Constants
 import com.angiuprojects.dispensav2.utilities.StorageItemUtils
 import com.angiuprojects.dispensav2.utilities.Utils
-import java.util.*
+import java.util.Date
 
 class AddItemActivity : BaseActivity<ActivityAddItemBinding>(ActivityAddItemBinding::inflate) {
 
@@ -53,24 +52,25 @@ class AddItemActivity : BaseActivity<ActivityAddItemBinding>(ActivityAddItemBind
         val storageItem = StorageItem()
         val getDateResponse = StorageItemUtils.singleton.getDate(binding.expDate, storageItem, StorageItem::expirationDate, false)
 
-        if(StorageItemUtils.singleton.getTextFromACTV(binding.sectionSpinner, storageItem, StorageItem::section) == null)
+        if(StorageItemUtils.singleton.getTextFromACTV(binding.sectionSpinner, storageItem, StorageItem::section, Constants.sectionList) == null)
             Utils.singleton.openSnackBar(snackBarView, "Inserire sezione!")
-        else if(StorageItemUtils.singleton.getTextFromInputText(binding.name, storageItem, StorageItem::name) == null
-            || StorageItemUtils.singleton.getTextFromInputInt(binding.quantity, storageItem, StorageItem::quantity) == null
-            || StorageItemUtils.singleton.getTextFromInputInt(binding.trigger, storageItem, StorageItem::trigger) == null)
+        else if(StorageItemUtils.singleton.getTextFromInputText(binding.name, storageItem, StorageItem::name, null) == null
+            || StorageItemUtils.singleton.getTextFromInputInt(binding.quantity, storageItem, StorageItem::quantity, null) == null
+            || StorageItemUtils.singleton.getTextFromInputInt(binding.trigger, storageItem, StorageItem::trigger, null) == null)
             Utils.singleton.openSnackBar(snackBarView, "Inserire tutti i campi obbligatori!")
         else if(getDateResponse.first == null && !getDateResponse.second)
             Utils.singleton.openSnackBar(snackBarView,
                 "Il formato della data non è corretto! Inserire una data con il seguente formato: "
                         + Constants.DATE_FORMAT)
-        else if(StorageItemUtils.singleton.getTextFromACTV(binding.profileSpinner, storageItem, StorageItem::profile) == null)
+        else if(StorageItemUtils.singleton.getTextFromACTV(binding.profileSpinner, storageItem, StorageItem::profile, Constants.profileList) == null)
             Utils.singleton.openSnackBar(snackBarView, "Inserire profilo!")
         else {
             val historyItem = HistoryItem(storageItem.name, Date(), HistoryActionEnum.INSERT, storageItem.quantity)
             Constants.historyItemList.add(historyItem)
             //Queries.singleton.addItem(historyItem, Queries.HISTORY_ITEMS_DB_REFERENCE) //TODO
-            StorageItemUtils.singleton.addStorageItem(storageItem)
-            createPopUp(storageItem.name)
+            val ins = StorageItemUtils.singleton.addStorageItem(storageItem)
+            val message = if(ins) "L'oggetto %s è stato aggiunto alla dispensa." else "Non è stato possibile aggiungere l'oggetto %s alla dispensa."
+            createPopUp(storageItem.name, message)
         }
     }
 
@@ -79,10 +79,10 @@ class AddItemActivity : BaseActivity<ActivityAddItemBinding>(ActivityAddItemBind
         finish()
     }
 
-    private fun createPopUp(name: String) {
+    private fun createPopUp(name: String, message: String) {
         dialog = Dialog(this)
         Utils.singleton.createSimpleOKPopUp(
-            String.format("L'oggetto %s è stato aggiunto alla dispensa.", name),
+            String.format(message, name),
             dialog,
             this::onClickOk)
     }

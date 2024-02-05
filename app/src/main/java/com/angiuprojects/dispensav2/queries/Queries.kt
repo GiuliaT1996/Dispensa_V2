@@ -41,14 +41,16 @@ class Queries {
         }
     }
 
-    lateinit var conn: Connection
+    private lateinit var conn: Connection
 
-    fun insertItem(storageItem: StorageItem) {
+    fun insertItem(storageItem: StorageItem) : Boolean{
         try {
             executeQuery(insertQueryBuilder("storage", storageItem), null)
         } catch(e: Exception) {
             Log.e(Constants.STORAGE_LOGGER, "Error inserting storage item " + e.message)
+            return false
         }
+        return true
     }
 
     fun updateItem(newItem: StorageItem, oldItem: StorageItem) {
@@ -140,6 +142,8 @@ class Queries {
         try {
             try {
                 var resultSet : ResultSet? = null
+
+                while(conn.isClosed) connectToDB()
 
                 val stmt: Statement = conn.createStatement()
                 if(function != null) {
@@ -253,13 +257,33 @@ class Queries {
     }
 
     private fun <T : ItemInterface> insertQueryBuilder(tableName: String, item: T) : String {
+        val fields = item.javaClass.declaredFields.asList().map { f -> f.name.replaceFirstChar { f.name.substring(0,1).uppercase() } }
         val query : StringBuilder = java.lang.StringBuilder()
-        query.append("INSERT INTO ").append(tableName)
-            .append(" VALUES ").append("('")
-        val methods = item.javaClass.methods.asList()
-        query.append(methods.map { m -> m.invoke(item) }.joinToString { "," }).append(")")
+        query.append("INSERT INTO ").append(tableName) // todo inserire lista colonne
+            .append("(")
+            .append(fields.map { f -> getValue(item, f) }.joinToString { "," })
+            .append(")")
+            .append(" VALUES ").append("(")
+            .append(fields.map { f -> getValue(item, f) }.joinToString { "," })
+            .append(")")
         Log.i(Constants.QUERY_LOGGER, "Query: $query")
         return query.toString()
+    }
+
+    private fun getField(field: String) { // todo generalize column enum
+
+    }
+
+    private fun <T: ItemInterface> getValue(item: T, field: String) : String {
+        val valueStr = StringBuilder()
+        valueStr.append("'")
+        var value = item.javaClass.getMethod("get$field").invoke(item)
+        if(value != null && ItemInterface::class.javaObjectType.isAssignableFrom(value.javaClass)) value = (value as ItemInterface).name
+        if(value == null || value == "null") value = ""
+        valueStr.append(value)
+        valueStr.append("'")
+
+        return valueStr.toString()
     }
 
     private fun <T : ItemInterface> updateQueryBuilder(tableName: String, newItem: T, oldItem: T) : String {

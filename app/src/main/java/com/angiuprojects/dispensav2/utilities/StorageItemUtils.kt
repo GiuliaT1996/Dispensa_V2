@@ -9,6 +9,7 @@ import com.angiuprojects.dispensav2.entities.WhereCondition
 import com.angiuprojects.dispensav2.enums.ComparatorEnum
 import com.angiuprojects.dispensav2.enums.ConditionEnum
 import com.angiuprojects.dispensav2.enums.ProfileButtonStateEnum
+import com.angiuprojects.dispensav2.exceptions.StorageException
 import com.angiuprojects.dispensav2.queries.Queries
 import com.google.android.material.textfield.TextInputLayout
 import java.util.Date
@@ -27,7 +28,7 @@ class StorageItemUtils {
     fun addStorageItem(storageItem: StorageItem) : Boolean {
         try {
             //todo esiste già?
-            Queries.singleton.insertItem(storageItem)
+            if(!Queries.singleton.insertItem(storageItem)) return false
         } catch (e : Exception) {
             Log.e(Constants.STORAGE_LOGGER, "Non è stato possibile aggiungere l'elemento " + storageItem.name + ": " + e.message.toString())
             return false
@@ -55,8 +56,9 @@ class StorageItemUtils {
 
     // KMutableProperty1<StorageItem, String> -> SAME AS BICONSUMER IN JAVA - CAN BE USED AS GETTER AND SETTER
     fun getTextFromInputText(text: View, storageItem: StorageItem,
-                                     setterFunction: KMutableProperty1<StorageItem, String>): String? {
+                                     setterFunction: KMutableProperty1<StorageItem, String>, itemList: MutableList<String>?): String? {
         text as TextInputLayout
+        if(itemList != null) return null
         return if (text.editText != null && text.editText!!.text != null && text.editText!!.text.toString()
                 .isNotEmpty()) {
             val formattedText = text.editText!!.text.toString().trim().replace(".", "-")
@@ -70,19 +72,21 @@ class StorageItemUtils {
 
     inline fun <reified T : ItemInterface> getTextFromACTV(
         text: View, storageItem: StorageItem,
-        setterFunction: KMutableProperty1<StorageItem, T>): String? {
+        setterFunction: KMutableProperty1<StorageItem, T>, itemList: MutableList<T>?): String? {
         text as AutoCompleteTextView
         return if(text.text != null && text.text.toString().isNotEmpty() && text.text.toString() != "null") {
-            val className = T::class.qualifiedName
-            val item = className?.let { Class.forName(it).getDeclaredConstructor().newInstance() } as T
+            if(!ItemInterface::class.javaObjectType.isAssignableFrom(T::class.java) || itemList == null)
+                throw StorageException("The object must be an ItemInterface subclass!")
+            val item = itemList.first { (it as ItemInterface).name == text.text.toString() }
             setterFunction.set(storageItem, item)
             text.text.toString().trim()
         } else null
     }
 
     fun getTextFromInputInt(text: View, storageItem: StorageItem,
-                                    setterFunction: KMutableProperty1<StorageItem, Int>): String? {
+                                    setterFunction: KMutableProperty1<StorageItem, Int>, itemList: MutableList<Int>?): String? {
         text as TextInputLayout
+        if(itemList != null) return null
         return if (text.editText != null && text.editText!!.text != null && text.editText!!.text.toString()
                 .isNotEmpty()) {
             try {
