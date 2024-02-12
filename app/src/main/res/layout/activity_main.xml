@@ -6,6 +6,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageButton
+        android:id="@+id/refresh_button"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/icons8_aggiorna_60"
+        android:backgroundTint="@drawable/change_color_yellow_buttons"
+        android:contentDescription="@string/history_button_desc" />
+
     <com.google.android.material.imageview.ShapeableImageView
         app:shapeAppearanceOverlay="@style/rounded_image_view"
         android:id="@+id/fruit_menu_image"
@@ -14,7 +25,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="80dp"
         app:srcCompat="@mipmap/fruit_image" />
-    
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/storage_button"
         android:layout_width="150dp"

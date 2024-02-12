@@ -3,16 +3,18 @@ package com.angiuprojects.dispensav2.activities.implementation
 import android.app.Dialog
 import android.content.res.ColorStateList
 import android.os.Bundle
-import android.util.Log
+import android.os.CountDownTimer
 import android.widget.ImageButton
 import com.angiuprojects.dispensav2.R
 import com.angiuprojects.dispensav2.activities.BaseActivity
 import com.angiuprojects.dispensav2.databinding.ActivityMainBinding
 import com.angiuprojects.dispensav2.enums.ProfileButtonStateEnum
 import com.angiuprojects.dispensav2.enums.ProfileEnum
+import com.angiuprojects.dispensav2.queries.Queries
 import com.angiuprojects.dispensav2.utilities.Constants
 import com.angiuprojects.dispensav2.utilities.ReadWriteJsonUtils
 import com.angiuprojects.dispensav2.utilities.Utils
+import kotlinx.coroutines.runBlocking
 
 class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
 
@@ -38,6 +40,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
     }
 
     private fun setOnClickListeners() {
+
+        binding.refreshButton.setOnClickListener { onClickRefresh() }
+
         /*
             START MAIN LIST BUTTONS
          */
@@ -59,6 +64,22 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         binding.boyButton.setOnClickListener { setColorProfileButton(binding.boyButton, ProfileEnum.ANTONIO, true) }
         binding.girlButton.setOnClickListener { setColorProfileButton(binding.girlButton, ProfileEnum.GIULIA, true) }
         binding.bothButton.setOnClickListener { setColorProfileButton(binding.bothButton, ProfileEnum.COMUNI, true) }
+    }
+
+    private fun onClickRefresh() = runBlocking {
+        Constants.appIsStarting = true
+        Queries.singleton.getStorageItems()
+        showLoadingGif()
+    }
+
+    private fun showLoadingGif() {
+        val dialog = Dialog(this)
+        Utils.singleton.createLoadingPopUp(dialog)
+        object : CountDownTimer(5000, 1000) {
+            override fun onTick(millisUntilFinished: Long) {}
+            override fun onFinish() { dialog.dismiss() }
+        }.start()
+        Constants.appIsStarting = false
     }
 
     private fun setColorProfileButton(imageButton: ImageButton, profile: ProfileEnum, isClicked: Boolean) {

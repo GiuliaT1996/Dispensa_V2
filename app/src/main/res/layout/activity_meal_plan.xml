@@ -16,6 +16,7 @@
         android:rotation="90"
         android:layout_below="@id/header"
         android:layout_marginStart="10dp"
+        android:contentDescription="@string/example_action"
         android:backgroundTint="@drawable/change_color_blue_buttons"/>
 
     <ImageButton
@@ -27,6 +28,7 @@
         android:rotation="-90"
         android:layout_below="@id/header"
         android:layout_marginEnd="10dp"
+        android:contentDescription="@string/example_action"
         android:backgroundTint="@drawable/change_color_blue_buttons"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -54,7 +56,7 @@
             android:layout_height="60dp"
             app:theme="@style/Widget.AppTheme.TextInputLayout.FilledBox.Dense"
             app:layout_constraintBottom_toTopOf="@id/tuesday_meal"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/monday_check"
             app:layout_constraintStart_toEndOf="@id/monday"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -67,6 +69,16 @@
                 android:inputType="text" />
 
         </com.google.android.material.textfield.TextInputLayout>
+
+        <CheckBox
+            android:id="@+id/monday_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/monday_meal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/monday_meal"
+            app:layout_constraintBottom_toBottomOf="@id/monday_meal"
+            />
 
         <TextView
             android:id="@+id/tuesday"
@@ -88,7 +100,7 @@
             android:layout_height="60dp"
             app:theme="@style/Widget.AppTheme.TextInputLayout.FilledBox.Dense"
             app:layout_constraintBottom_toTopOf="@id/wednesday_meal"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tuesday_check"
             app:layout_constraintStart_toEndOf="@id/tuesday"
             app:layout_constraintTop_toBottomOf="@id/monday_meal">
 
@@ -101,6 +113,16 @@
                 android:inputType="text" />
 
         </com.google.android.material.textfield.TextInputLayout>
+
+        <CheckBox
+            android:id="@+id/tuesday_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/tuesday_meal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tuesday_meal"
+            app:layout_constraintBottom_toBottomOf="@id/tuesday_meal"
+            />
 
         <TextView
             android:id="@+id/wednesday"
@@ -122,7 +144,7 @@
             android:layout_height="60dp"
             app:theme="@style/Widget.AppTheme.TextInputLayout.FilledBox.Dense"
             app:layout_constraintBottom_toTopOf="@id/thursday_meal"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/wednesday_check"
             app:layout_constraintStart_toEndOf="@id/wednesday"
             app:layout_constraintTop_toBottomOf="@id/tuesday_meal">
 
@@ -135,6 +157,16 @@
                 android:inputType="text" />
 
         </com.google.android.material.textfield.TextInputLayout>
+
+        <CheckBox
+            android:id="@+id/wednesday_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/wednesday_meal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/wednesday_meal"
+            app:layout_constraintBottom_toBottomOf="@id/wednesday_meal"
+            />
 
         <TextView
             android:id="@+id/thursday"
@@ -156,7 +188,7 @@
             android:layout_height="60dp"
             app:theme="@style/Widget.AppTheme.TextInputLayout.FilledBox.Dense"
             app:layout_constraintBottom_toTopOf="@id/friday_meal"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/thursday_check"
             app:layout_constraintStart_toEndOf="@id/thursday"
             app:layout_constraintTop_toBottomOf="@id/wednesday_meal">
 
@@ -169,6 +201,16 @@
                 android:inputType="text" />
 
         </com.google.android.material.textfield.TextInputLayout>
+
+        <CheckBox
+            android:id="@+id/thursday_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/thursday_meal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/thursday_meal"
+            app:layout_constraintBottom_toBottomOf="@id/thursday_meal"
+            />
 
         <TextView
             android:id="@+id/friday"
@@ -190,7 +232,7 @@
             android:layout_height="60dp"
             app:theme="@style/Widget.AppTheme.TextInputLayout.FilledBox.Dense"
             app:layout_constraintBottom_toTopOf="@id/saturday_meal"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/friday_check"
             app:layout_constraintStart_toEndOf="@id/friday"
             app:layout_constraintTop_toBottomOf="@id/thursday_meal">
 
@@ -203,6 +245,16 @@
                 android:inputType="text" />
 
         </com.google.android.material.textfield.TextInputLayout>
+
+        <CheckBox
+            android:id="@+id/friday_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/friday_meal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/friday_meal"
+            app:layout_constraintBottom_toBottomOf="@id/friday_meal"
+            />
 
         <TextView
             android:id="@+id/saturday"
@@ -224,7 +276,7 @@
             android:layout_height="60dp"
             app:theme="@style/Widget.AppTheme.TextInputLayout.FilledBox.Dense"
             app:layout_constraintBottom_toTopOf="@id/sunday_meal"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/saturday_check"
             app:layout_constraintStart_toEndOf="@id/saturday"
             app:layout_constraintTop_toBottomOf="@id/friday_meal">
 
@@ -237,6 +289,16 @@
                 android:inputType="text" />
 
         </com.google.android.material.textfield.TextInputLayout>
+
+        <CheckBox
+            android:id="@+id/saturday_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/saturday_meal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/saturday_meal"
+            app:layout_constraintBottom_toBottomOf="@id/saturday_meal"
+            />
 
 
         <TextView
@@ -259,7 +321,7 @@
             android:layout_height="60dp"
             app:theme="@style/Widget.AppTheme.TextInputLayout.FilledBox.Dense"
             app:layout_constraintTop_toBottomOf="@id/saturday_meal"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/sunday_check"
             app:layout_constraintStart_toEndOf="@id/sunday"
             app:layout_constraintBottom_toBottomOf="parent">
 
@@ -272,6 +334,17 @@
                 android:inputType="text" />
 
         </com.google.android.material.textfield.TextInputLayout>
+
+        <CheckBox
+            android:id="@+id/sunday_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintHorizontal_bias="1.8"
+            app:layout_constraintTop_toTopOf="@id/sunday_meal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/sunday_meal"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
