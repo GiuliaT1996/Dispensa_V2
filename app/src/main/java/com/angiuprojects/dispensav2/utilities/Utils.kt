@@ -5,14 +5,11 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.TextView
+import android.widget.*
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -29,7 +26,10 @@ import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.temporal.ChronoUnit
 import java.util.*
-import kotlin.reflect.*
+import kotlin.reflect.KFunction1
+import kotlin.reflect.KFunction3
+import kotlin.reflect.KFunction5
+
 
 class Utils {
 
@@ -41,8 +41,11 @@ class Utils {
         }
     }
 
-    fun <T> changeActivity(context : Context, clazz: Class<T>) {
+    fun <T> changeActivity(context : Context, clazz: Class<T>, isOptional: Boolean) {
         val intent = Intent(context, clazz)
+        val b = Bundle()
+        b.putBoolean("isOptional", isOptional)
+        intent.putExtras(b)
         context.startActivity(intent)
     }
 

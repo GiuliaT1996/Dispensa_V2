@@ -4,7 +4,7 @@
     <string name="app_name">Dispensa V2</string>
     <string name="storage_txt">Dispensa</string>
     <string name="shopping_list_txt">Lista della Spesa</string>
-    <string name="expiring_txt">In Scadenza</string>
+    <string name="optional_txt">Dispensa Opzionali</string>
     <string name="history_txt">Storico</string>
     <string name="ticket_calculator_txt">Calcolatore Buoni Pasto</string>
     <string name="meal_plan_txt">Piano Settimanale</string>
@@ -30,8 +30,6 @@
     <string name="edit">Modifica</string>
     <string name="delete">Elimina</string>
     <string name="line">Linea</string>
-    <string name="plus">Più</string>
-    <string name="minus">Meno</string>
 
     <!-- Calculator Activity -->
     <string name="importo">Importo Buoni Pasto:</string>
@@ -47,24 +45,6 @@
         <item>6,00 €</item>
         <item>7,00 €</item>
         <item>8,00 €</item>
-    </string-array>
-
-    <string-array name="sezioni">
-        <item>Frutta</item>
-        <item>Verdura</item>
-        <item>Carne</item>
-        <item>Pesce</item>
-        <item>Merendine</item>
-        <item>Pulizie</item>
-        <item>Igiene Personale</item>
-        <item>Pasta, Riso, Pane</item>
-        <item>Legumi</item>
-        <item>Biscotti</item>
-        <item>Gatti</item>
-        <item>Snack</item>
-        <item>Bevande</item>
-        <item>Condimenti</item>
-        <item>Altro</item>
     </string-array>
 
     <!-- Descriptions -->

@@ -7,78 +7,51 @@
 
     <include android:id="@+id/header" layout="@layout/header_layout" />
 
-    <androidx.core.widget.NestedScrollView
+    <RelativeLayout
+        android:id="@+id/arrows"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="10dp"
-        android:layout_below="@+id/header"
-        android:layout_marginEnd="10dp">
+        android:layout_marginBottom="5dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginStart="30dp"
+        android:layout_below="@id/header">
 
-        <RelativeLayout
+        <TextView
+            android:id="@+id/is_opt"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="25dp"
+            android:layout_toEndOf="@id/left"
+            android:layout_toStartOf="@+id/right"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:textColor="@color/main_blue"
+            />
 
-            <ImageButton
-                android:id="@+id/expand_mandatory"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:backgroundTint="@color/main_blue"
-                android:contentDescription="@string/shopping_list_txt"
-                android:background="@drawable/icons8_gi__squadrato_100" />
+        <ImageButton
+            android:id="@+id/left"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@drawable/icons8_doppio_gi__50"
+            android:backgroundTint="@drawable/change_color_blue_buttons"
+            android:contentDescription="@string/back_button_desc"
+            android:rotation="90"/>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="32dp"
-                android:layout_alignTop="@id/expand_mandatory"
-                android:layout_toEndOf="@id/expand_mandatory"
-                android:fontFamily="@font/ubuntu"
-                android:text="@string/mandatory"
-                android:gravity="center_vertical"
-                android:textStyle="bold"
-                android:textColor="@color/main_blue"
-                android:textSize="18sp"
-                android:layout_marginStart="5dp"/>
+        <ImageButton
+            android:id="@+id/right"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/icons8_doppio_gi__50"
+            android:backgroundTint="@drawable/change_color_blue_buttons"
+            android:contentDescription="@string/back_button_desc"
+            android:rotation="-90"/>
+    </RelativeLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/storage_list_mandatory"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/expand_mandatory"
-                android:scrollbars="vertical" />
-
-            <ImageButton
-                android:id="@+id/expand_optional"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_below="@+id/storage_list_mandatory"
-                android:backgroundTint="@color/main_blue"
-                android:layout_marginTop="20dp"
-                android:contentDescription="@string/shopping_list_txt"
-                android:background="@drawable/icons8_gi__squadrato_100" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="32dp"
-                android:layout_alignTop="@id/expand_optional"
-                android:layout_toEndOf="@id/expand_optional"
-                android:fontFamily="@font/ubuntu"
-                android:text="@string/optional"
-                android:gravity="center_vertical"
-                android:textStyle="bold"
-                android:textColor="@color/main_blue"
-                android:textSize="18sp"
-                android:layout_marginStart="5dp"/>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/storage_list_optional"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/expand_optional"
-                android:scrollbars="vertical" />
-
-        </RelativeLayout>
-
-    </androidx.core.widget.NestedScrollView>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/storage_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/arrows"
+        android:scrollbars="vertical"/>
 
 </RelativeLayout>

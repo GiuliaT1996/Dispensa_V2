@@ -60,7 +60,7 @@ class LoaderActivity : AppCompatActivity() {
         animation.setAnimationListener(object : Animation.AnimationListener {
             override fun onAnimationStart(animation: Animation) {}
             override fun onAnimationEnd(animation: Animation) {
-                Utils.singleton.changeActivity(context, MainActivity::class.java)
+                Utils.singleton.changeActivity(context, MainActivity::class.java, false)
             }
 
             override fun onAnimationRepeat(animation: Animation) {}

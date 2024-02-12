@@ -13,12 +13,12 @@ import com.angiuprojects.dispensav2.entities.StorageItem
 import com.angiuprojects.dispensav2.enums.SectionEnum
 import com.angiuprojects.dispensav2.utilities.Constants
 import com.angiuprojects.dispensav2.utilities.Utils
-import java.util.Locale
+import java.util.*
 
 class StorageActivity : BaseActivity<ActivityStorageBinding>(ActivityStorageBinding::inflate) {
 
-    private lateinit var optionalList: MutableList<StorageItem>
-    private lateinit var mandatoryList: MutableList<StorageItem>
+    private lateinit var itemList: MutableList<StorageItem>
+    private var isOptional: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,20 +27,19 @@ class StorageActivity : BaseActivity<ActivityStorageBinding>(ActivityStorageBind
             isFilterPresent = true,
             isSearchPresent = true
         )
+        binding.left.setOnClickListener { switchOptionalMandatory() }
+        binding.right.setOnClickListener { switchOptionalMandatory() }
 
-        optionalList = Utils.singleton.filterOptionalMandatoryList(isOptional = true, false, Constants.itemMapFilteredByProfile)
-        mandatoryList = Utils.singleton.filterOptionalMandatoryList(isOptional = false, false, Constants.itemMapFilteredByProfile)
+        val b = intent.extras
+        if (b != null) isOptional = b.getBoolean("isOptional")
 
-        binding.expandMandatory.setOnClickListener { Utils.singleton.expand(binding.expandMandatory, binding.storageListMandatory) }
-        binding.expandOptional.setOnClickListener { Utils.singleton.expand(binding.expandOptional, binding.storageListOptional) }
+        binding.isOpt.text = if(isOptional) "OPZIONALE" else "IMPORTANTE"
 
-        Utils.singleton.setRecyclerAdapter(findViewById(R.id.storage_list_mandatory),
+        itemList = Utils.singleton.filterOptionalMandatoryList(isOptional = isOptional, false, Constants.itemMapFilteredByProfile)
+
+        Utils.singleton.setRecyclerAdapter(findViewById(R.id.storage_list),
             this,
-            StorageRecyclerAdapter(mandatoryList, this))
-
-        Utils.singleton.setRecyclerAdapter(findViewById(R.id.storage_list_optional),
-            this,
-            StorageRecyclerAdapter(optionalList, this))
+            StorageRecyclerAdapter(itemList, this))
     }
 
     override fun setSearchListener(header: HeaderLayoutBinding) {
@@ -56,15 +55,9 @@ class StorageActivity : BaseActivity<ActivityStorageBinding>(ActivityStorageBind
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if(header.searchInput.editText.toString().isNotEmpty()) {
                     if(s != null) {
-                        val filteredOptList = optionalList.filter { it.name.lowercase()
+                        val filteredOptList = itemList.filter { it.name.lowercase()
                             .contains(s.toString().trim().lowercase()) }.toMutableList()
-                        val filteredManList = mandatoryList.filter { it.name.lowercase()
-                            .contains(s.toString().trim().lowercase()) }.toMutableList()
-                        Utils.singleton.setRecyclerAdapter(findViewById(R.id.storage_list_mandatory),
-                            context,
-                            StorageRecyclerAdapter(filteredManList, context))
-
-                        Utils.singleton.setRecyclerAdapter(findViewById(R.id.storage_list_optional),
+                        Utils.singleton.setRecyclerAdapter(findViewById(R.id.storage_list),
                             context,
                             StorageRecyclerAdapter(filteredOptList, context))
                     }
@@ -88,19 +81,12 @@ class StorageActivity : BaseActivity<ActivityStorageBinding>(ActivityStorageBind
         header.filterSpinner.setOnItemClickListener { parent, _, position, _ ->
             run {
                 val section = parent.getItemAtPosition(position) as String
-                val filteredManList = mandatoryList.filter {
+                val filteredManList = itemList.filter {
                     it.section.trim().lowercase(Locale.ROOT) == section.trim().lowercase(Locale.ROOT)
                 }.toMutableList()
-                val filteredOptList = optionalList.filter {
-                    it.section.trim().lowercase(Locale.ROOT) == section.trim().lowercase(Locale.ROOT)
-                }.toMutableList()
-                Utils.singleton.setRecyclerAdapter(findViewById(R.id.storage_list_mandatory),
+                Utils.singleton.setRecyclerAdapter(findViewById(R.id.storage_list),
                     context,
                     StorageRecyclerAdapter(filteredManList, context))
-
-                Utils.singleton.setRecyclerAdapter(findViewById(R.id.storage_list_optional),
-                    context,
-                    StorageRecyclerAdapter(filteredOptList, context))
             }
         }
     }
@@ -110,12 +96,13 @@ class StorageActivity : BaseActivity<ActivityStorageBinding>(ActivityStorageBind
 
         header.filterSpinner.text = null
         header.searchInput.editText?.setText("")
-        Utils.singleton.setRecyclerAdapter(findViewById(R.id.storage_list_mandatory),
+        Utils.singleton.setRecyclerAdapter(findViewById(R.id.storage_list),
             this,
-            StorageRecyclerAdapter(mandatoryList, this))
+            StorageRecyclerAdapter(itemList, this))
+    }
 
-        Utils.singleton.setRecyclerAdapter(findViewById(R.id.storage_list_optional),
-            this,
-            StorageRecyclerAdapter(optionalList, this))
+    private fun switchOptionalMandatory() {
+        Utils.singleton.changeActivity(this, StorageActivity::class.java, !isOptional)
+        finish()
     }
 }

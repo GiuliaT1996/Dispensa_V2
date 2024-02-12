@@ -47,13 +47,6 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".activities.implementation.ExpiringActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
             android:name=".activities.implementation.TicketCalculatorActivity"
             android:exported="false">
             <meta-data
