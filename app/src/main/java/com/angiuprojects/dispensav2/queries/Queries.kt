@@ -103,9 +103,13 @@ class Queries {
     }
 
     private fun checkStorageItem(storageItem: StorageItem?) : Boolean {
-        if (storageItem == null || storageItem.name.isEmpty()
-            || storageItem.section.isEmpty())
+        try {
+            if (storageItem == null || storageItem.name.isEmpty() || storageItem.section.isEmpty())
+                return false
+        } catch(e:Exception) {
+            Log.e(Constants.STORAGE_LOGGER, "Errore nel recupero di storageItem")
             return false
+        }
         return true
     }
 

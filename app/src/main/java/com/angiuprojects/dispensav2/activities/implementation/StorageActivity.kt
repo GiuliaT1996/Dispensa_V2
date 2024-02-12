@@ -4,11 +4,8 @@ import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.widget.AdapterView
-import android.widget.AdapterView.OnItemSelectedListener
 import com.angiuprojects.dispensav2.R
 import com.angiuprojects.dispensav2.activities.BaseActivity
-import com.angiuprojects.dispensav2.adapters.ShoppingListRecyclerAdapter
 import com.angiuprojects.dispensav2.adapters.StorageRecyclerAdapter
 import com.angiuprojects.dispensav2.databinding.ActivityStorageBinding
 import com.angiuprojects.dispensav2.databinding.HeaderLayoutBinding
@@ -16,9 +13,13 @@ import com.angiuprojects.dispensav2.entities.StorageItem
 import com.angiuprojects.dispensav2.enums.SectionEnum
 import com.angiuprojects.dispensav2.utilities.Constants
 import com.angiuprojects.dispensav2.utilities.Utils
-import java.util.*
+import java.util.Locale
 
 class StorageActivity : BaseActivity<ActivityStorageBinding>(ActivityStorageBinding::inflate) {
+
+    private lateinit var optionalList: MutableList<StorageItem>
+    private lateinit var mandatoryList: MutableList<StorageItem>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -26,10 +27,20 @@ class StorageActivity : BaseActivity<ActivityStorageBinding>(ActivityStorageBind
             isFilterPresent = true,
             isSearchPresent = true
         )
-        Utils.singleton.setRecyclerAdapter(findViewById(R.id.storage_list),
+
+        optionalList = Utils.singleton.filterOptionalMandatoryList(isOptional = true, false, Constants.itemMapFilteredByProfile)
+        mandatoryList = Utils.singleton.filterOptionalMandatoryList(isOptional = false, false, Constants.itemMapFilteredByProfile)
+
+        binding.expandMandatory.setOnClickListener { Utils.singleton.expand(binding.expandMandatory, binding.storageListMandatory) }
+        binding.expandOptional.setOnClickListener { Utils.singleton.expand(binding.expandOptional, binding.storageListOptional) }
+
+        Utils.singleton.setRecyclerAdapter(findViewById(R.id.storage_list_mandatory),
             this,
-            StorageRecyclerAdapter(Constants.itemMapFilteredByProfile.values.toMutableList(), this)
-        )
+            StorageRecyclerAdapter(mandatoryList, this))
+
+        Utils.singleton.setRecyclerAdapter(findViewById(R.id.storage_list_optional),
+            this,
+            StorageRecyclerAdapter(optionalList, this))
     }
 
     override fun setSearchListener(header: HeaderLayoutBinding) {
@@ -45,12 +56,17 @@ class StorageActivity : BaseActivity<ActivityStorageBinding>(ActivityStorageBind
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if(header.searchInput.editText.toString().isNotEmpty()) {
                     if(s != null) {
-                        val filteredMap = Constants.itemMapFilteredByProfile.filter { it.key.lowercase()
-                            .contains(s.toString().trim().lowercase()) }
-                        Utils.singleton.setRecyclerAdapter(findViewById(R.id.storage_list),
+                        val filteredOptList = optionalList.filter { it.name.lowercase()
+                            .contains(s.toString().trim().lowercase()) }.toMutableList()
+                        val filteredManList = mandatoryList.filter { it.name.lowercase()
+                            .contains(s.toString().trim().lowercase()) }.toMutableList()
+                        Utils.singleton.setRecyclerAdapter(findViewById(R.id.storage_list_mandatory),
                             context,
-                            StorageRecyclerAdapter(filteredMap.values.toMutableList(), context)
-                        )
+                            StorageRecyclerAdapter(filteredManList, context))
+
+                        Utils.singleton.setRecyclerAdapter(findViewById(R.id.storage_list_optional),
+                            context,
+                            StorageRecyclerAdapter(filteredOptList, context))
                     }
                 }
             }
@@ -72,13 +88,19 @@ class StorageActivity : BaseActivity<ActivityStorageBinding>(ActivityStorageBind
         header.filterSpinner.setOnItemClickListener { parent, _, position, _ ->
             run {
                 val section = parent.getItemAtPosition(position) as String
-                val filteredMap = Constants.itemMapFilteredByProfile.filter {
-                    it.value.section.trim().lowercase(Locale.ROOT) == section.trim().lowercase(Locale.ROOT)
-                }
-                Utils.singleton.setRecyclerAdapter(findViewById(R.id.storage_list),
+                val filteredManList = mandatoryList.filter {
+                    it.section.trim().lowercase(Locale.ROOT) == section.trim().lowercase(Locale.ROOT)
+                }.toMutableList()
+                val filteredOptList = optionalList.filter {
+                    it.section.trim().lowercase(Locale.ROOT) == section.trim().lowercase(Locale.ROOT)
+                }.toMutableList()
+                Utils.singleton.setRecyclerAdapter(findViewById(R.id.storage_list_mandatory),
                     context,
-                    StorageRecyclerAdapter(filteredMap.values.toMutableList(), context)
-                )
+                    StorageRecyclerAdapter(filteredManList, context))
+
+                Utils.singleton.setRecyclerAdapter(findViewById(R.id.storage_list_optional),
+                    context,
+                    StorageRecyclerAdapter(filteredOptList, context))
             }
         }
     }
@@ -88,10 +110,12 @@ class StorageActivity : BaseActivity<ActivityStorageBinding>(ActivityStorageBind
 
         header.filterSpinner.text = null
         header.searchInput.editText?.setText("")
-
-        Utils.singleton.setRecyclerAdapter(findViewById(R.id.storage_list),
+        Utils.singleton.setRecyclerAdapter(findViewById(R.id.storage_list_mandatory),
             this,
-            StorageRecyclerAdapter(Constants.itemMapFilteredByProfile.values.toMutableList(), this)
-        )
+            StorageRecyclerAdapter(mandatoryList, this))
+
+        Utils.singleton.setRecyclerAdapter(findViewById(R.id.storage_list_optional),
+            this,
+            StorageRecyclerAdapter(optionalList, this))
     }
 }
