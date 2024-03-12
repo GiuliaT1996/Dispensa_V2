@@ -27,6 +27,16 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         setColorProfileButton(binding.bothButton, ProfileEnum.COMUNI, false)
 
         setOnClickListeners()
+
+        ExpiringActivity.filterExpiringItems().forEach {
+            val dialog = Dialog(this)
+            Utils.singleton.createSimpleOKPopUp(it.name + " " + it.expirationDate?.let { it1 ->
+                Utils.singleton.setPhrase(it1) }, dialog, this::onClickCloseDialog)
+        }
+    }
+
+    private fun onClickCloseDialog(dialog: Dialog?) {
+        dialog?.dismiss()
     }
 
     private fun setOnClickListeners() {
@@ -37,8 +47,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
             START MAIN LIST BUTTONS
          */
         binding.storageButton.setOnClickListener { onClickOpenSelectedActivity(StorageActivity::class.java, false) }
-        binding.storageOptionalButton.setOnClickListener { onClickOpenSelectedActivity(StorageActivity::class.java, true) }
         binding.shoppingListButton.setOnClickListener { onClickOpenSelectedActivity(ShoppingListActivity::class.java, false) }
+        binding.expiringButton.setOnClickListener { onClickOpenSelectedActivity(ExpiringActivity::class.java, false) }
         binding.mealPlanButton.setOnClickListener { onClickOpenSelectedActivity(MealPlanActivity::class.java, false) }
 
         /*

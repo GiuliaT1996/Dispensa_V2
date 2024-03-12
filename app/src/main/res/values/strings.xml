@@ -6,6 +6,7 @@
     <string name="shopping_list_txt">Lista della Spesa</string>
     <string name="optional_txt">Dispensa Opzionali</string>
     <string name="history_txt">Storico</string>
+    <string name="expiring_txt">In Scadenza</string>
     <string name="ticket_calculator_txt">Calcolatore Buoni Pasto</string>
     <string name="meal_plan_txt">Piano Settimanale</string>
     <string name="search_hint">Cerca</string>

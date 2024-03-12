@@ -31,21 +31,9 @@
         android:layout_height="50dp"
         android:background="@drawable/round_button"
         android:layout_centerHorizontal="true"
-        android:layout_above="@id/storage_optional_button"
-        android:layout_marginBottom="30dp"
-        android:text="@string/storage_txt"
-        android:textColor="@color/light_blue"
-        android:fontFamily="@font/ubuntu"/>
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/storage_optional_button"
-        android:layout_width="150dp"
-        android:layout_height="50dp"
-        android:background="@drawable/round_button"
-        android:layout_centerHorizontal="true"
         android:layout_above="@id/shopping_list_button"
         android:layout_marginBottom="30dp"
-        android:text="@string/optional_txt"
+        android:text="@string/storage_txt"
         android:textColor="@color/light_blue"
         android:fontFamily="@font/ubuntu"/>
 
@@ -55,13 +43,23 @@
         android:layout_height="50dp"
         android:background="@drawable/round_button"
         android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="50dp"
+        android:layout_above="@id/expiring_button"
+        android:layout_marginBottom="30dp"
         android:text="@string/shopping_list_txt"
         android:textColor="@color/light_blue"
         android:fontFamily="@font/ubuntu"/>
 
-
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/expiring_button"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:background="@drawable/round_button"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="50dp"
+        android:text="@string/expiring_txt"
+        android:textColor="@color/light_blue"
+        android:fontFamily="@font/ubuntu"/>
 
     <ImageButton
         android:id="@+id/add_item_button"
