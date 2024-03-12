@@ -1,15 +1,18 @@
 package com.angiuprojects.dispensav2.queries
 
 import android.util.Log
-import com.angiuprojects.dispensav2.conversion.StoricoItem
 import com.angiuprojects.dispensav2.entities.HistoryItem
 import com.angiuprojects.dispensav2.entities.ItemInterface
 import com.angiuprojects.dispensav2.entities.StorageItem
 import com.angiuprojects.dispensav2.utilities.Constants
-import com.google.firebase.database.*
+import com.google.firebase.database.ChildEventListener
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import java.time.Instant
 import java.time.temporal.ChronoUnit
-import java.util.*
+import java.util.Date
 
 class Queries {
 
@@ -43,21 +46,6 @@ class Queries {
                     Log.e(Constants.STORAGE_LOGGER, "Errore recupero item: \n"
                     + e.printStackTrace())
                 }
-            }
-            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {}
-            override fun onChildRemoved(snapshot: DataSnapshot) {}
-            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
-            override fun onCancelled(error: DatabaseError) {}
-        })
-    }
-
-    fun getStoricoItem() {
-        Constants.historyItemList = mutableListOf()
-        myRef = DB_INSTANCE.getReference("Storico")
-        myRef.orderByChild("name").addChildEventListener(object : ChildEventListener {
-            override fun onChildAdded(dataSnapshot: DataSnapshot, prevChildKey: String?) {
-                val item: StoricoItem? = dataSnapshot.getValue(StoricoItem::class.java)
-                deleteItem("" + item?.lastUpdate?.time, "Storico")
             }
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {}
             override fun onChildRemoved(snapshot: DataSnapshot) {}

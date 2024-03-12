@@ -50,7 +50,7 @@ class ReadWriteJsonUtils {
         if(json != "") {
             try {
                 val gson = GsonBuilder().registerTypeAdapter(LocalDate::class.java,
-                    JsonDeserializer<Any?> { json, _, _ -> LocalDate.parse(json.asString) })
+                    JsonDeserializer<Any?> { j, _, _ -> LocalDate.parse(j.asString) })
                     .create()
                 Constants.mealPlan = gson.fromJson(json, MealPlan::class.java)
                 Log.i(Constants.STORAGE_LOGGER, "MealPlan " + Constants.mealPlan.toString())

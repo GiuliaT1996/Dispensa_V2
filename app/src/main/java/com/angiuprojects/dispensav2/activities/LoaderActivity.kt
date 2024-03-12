@@ -8,8 +8,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.angiuprojects.dispensav2.activities.implementation.MainActivity
-import com.angiuprojects.dispensav2.conversion.ConvertUtils
-import com.angiuprojects.dispensav2.conversion.OldQueries
 import com.angiuprojects.dispensav2.databinding.ActivityLoaderBinding
 import com.angiuprojects.dispensav2.queries.Queries
 import com.angiuprojects.dispensav2.utilities.Constants
@@ -44,8 +42,6 @@ class LoaderActivity : AppCompatActivity() {
     }
 
     private fun initializeSingletons() {
-        OldQueries.initializeOldQueries()
-        ConvertUtils.initializeConvertUtils()
         Constants.initializeConstants()
         Queries.initializeQueries()
         Utils.initializeUtils()

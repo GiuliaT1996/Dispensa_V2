@@ -46,17 +46,17 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         /*
             START MAIN LIST BUTTONS
          */
-        binding.storageButton.setOnClickListener { onClickOpenSelectedActivity(StorageActivity::class.java, false) }
-        binding.shoppingListButton.setOnClickListener { onClickOpenSelectedActivity(ShoppingListActivity::class.java, false) }
-        binding.expiringButton.setOnClickListener { onClickOpenSelectedActivity(ExpiringActivity::class.java, false) }
-        binding.mealPlanButton.setOnClickListener { onClickOpenSelectedActivity(MealPlanActivity::class.java, false) }
+        binding.storageButton.setOnClickListener { onClickOpenSelectedActivity(StorageActivity::class.java) }
+        binding.shoppingListButton.setOnClickListener { onClickOpenSelectedActivity(ShoppingListActivity::class.java) }
+        binding.expiringButton.setOnClickListener { onClickOpenSelectedActivity(ExpiringActivity::class.java) }
+        binding.mealPlanButton.setOnClickListener { onClickOpenSelectedActivity(MealPlanActivity::class.java) }
 
         /*
             START LIST YELLOW BUTTONS
          */
-        binding.addItemButton.setOnClickListener { onClickOpenSelectedActivity(AddItemActivity::class.java, false) }
-        binding.calculatorButton.setOnClickListener { onClickOpenSelectedActivity(TicketCalculatorActivity::class.java, false) }
-        binding.historyButton.setOnClickListener { onClickOpenSelectedActivity(HistoryActivity::class.java, false) }
+        binding.addItemButton.setOnClickListener { onClickOpenSelectedActivity(AddItemActivity::class.java) }
+        binding.calculatorButton.setOnClickListener { onClickOpenSelectedActivity(TicketCalculatorActivity::class.java) }
+        binding.historyButton.setOnClickListener { onClickOpenSelectedActivity(HistoryActivity::class.java) }
 
         /*
             START LIST SELECTION BUTTONS
@@ -108,7 +108,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         Utils.singleton.refreshProfileList()
     }
 
-    private fun <T> onClickOpenSelectedActivity(clazz: Class<T>, isOptional: Boolean) {
-        Utils.singleton.changeActivity(this, clazz, isOptional)
+    private fun <T> onClickOpenSelectedActivity(clazz: Class<T>) {
+        Utils.singleton.changeActivity(this, clazz, isOptional = false)
     }
 }
